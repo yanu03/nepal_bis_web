@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtRouteplan.BisMtRouteplanMapper">
+
+	<select id="findAll" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtRouteplan.BisMtRouteplan">
+      SELECT
+            ROUTE_ID AS routeId,
+            FN_MT_GET_ROUTE_NAME(ROUTE_ID) AS routeName,
+            DAY_TYPE AS dayType,
+            SERVICE_COUNT AS serviceCount,
+            ST_FIRST_TIME AS stFirstTime,
+            ST_LAST_TIME AS stLastTime,
+            ED_FIRST_TIME AS edFirstTime,
+            ED_LAST_TIME AS edLastTime,
+            MIN_INTERVAL AS minInterval,
+            MAX_INTERVAL AS maxInterval,
+            UPDATE_DATE AS updateDate,
+            REMARK AS remark,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_routeplan
+		<if test="Select == 'routeId'">
+			WHERE
+			ROUTE_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'routeName'">
+			WHERE
+			FN_MT_GET_ROUTE_NAME(ROUTE_ID) LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+	</select>
+
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtRouteplan.BisMtRouteplan"
+		resultType="kr.tracom.bis.domain.bisMtRouteplan.BisMtRouteplan">
+		INSERT INTO bis_mt_routeplan (
+            ROUTE_ID,
+            DAY_TYPE,
+            SERVICE_COUNT,
+            ST_FIRST_TIME,
+            ST_LAST_TIME,
+            ED_FIRST_TIME,
+            ED_LAST_TIME,
+            MIN_INTERVAL,
+            MAX_INTERVAL,
+            UPDATE_DATE,
+            REMARK,
+            USER_ID,
+            USE_YN
+        ) VALUES (
+            #{routeId},
+            #{dayType},
+            #{serviceCount},
+            #{stFirstTime},
+            #{stLastTime},
+            #{edFirstTime},
+            #{edLastTime},
+            #{minInterval},
+            #{maxInterval},
+            date_format(now(),'%Y%m%d'),
+            #{remark},
+            #{userId},
+            #{useYn}
+        )
+		ON DUPLICATE KEY
+		UPDATE
+			SERVICE_COUNT=#{serviceCount},
+            ST_FIRST_TIME=#{stFirstTime},
+            ST_LAST_TIME=#{stLastTime},
+            ED_FIRST_TIME=#{edFirstTime},
+            ED_LAST_TIME=#{edLastTime},
+            MIN_INTERVAL=#{minInterval},
+            MAX_INTERVAL=#{maxInterval},
+            UPDATE_DATE=date_format(now(),'%Y%m%d'),
+            REMARK=#{remark},
+            USER_ID= #{userId},
+            USE_YN=#{useYn}
+	</select>
+	
+</mapper>

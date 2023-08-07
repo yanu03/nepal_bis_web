@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tracom.brt.domain.user.UserMapper">
+
+	<resultMap id="userList" type="hashmap">
+		<result property="userCd" column="userCd"/>
+		<result property="userNm" column="userNm"/>
+		<result property="email" column="email"/>
+		<result property="hpNo" column="hpNo"/>
+		<result property="remark" column="remark"/>
+		<result property="extScdPs" column="extScdPs"/>
+		<result property="scdPsUseYn" column="scdPsUseYn"/>
+		<result property="useYn" column="useYn"/>
+		<result property="delYn" column="delYn"/>
+		<collection property="authList" column="userCd" javaType="java.util.ArrayList" select="selectUserAuthList"></collection>
+	</resultMap>
+
+	<select id="selectUserList" parameterType="String" resultMap="userList">
+		SELECT
+		 	  USER_CD							AS userCd
+		 	, USER_NM							AS userNm
+		 	, EMAIL								AS email
+		 	, CONCAT(LEFT(HP_NO, 3), '-', SUBSTRING(HP_NO, 3, 4), '-', RIGHT(HP_NO, 4)) AS hpNo
+		 	, REMARK							AS remark
+		 	, IF(SCD_PS IS NULL OR SCD_PS = '', 'N', 'Y')	AS extScdPs 
+		 	, SCD_PS_USE_YN						AS scdPsUseYn
+		 	, USE_YN							AS useYn
+		 	, DEL_YN							AS delYn
+		FROM
+			USER_M
+		<where>
+	    	<if test="value != null">
+				USER_CD LIKE CONCAT('%', #{value}, '%')
+				OR USER_NM LIKE CONCAT('%' , #{value} , '%')
+	    	</if>
+    	</where>
+    	ORDER BY USER_CD ASC
+	</select>
+	
+	<select id="selectUserAuthList" parameterType="user" resultType="userAuth">
+		SELECT
+			GRP_AUTH_CD
+		FROM
+			USER_AUTH_M
+		WHERE
+			USER_CD = #{userCd}
+	</select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItSchedulegroup.BisItSchedulegroupMapper">
+    <select id="findAll" resultType="kr.tracom.bis.domain.bisItSchedulegroup.BisItSchedulegroup" parameterType="map" >
+	    SELECT
+            T1.SCHEDULE_GROUP_ID AS scheduleGroupId,
+            T1.SCHEDULE_ID AS scheduleId,
+           T2.START_DATE AS startDate,
+            T2.END_DATE AS endDate,
+            T2.START_TIME AS startTime,
+		    T2.END_TIME AS endTime,
+		    T2.SCHEDULE_VALUE AS scheduleValue,
+            T1.USER_ID AS userId,
+            T1.UPDATE_DATE AS updateDate,
+            T1.USE_YN AS useYn
+        FROM
+            bis_it_schedulegroup T1        
+		JOIN bis_it_systemschedule AS T2
+		ON T1.SCHEDULE_ID=T2.SCHEDULE_ID
+            
+       <if test="Select == 'scheduleGroupId'">
+			 WHERE
+            T1.SCHEDULE_GROUP_ID = #{scheduleGroupId}
+		</if>
+		 <if test="scheduleId != null">
+			 AND
+            T1.SCHEDULE_ID = #{scheduleId}
+			 
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			T1.USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			T1.USE_YN='N'
+		</if>
+    </select>
+   
+  
+ 
+   <update id="add" parameterType="kr.tracom.bis.domain.bisItSchedulegroup.BisItSchedulegroup" >
+       INSERT INTO bis_it_schedulegroup (
+            SCHEDULE_GROUP_ID,
+            SCHEDULE_ID,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{scheduleGroupId},
+            #{scheduleId},
+            #{userId},
+              date_format(now(),'%Y%m%d'),
+            #{useYn}
+        )
+    </update>
+
+   <delete id="delete" parameterType="kr.tracom.bis.domain.bisItSchedulegroup.BisItSchedulegroup">
+    	delete
+    	 from 
+    		bis_it_schedulegroup
+    	 where 
+    	SCHEDULE_GROUP_ID=#{scheduleGroupId}
+    </delete>
+    
+        <select id="senddata" resultType="kr.tracom.bis.domain.bisItSchedulegroup.BisItSchedulegroup" parameterType="map" >
+	   SELECT
+            SCHEDULE_GROUP_ID AS scheduleGroupId,
+            SCHEDULE_ID AS scheduleId,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_schedulegroup
+            
+       <if test="Select == 'scheduleGroupId'">
+			 WHERE
+            SCHEDULE_GROUP_ID = #{scheduleGroupId}
+		</if>
+		 <if test="scheduleId != null">
+			 AND
+            SCHEDULE_ID = #{scheduleId}
+			 
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+    </select>
+</mapper>

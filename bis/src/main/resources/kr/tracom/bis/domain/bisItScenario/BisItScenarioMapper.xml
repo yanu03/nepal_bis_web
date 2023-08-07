@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItScenario.BisItScenarioMapper">
+
+	<select id="scenarioTypeList" resultType="map" statementType="PREPARED">
+		SELECT
+			t1.DETAIL_CODE AS detailCode,t1.DETAIL_CODE_NAME AS detailCodeName
+		FROM
+		   bis_ct_detail_code AS t1
+		JOIN
+		   bis_ct_common_code AS t2
+		ON
+		   t1.COMMON_CODE=t2.COMMON_CODE
+		WHERE
+		  t1.COMMON_CODE LIKE 'SCENARIO_TYPE'
+	</select>
+ 
+    <select id="findAll" resultType="bisItScenario" parameterType="map" statementType="PREPARED">
+        SELECT DISTINCT
+			t3.SCENARIO_ID AS scenarioId,
+			t3.SCENARIO_TYPE AS scenarioType,
+			t3.SCENARIO_NAME AS scenarioName,
+	        t3.SCENARIO_ENAME AS scenarioEname,
+	        t3.START_DATE AS startDate,
+	        t3.END_DATE AS endDate,
+	        t3.START_TIME AS startTime,
+	        t3.END_TIME AS endTime,
+	        t3.REMARK AS remark,
+	        t3.USER_ID AS userId,
+	        t3.UPDATE_DATE AS updateDate,
+	        t3.USE_YN AS useYn
+		FROM
+			bis_it_scenario AS t3
+		JOIN
+			bis_ct_detail_code AS t4
+		ON
+			t3.SCENARIO_TYPE=t4.DETAIL_CODE
+		
+		WHERE
+       		t3.USE_YN LIKE 'Y'
+        <if test="searchData !=null">
+        AND
+        	t3.${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+        AND 
+        	t3.USE_YN LIKE CONCAT('%',#{useYn},'%')
+        </if>
+        ORDER BY
+        	t3.SCENARIO_ID
+    </select>
+    
+    <select id="findAllUseY" resultType="bisItScenario" parameterType="map" statementType="PREPARED">
+        SELECT DISTINCT
+			t3.SCENARIO_ID AS scenarioId,
+			t3.SCENARIO_TYPE AS scenarioType,
+			t3.SCENARIO_NAME AS scenarioName,
+	        t3.SCENARIO_ENAME AS scenarioEname,
+	        t3.START_DATE AS startDate,
+	        t3.END_DATE AS endDate,
+	        t3.START_TIME AS startTime,
+	        t3.END_TIME AS endTime,
+	        t3.REMARK AS remark,
+	        t3.USER_ID AS userId,
+	        t3.UPDATE_DATE AS updateDate,
+	        t3.USE_YN AS useYn
+		FROM
+			bis_it_scenario AS t3
+		JOIN
+			bis_ct_detail_code AS t4
+		ON
+			t3.SCENARIO_TYPE=t4.DETAIL_CODE
+		
+		WHERE
+       		t4.USE_YN LIKE 'Y'
+        <if test="searchData !=null">
+        AND
+        	t3.${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+        AND 
+        	t3.USE_YN LIKE 'Y'
+        </if>
+
+    </select>
+    
+    
+     <select id="findOne" resultType="bisItScenario" parameterType="bisItScenario" statementType="PREPARED">
+        SELECT
+            SCENARIO_ID AS scenarioId,
+            SCENARIO_TYPE AS scenarioType,
+            SCENARIO_NAME AS scenarioName,
+            SCENARIO_ENAME AS scenarioEname,
+            START_DATE AS startDate,
+            END_DATE AS endDate,
+            START_TIME AS startTime,
+            END_TIME AS endTime,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_scenario
+        WHERE
+            scenarioId=#{scenarioId}
+    </select>
+    
+    <select id="maxScenarioPlus" resultType="string" statementType="PREPARED"> 
+    		SELECT
+    			LPAD(MAX(SUBSTRING(SCENARIO_ID,5,9))+1,9,0)
+    		FROM
+    			bis_it_scenario;
+    </select>
+ 
+   <update id="insert" parameterType="hashmap" statementType="PREPARED">
+        INSERT INTO bis_it_scenario (
+            SCENARIO_ID,
+            SCENARIO_TYPE,
+            SCENARIO_NAME,
+            SCENARIO_ENAME,
+            START_DATE,
+            END_DATE,
+            START_TIME,
+            END_TIME,
+            REMARK,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{scenarioId},
+            #{scenarioType},
+            #{scenarioName},
+            #{scenarioEname},
+            #{startDate},
+            #{endDate},
+            #{startTime},
+            #{endTime},
+            #{remark},
+            #{userId},
+            #{updateDate},
+            #{useYn}
+        ) ON DUPLICATE KEY
+        UPDATE
+            SCENARIO_TYPE=  #{scenarioType},
+            SCENARIO_NAME= #{scenarioName},
+            SCENARIO_ENAME= #{scenarioEname},
+            START_DATE=  #{startDate},
+            END_DATE=#{endDate},
+            START_TIME= #{startTime},
+            END_TIME=  #{endTime},
+            REMARK=#{remark},
+            USER_ID=#{userId},
+            UPDATE_DATE= #{updateDate},
+            USE_YN=#{useYn}
+    </update>
+</mapper>

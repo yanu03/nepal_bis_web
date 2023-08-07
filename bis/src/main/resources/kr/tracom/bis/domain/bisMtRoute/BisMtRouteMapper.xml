@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtRoute.BisMtRouteMapper">
+
+	<select id="findAll" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute">
+		select
+		ROUTE_ID AS ROUTEID,
+		ROUTE_TYPE AS ROUTETYPE,
+		ROUTE_NAME AS ROUTENAME,
+		ROUTE_ENAME AS ROUTEENAME,
+		FROM_STATION_ID AS FROMSTATIONID,
+		(SELECT STATION_NAME FROM BIS_MT_STATION B WHERE FROM_STATION_ID =
+		STATION_ID)
+		AS FROMSTATIONNAME,
+		TO_STATION_ID AS TOSTATIONID,
+		(SELECT STATION_NAME FROM BIS_MT_STATION B WHERE TO_STATION_ID = STATION_ID)
+		AS TOSTATIONNAME,
+		TURN_STATION_ID AS TURNSTATIONID,
+		(SELECT STATION_NAME FROM BIS_MT_STATION B WHERE TURN_STATION_ID =
+		STATION_ID) AS TURNSTATIONNAME,
+		PERMISSION_COUNT AS PERMISSIONCOUNT,
+		BEGIN_DATE AS BEGINDATE,
+		CLOSE_DATE AS CLOSEDATE,
+		ROUTE_EX AS ROUTEEX,
+		ROUTE_DISTANCE AS ROUTEDISTANCE,
+		COUNTRY_CODE AS COUNTRYCODE,
+		AREA_CODE AS AREACODE,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+	
+		REQUEST_TIME AS REQUESTTIME,
+		CHARGE,RUN_TYPE AS RUNTYPE,
+		UPDATE_DATE AS UPDATEDATE,
+		REMARK,USER_ID AS USERID,
+		USE_YN AS USEYN
+		from
+		bis_mt_Route T1
+		<if test="Select == 'routeName'">
+			WHERE
+			ROUTE_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'routeId'">
+			WHERE
+			ROUTE_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+	</select>
+
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute"
+		resultType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute">
+
+		INSERT INTO bis_mt_route (
+		ROUTE_ID,
+		ROUTE_TYPE,
+		ROUTE_NAME,
+		ROUTE_ENAME,
+		FROM_STATION_ID,
+		TO_STATION_ID,
+		TURN_STATION_ID,
+		PERMISSION_COUNT,
+		BEGIN_DATE,
+		CLOSE_DATE,
+		ROUTE_EX,
+		ROUTE_DISTANCE,
+		COUNTRY_CODE,
+		AREA_CODE,
+		REQUEST_TIME,
+		CHARGE,
+		RUN_TYPE,
+		UPDATE_DATE,
+		REMARK,
+		USER_ID,
+		USE_YN
+		) VALUES (
+		#{routeId},
+		#{routeType},
+		#{routeName},
+		#{routeEname},
+		#{fromStationId},
+		#{toStationId},
+		#{turnStationId},
+		#{permissionCount},
+		#{beginDate},
+		#{closeDate},
+		#{routeEx},
+		#{routeDistance},
+		#{countryCode},
+		#{areaCode},
+		#{requestTime},
+		#{charge},
+		#{runType},
+		date_format(now(),'%Y%m%d'),
+		#{remark},
+		#{userId},
+		#{useYn}
+		)
+		ON DUPLICATE KEY
+		UPDATE
+
+		ROUTE_TYPE=#{routeType},
+		ROUTE_NAME=#{routeName},
+		ROUTE_ENAME=#{routeEname},
+		FROM_STATION_ID=#{fromStationId},
+		TO_STATION_ID=#{toStationId},
+		TURN_STATION_ID=#{turnStationId},
+		PERMISSION_COUNT=#{permissionCount},
+		BEGIN_DATE= #{beginDate},
+		CLOSE_DATE=#{closeDate},
+		ROUTE_EX=#{routeEx},
+		ROUTE_DISTANCE=#{routeDistance},
+		COUNTRY_CODE=#{countryCode},
+		AREA_CODE=#{areaCode},
+		REQUEST_TIME=#{requestTime},
+		CHARGE=#{charge},
+		RUN_TYPE=#{runType},
+		UPDATE_DATE=date_format(now(),'%Y%m%d'),
+		REMARK=#{remark},
+		USER_ID=#{userId},
+		USE_YN=#{useYn}
+	</select>
+	  
+	<select id="maxPlus" parameterType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute" resultType="string">
+	SELECT LPAD(MAX(SUBSTRING(ROUTE_ID,3,8))+1,9,0)
+    			FROM BIS_MT_ROUTE
+	</select>
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtLink.BisMtLinkMapper">
+  <select id="findAll" resultType="map" parameterType="kr.tracom.bis.domain.bisMtLink.BisMtLink" statementType="PREPARED">
+        SELECT
+            LINK_ID AS linkId,
+            LINK_TYPE AS linkType,
+            LINK_NAME AS linkName,
+            LINK_ENAME AS linkEname,
+            FROM_NODE_ID AS fromNodeId,
+            TO_NODE_ID AS toNodeId,
+            LINK_NUMBER AS linkNumber,
+            LINK_DISTANCE AS linkDistance,
+            LANE_COUNT AS laneCount,
+            LINK_GRADE AS linkGrade,
+            MULTI_YN AS multiYn,
+            CONNECT_CODE AS connectCode,
+            MAX_REST_SPEED AS maxRestSpeed,
+            REST_VEHCLE AS restVehcle,
+            REST_WEIGHT AS restWeight,
+            REST_HEIGHT AS restHeight,
+            ENTRY_ANGLE AS entryAngle,
+            ADVANCE_ANGLE AS advanceAngle,
+            COUNTRY_CODE AS countryCode,
+            AREA_CODE AS areaCode,
+            UPDATE_DATE AS updateDate,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_link
+              
+            <if test="Select == 'linkId'">            
+ 		     WHERE 
+            LINK_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+                <if test="Select == 'linkName'">           
+ 		     WHERE 
+            LINK_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+            
+             <if test='useYn == "Y"'>           
+ 		    AND
+            USE_YN='Y'
+             </if>
+             <if test='useYn == "N"'>           
+ 		    AND
+            USE_YN='N'
+             </if>
+    </select>
+   <select id="count" resultType="kr.tracom.bis.domain.bisMtLink.BisMtLink" parameterType="kr.tracom.bis.domain.bisMtLink.BisMtLink" statementType="PREPARED">
+        SELECT
+        COUNT(*) AS COUNT
+        FROM
+        BIS_MT_Link
+        </select>
+   
+    <select id="add" parameterType="kr.tracom.bis.domain.bisMtLink.BisMtLink" resultType="kr.tracom.bis.domain.bisMtLink.BisMtLink">
+	         
+        INSERT INTO bis_mt_link (
+            LINK_ID,
+            LINK_TYPE,
+            LINK_NAME,
+            LINK_ENAME,
+            FROM_NODE_ID,
+            TO_NODE_ID,
+            LINK_NUMBER,
+            LINK_DISTANCE,
+            LANE_COUNT,
+            LINK_GRADE,
+            MULTI_YN,
+            CONNECT_CODE,
+            MAX_REST_SPEED,
+            REST_VEHCLE,
+            REST_WEIGHT,
+            REST_HEIGHT,
+            ENTRY_ANGLE,
+            ADVANCE_ANGLE,
+            COUNTRY_CODE,
+            AREA_CODE,
+            UPDATE_DATE,
+            USER_ID,
+            USE_YN
+        ) VALUES (
+            #{linkId},
+            #{linkType},
+            #{linkName},
+            #{linkEname},
+            #{fromNodeId},
+            #{toNodeId},
+            #{linkNumber},
+            #{linkDistance},
+            #{laneCount},
+            #{linkGrade},
+            #{multiYn},
+            #{connectCode},
+            #{maxRestSpeed},
+            #{restVehcle},
+            #{restWeight},
+            #{restHeight},
+            #{entryAngle},
+            #{advanceAngle},
+            #{countryCode},
+            #{areaCode},
+            #{updateDate},
+            #{userId},
+            #{useYn}
+        )ON DUPLICATE KEY
+					UPDATE
+			LINK_TYP=#{linkType},
+            LINK_NAME=#{linkName},
+            LINK_ENAME=#{linkEname},
+            FROM_NODE_ID=#{fromNodeId},
+            TO_NODE_ID=#{toNodeId},
+            LINK_NUMBER=#{linkNumber},
+            LINK_DISTANCE=#{linkDistance},
+            LANE_COUNT=#{laneCount},
+            LINK_GRADE=#{linkGrade},
+            MULTI_YN=#{multiYn},
+            CONNECT_CODE=#{connectCode},
+            MAX_REST_SPEED=#{maxRestSpeed},
+            REST_VEHCLE=#{restVehcle},
+            REST_WEIGHT=#{restWeight},
+            REST_HEIGHT=#{restHeight},
+            ENTRY_ANGLE=#{entryAngle},
+            ADVANCE_ANGLE=#{advanceAngle},
+            COUNTRY_CODE=#{countryCode},
+            AREA_CODE=#{areaCode},
+            UPDATE_DATE=#{updateDate},
+            USER_ID=#{userId},
+            USE_YN=#{useYn}
+       <if test="bitId != null">       
+	 	  <if test="bitType != null">      
+	 		  <if test="areaCode != null">      
+				   <if test="useYn != null">
+	      			
+     			  </if>
+    		   </if>
+    	   </if>
+       </if>
+          
+    </select>
+    
+  
+</mapper>

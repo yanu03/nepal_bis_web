@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminalMapper">
+
+	<select id="findAll" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
+		SELECT
+		TERMINAL_ID AS terminalId,
+		TERMINAL_TYPE AS terminalType,
+		VEHICLE_ID AS vehicleId,
+		TERMINAL_VERSION AS terminalVersion,
+		IP_ADDRESS AS ipAddress,
+		SERIAL_NO AS serialNo,
+		COUNTRY_CODE AS countryCode,
+		AREA_CODE AS
+		areaCode,
+		UPDATE_DATE AS updateDate,
+		USER_ID AS userId,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+		FN_MT_GET_PLATE_NUMBER(T1.VEHICLE_ID) plateNumber,
+		USE_YN AS useYn
+		FROM
+		bis_mt_terminal T1
+		<if test="Select == 'terminalId'">
+			WHERE
+			TERMINAL_ID LIKE
+			CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+			<if test="Select == 'plateNumber'">
+			WHERE
+			FN_MT_GET_PLATE_NUMBER(T1.VEHICLE_ID) LIKE
+			CONCAT('%',IFNULL(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+	</select>
+	<select id="count" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
+		SELECT
+		COUNT(*) AS COUNT
+		FROM
+		bis_mt_terminal
+	
+		</select>
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal"
+		resultType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
+		<if test="terminalId != null">
+			<if test="terminalType != null">
+				<if test="areaCode != null">
+					<if test="useYn != null">
+						INSERT INTO bis_mt_terminal (
+						TERMINAL_ID,
+						TERMINAL_TYPE,
+						VEHICLE_ID,
+						TERMINAL_VERSION,
+						IP_ADDRESS,
+						SERIAL_NO,
+						COUNTRY_CODE,
+						AREA_CODE,
+						UPDATE_DATE,
+						USER_ID,
+						USE_YN
+						) VALUES (
+						#{terminalId},
+						#{terminalType},
+						#{vehicleId},
+						#{terminalVersion},
+						#{ipAddress},
+						#{serialNo},
+						#{countryCode},
+						#{areaCode},
+						date_format(now(),'%Y%m%d'),
+						#{userId},
+						#{useYn}
+						)
+						ON DUPLICATE KEY
+						UPDATE
+						TERMINAL_TYPE=#{terminalType},
+						VEHICLE_ID=#{vehicleId},
+						TERMINAL_VERSION=#{terminalVersion},
+						IP_ADDRESS=#{ipAddress},
+						SERIAL_NO=#{serialNo},
+						COUNTRY_CODE=#{countryCode},
+						AREA_CODE=#{areaCode},
+						UPDATE_DATE=date_format(now(),'%Y%m%d'),
+						USER_ID=#{userId},
+						USE_YN=#{useYn}
+					</if>
+				</if>
+			</if>
+		</if>
+	</select>
+	<select id="maxPlus"  parameterType="string" resultType="string">
+	SELECT LPAD(MAX(SUBSTRING(TERMINAL_ID,3,8))+1,9,0)
+    			FROM BIS_MT_TERMINAL
+	</select>
+	<select id="findId" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
+		SELECT
+			TERMINAL_ID AS terminalId
+		FROM
+			bis_mt_terminal T1
+		WHERE
+			USE_YN='Y'
+	</select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisItLocation.BisItLocationMapper">
+
+	<select id="findAll" resultType="kr.tracom.bis.domain.bisItLocation.BisItLocation" parameterType="map" statementType="PREPARED">
+	       SELECT	TA.VEHICLE_ID AS VEHICLEID,
+               FN_MT_GET_PLATE_NUMBER(TA.VEHICLE_ID) AS PLATENUMBER,
+               FN_MT_GET_BUS_TYPE(TA.VEHICLE_ID) AS BUSTYPE,
+            	TA.ROUTE_ID AS ROUTEID,
+            	TA.NODE_SEQUENCE AS NODESEQUENCE,
+            	TA.NODE_ID AS NODEID,
+            	TA.STATION_SEQUENCE AS STATIONSEQUENCE,
+            	TA.STATION_ID AS STATIONID,
+            	TA.COLLECT_DATE AS COLLECTDATE,
+            	TA.RUN_CODE AS RUNCODE, 
+            	TA.ALARM_CODE AS ALARMCODE,
+            	TA.GPS_X AS GPSX,
+           		TA.GPS_Y AS GPSY,
+           		TC.UPDOWN_DIR AS UPDWONDIR
+        FROM	BIS_IT_LOCATION TA 
+				   INNER JOIN BIS_MT_ROUTE TB
+					ON(TA.ROUTE_ID = TB.ROUTE_ID)
+					INNER JOIN BIS_MT_ROUTENODE TC
+					ON(TA.ROUTE_ID = TC.ROUTE_ID AND TA.NODE_SEQUENCE = TC.NODE_SEQUENCE) 
+		  WHERE  TB.USE_YN = 'Y'
+		 <if test="routeId !=null">
+			  AND    TB.ROUTE_ID = #{routeId}		
+		  </if>  
+		  AND    date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s') > DATE_SUB(NOW(), INTERVAL 60 MINUTE)	   
+		  ORDER BY TC.ROUTE_ID, TA.NODE_SEQUENCE 
+	</select>
+
+</mapper>

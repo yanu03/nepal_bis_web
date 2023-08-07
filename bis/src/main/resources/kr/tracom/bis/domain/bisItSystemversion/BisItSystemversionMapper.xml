@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItSystemversion.BisItSystemversionMapper">
+    <select id="findOne" resultType="kr.tracom.bis.domain.bisItSystemversion.BisItSystemversion" parameterType="map" statementType="PREPARED">
+       SELECT
+        FN_CT_GET_CODE_ENAME('VERSION_CODE',
+        b1.version_code) AS NAME,
+        b1.version_Code AS CODE,
+        b2.version_value AS VERSION,
+        b1.version_value AS SENTVERSION     
+    FROM
+        bis_it_sendsystemversion b1      
+    LEFT JOIN
+        bis_it_systemversion b2      
+            ON      b1.system_id=b2.system_id 
+            AND b1.version_code=b2.version_code     
+    WHERE
+    b1.system_id=#{systemId}   
+    ORDER BY
+        b1.version_code
+    </select>
+</mapper>

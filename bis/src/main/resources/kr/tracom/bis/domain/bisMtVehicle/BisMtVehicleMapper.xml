@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicleMapper">
+
+	<select id="findAll" parameterType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle"
+		resultType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle">
+		SELECT
+		VEHICLE_ID AS vehicleId,
+		VEHICLE_TYPE AS vehicleType,
+		PLATE_NUMBER AS plateNumber,
+		COMPANY_ID AS companyId,
+		(SELECT COMPANY_NAME FROM bis_mt_company WHERE COMPANY_ID=T1.COMPANY_ID) AS companyName,
+		BUS_TYPE AS busType,
+		VEHICLE_CAPA AS vehicleCapa,
+		COUNTRY_CODE AS countryCode,
+		AREA_CODE AS areaCode,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+		UPDATE_DATE AS updateDate,
+		REMARK AS remark,
+		USER_ID AS userId,
+		USE_YN AS useYn
+		FROM
+		bis_mt_vehicle T1
+		<if test="Select == 'vehicleId'">
+			WHERE
+			VEHICLE_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'plateNumber'">
+			WHERE
+			PLATE_NUMBER LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+
+	</select>
+	
+	<select id="count" parameterType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle"
+		resultType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle">
+		SELECT
+		COUNT(*) AS COUNT
+		FROM
+		bis_mt_vehicle T1
+	</select>
+	
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle"
+		resultType="kr.tracom.bis.domain.bisMtVehicle.BisMtVehicle">
+		<if test="vehicleId != null">
+			<if test="vehicleType!= null">
+				<if test="plateNumber != null">
+					<if test="busType != null">
+						<if test="vehicleCapa != null">
+							<if test="areaCode != null">
+								<if test="useYn != null">
+									INSERT INTO bis_mt_vehicle (
+									VEHICLE_ID,
+									VEHICLE_TYPE,
+									PLATE_NUMBER,
+									COMPANY_ID,
+									BUS_TYPE,
+									VEHICLE_CAPA,
+									COUNTRY_CODE,
+									AREA_CODE,
+									UPDATE_DATE,
+									REMARK,
+									USER_ID,
+									USE_YN
+									) VALUES (
+									#{vehicleId},
+									#{vehicleType},
+									#{plateNumber},
+									#{companyId},
+									#{busType},
+									#{vehicleCapa},
+									#{countryCode},
+									#{areaCode},
+									date_format(now(),'%Y%m%d'),
+									#{remark},
+									#{userId},
+									#{useYn}
+									)ON DUPLICATE KEY
+									UPDATE
+									VEHICLE_TYPE=#{vehicleType},
+									PLATE_NUMBER=#{plateNumber},
+									COMPANY_ID=#{companyId},
+									BUS_TYPE=#{busType},
+									VEHICLE_CAPA=#{vehicleCapa},
+									COUNTRY_CODE=#{countryCode},
+									AREA_CODE=#{areaCode},
+									UPDATE_DATE=date_format(now(),'%Y%m%d'),
+									REMARK=#{remark},
+									USER_ID=#{userId},
+									USE_YN=#{useYn}
+								</if>
+							</if>
+						</if>
+					</if>
+				</if>
+			</if>
+		</if>
+
+	</select>
+
+	<select id="maxPlus"  parameterType="string" resultType="string">
+	SELECT LPAD(MAX(SUBSTRING(VEHICLE_ID,3,8))+1,9,0)
+    			FROM BIS_MT_VEHICLE
+	</select>
+</mapper>

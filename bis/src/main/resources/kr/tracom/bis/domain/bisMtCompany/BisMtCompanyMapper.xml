@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtCompany.BisMtCompanyMapper">
+	<select id="findAll" resultType="map"
+		parameterType="kr.tracom.bis.domain.bisMtCompany.BisMtCompany"
+		statementType="PREPARED">
+		SELECT
+		COMPANY_ID AS companyId,
+		COMPANY_NAME AS companyName,
+		COMPANY_ENAME AS companyEname,
+		TELEPHONE_NUMBER AS telephoneNumber,
+		FAX_NUMBER AS faxNumber,
+		ADDRESS AS address,
+		CEO_NAME AS ceoName,
+		COMPANY_TYPE AS companyType,
+		BUS_COUNT AS busCount,
+		REGIST_COUNT AS
+		registCount,
+		SPARE_COUNT AS spareCount,
+		COUNTRY_CODE AS countryCode,
+		AREA_CODE AS areaCode,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+		UPDATE_DATE AS updateDate,
+		REMARK AS remark,
+		USER_ID AS userId,
+		USE_YN AS useYn
+		FROM
+		bis_mt_company T1
+		<if test="Select == 'companyId'">
+			WHERE
+			COMPANY_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'companyName'">
+			WHERE
+			COMPANY_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>           
+		    AND
+           USE_YN='Y'
+         </if>
+         <if test='useYn == "N"'>           
+   			AND
+       		 USE_YN='N'
+         </if>
+	</select>
+	<select id="count" resultType="kr.tracom.bis.domain.bisMtCompany.BisMtCompany"
+		parameterType="kr.tracom.bis.domain.bisMtCompany.BisMtCompany"
+		statementType="PREPARED">
+		SELECT
+		COUNT(*) AS COUNT
+		FROM
+		bis_mt_company T1
+		</select>
+
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtCompany.BisMtCompany"
+		resultType="kr.tracom.bis.domain.bisMtCompany.BisMtCompany">
+		<if test="companyId != null">
+			<if test="companyName != null">
+				<if test="telephoneNumber != null">
+					<if test="address != null">
+						<if test="busCount != null">
+							<if test="registCount != null">
+								<if test="spareCount != null">
+									<if test="areaCode != null">
+										<if test="useYn != null">
+											INSERT INTO bis_mt_company (
+											COMPANY_ID,
+											COMPANY_NAME,
+											COMPANY_ENAME,
+											TELEPHONE_NUMBER,
+											FAX_NUMBER,
+											ADDRESS,
+											CEO_NAME,
+											COMPANY_TYPE,
+											BUS_COUNT,
+											REGIST_COUNT,
+											SPARE_COUNT,
+											COUNTRY_CODE,
+											AREA_CODE,
+											UPDATE_DATE,
+											REMARK,
+											USER_ID,
+											USE_YN
+											) VALUES (
+											#{companyId},
+											#{companyName},
+											#{companyEname},
+											#{telephoneNumber},
+											#{faxNumber},
+											#{address},
+											#{ceoName},
+											#{companyType},
+											#{busCount},
+											#{registCount},
+											#{spareCount},
+											#{countryCode},
+											#{areaCode},
+											date_format(now(),'%Y%m%d'),
+											#{remark},
+											#{userId},
+											#{useYn}
+											)ON
+											DUPLICATE KEY
+											UPDATE
+											COMPANY_NAME=#{companyName},
+											COMPANY_ENAME=#{companyEname},
+											TELEPHONE_NUMBER=#{telephoneNumber},
+											FAX_NUMBER=#{faxNumber},
+											ADDRESS=#{address},
+											CEO_NAME=#{ceoName},
+											COMPANY_TYPE=#{companyType},
+											BUS_COUNT=#{busCount},
+											REGIST_COUNT=#{registCount},
+											SPARE_COUNT=#{spareCount},
+											COUNTRY_CODE=#{countryCode},
+											AREA_CODE=#{areaCode},
+											UPDATE_DATE=date_format(now(),'%Y%m%d'),
+											REMARK=#{remark},
+											USER_ID=#{userId},
+											USE_YN=#{useYn}
+										</if>
+									</if>
+								</if>
+							</if>
+						</if>
+					</if>
+				</if>
+			</if>
+		</if>
+
+	</select>
+
+	<select id="maxPlus"  parameterType="string" resultType="string">
+	SELECT LPAD(MAX(SUBSTRING(COMPANY_ID,3,8))+1,9,0)
+    			FROM BIS_MT_COMPANY
+	</select>
+</mapper>

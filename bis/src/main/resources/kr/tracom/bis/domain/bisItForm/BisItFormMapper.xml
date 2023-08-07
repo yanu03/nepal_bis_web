@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItForm.BisItFormMapper">
+ 	<select id="getBitId" resultType="map" statementType="PREPARED">
+ 		SELECT 
+ 			BIT_ID AS bitId,
+ 			BIT_TYPE AS bitType
+        FROM
+        	bis_mt_bit
+        WHERE 
+       		USE_YN ='Y'
+ 	</select>
+ 
+ 
+ 	<select id="formTypeList" resultType="map" statementType="PREPARED">
+ 		SELECT
+			t1.DETAIL_CODE AS detailCode,t1.DETAIL_CODE_NAME AS detailCodeName
+		FROM
+		   bis_ct_detail_code AS t1
+		JOIN
+		   bis_ct_common_code AS t2
+		ON
+		   t1.COMMON_CODE=t2.COMMON_CODE
+		WHERE
+		  t1.COMMON_CODE LIKE 'FORM_TYPE'
+ 	</select>
+    
+    <select id="findAll" resultType="bisItForm" parameterType="map" statementType="PREPARED">
+        SELECT
+			t3.FORM_ID AS formId,
+			t3.FORM_TYPE AS formType,
+			t3.FORM_NAME AS formName,
+			t3.FORM_ENAME AS formEname,
+			t3.FILE_NAME AS fileName,
+			t3.REMARK AS remark,
+			t3.USER_ID AS userId,
+			t3.UPDATE_DATE AS updateDate,
+			t3.USE_YN AS useYn,
+			t3.APPLY_DATE AS applyDate
+		FROM
+			bis_it_form AS t3
+        <if test="searchData !=null">
+        WHERE
+        	${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+        AND
+        	USE_YN LIKE CONCAT('%',#{useYn},'%')
+        </if>
+    </select>
+    
+    <select id="findAllUseY" resultType="bisItForm" parameterType="map" statementType="PREPARED">
+        SELECT
+			t3.FORM_ID AS formId,
+			t3.FORM_TYPE AS formType,
+			t3.FORM_NAME AS formName,
+			t3.FORM_ENAME AS formEname,
+			t3.FILE_NAME AS fileName,
+			t3.REMARK AS remark,
+			t3.USER_ID AS userId,
+			t3.UPDATE_DATE AS updateDate,
+			t3.USE_YN AS useYn,
+			t3.APPLY_DATE AS applyDate
+		FROM
+			bis_it_form AS t3
+        <if test="searchData !=null">
+        WHERE
+        	${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+        AND
+        	USE_YN LIKE 'Y'
+        </if>
+    </select>
+ 
+    <select id="findOne" resultType="bisItForm" parameterType="bisItForm" statementType="PREPARED">
+        SELECT
+            FORM_ID AS formId,
+            FORM_TYPE AS formType,
+            FORM_NAME AS formName,
+            FORM_ENAME AS formEname,
+            FILE_NAME AS fileName,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn,
+            APPLY_DATE AS applyDate
+        FROM
+            bis_it_form
+        WHERE
+            FORM_ID = #{formId}
+    </select>
+    
+    <select id="maxFilePlus" resultType="string" statementType="PREPARED"> 
+    		SELECT LPAD(MAX(SUBSTRING(FILE_NAME,5,8))+1,8,0)
+    		FROM BIS_IT_FORM;
+    </select>
+    
+    <select id="maxFile" resultType="string" statementType="PREPARED"> 
+    		SELECT MAX(SUBSTRING(FILE_NAME,5,8))
+    		FROM BIS_IT_FORM;
+    </select>
+
+ 
+   <update id="delete" parameterType="bisItForm" statementType="PREPARED">
+        DELETE FROM
+            bis_it_form
+        WHERE
+            FORM_ID = #{formId}
+    </update>
+ 
+   <update id="update" parameterType="bisItForm" statementType="PREPARED">
+        UPDATE bis_it_form
+        SET
+            FORM_TYPE = #{formType},
+            FORM_NAME = #{formName},
+            FORM_ENAME = #{formEname},
+            FILE_NAME = #{fileName},
+            REMARK = #{remark},
+            USER_ID = #{userId},
+            UPDATE_DATE = #{updateDate},
+            USE_YN = #{useYn}
+        WHERE
+            FORM_ID = #{formId}
+    </update>
+ 
+   <update id="insert" parameterType="map" statementType="PREPARED">
+        INSERT INTO bis_it_form (
+            FORM_ID,
+            FORM_TYPE,
+            FORM_NAME,
+            FORM_ENAME,
+            FILE_NAME,
+            REMARK,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN,
+            APPLY_DATE
+        ) VALUES (
+            #{formId},
+            #{formType},
+            #{formName},
+            #{formEname},
+            #{fileName},
+            #{remark},
+            #{userId},
+            #{updateDate},
+            #{useYn},
+            #{applyDate}
+        )  ON DUPLICATE KEY
+          UPDATE
+            FORM_TYPE = #{formType},
+            FORM_NAME = #{formName},
+            FORM_ENAME = #{formEname},
+            FILE_NAME = #{fileName},
+            REMARK = #{remark},
+            USER_ID = #{userId},
+            UPDATE_DATE = #{updateDate},
+            USE_YN = #{useYn},
+            APPLY_DATE = #{applyDate}
+    </update>
+    
+    <select id="formPath" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS formPath FROM bis_mt_param WHERE PARAM_ID LIKE 'FORM_PATH'
+ 	</select>
+ 	
+ 	<select id="ftpId" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpId FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_ID'
+ 	</select>
+ 	
+ 	<select id="ftpPw" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpPort FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_PW'
+ 	</select>
+ 	
+ 	<select id="ftpPort" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpPort FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_PORT'
+ 	</select>
+ 	
+ 	<select id="ftpIp" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpIp FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_IP'
+ 	</select>
+ 
+</mapper>

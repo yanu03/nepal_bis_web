@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstationMapper">
+  <select id="findAll" resultType="map" parameterType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation" statementType="PREPARED">
+        SELECT
+            BIT_ID AS bitId,
+            (SELECT BIT_NAME FROM BIS_MT_BIT WHERE BIT_ID=T1.BIT_ID) AS bitName,
+           	STATION_ID AS stationId,
+           	FN_MT_GET_STATION_NAME(T1.STATION_ID) AS stationName,
+            UPDATE_DATE AS updateDate,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_bitstation T1
+              
+            <if test="Select == 'bitId'">            
+ 		     WHERE 
+            BIT_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+                <if test="Select == 'bitName'">           
+ 		     WHERE 
+            (SELECT BIT_NAME FROM BIS_MT_BIT WHERE BIT_ID=T1.BIT_ID) LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+            
+             <if test='useYn == "Y"'>           
+ 		    AND
+            USE_YN='Y'
+             </if>
+             <if test='useYn == "N"'>           
+ 		    AND
+            USE_YN='N'
+             </if>
+   </select>
+    <delete id="delete" parameterType="hashmap">
+    	delete
+    	 from 
+    		BIS_MT_BITSTATION
+    	 where 
+    	BIT_ID=#{bitId}
+    </delete>
+    <select id="add" parameterType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation" resultType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation">
+	   <if test="bitId != null">       
+	 	  <if test="stationId != null">      
+	    
+			        INSERT INTO bis_mt_bitstation (
+			            BIT_ID,
+			            STATION_ID,
+			            UPDATE_DATE,
+			            USER_ID,
+			            USE_YN
+			        ) VALUES (
+			            #{bitId},
+			            #{stationId},
+			            date_format(now(),'%Y%m%d'),
+			            #{userId},
+			            #{useYn}
+			        )
+	      	
+	     	   </if>
+	        </if>
+            
+    </select>
+    
+  
+</mapper>

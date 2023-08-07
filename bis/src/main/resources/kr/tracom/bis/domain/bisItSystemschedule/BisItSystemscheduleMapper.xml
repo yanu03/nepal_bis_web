@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItSystemschedule.BisItSystemscheduleMapper">
+ 
+    <select id="findAll" resultType="kr.tracom.bis.domain.bisItSystemschedule.BisItSystemschedule" parameterType="map" >
+		SELECT
+            SCHEDULE_ID AS scheduleId,
+            SCHEDULE_CODE AS scheduleCode,
+            START_DATE AS startDate,
+            END_DATE AS endDate,
+            START_TIME AS startTime,
+            END_TIME AS endTime,
+            SCHEDULE_VALUE AS scheduleValue,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_systemschedule
+       <if test="Select == 'scheduleId'">
+			WHERE
+			SCHEDULE_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		  <if test="scheduleCode != null">
+			AND
+			SCHEDULE_CODE = #{scheduleCode}
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+    </select>
+   
+  
+ 
+   <update id="add" parameterType="kr.tracom.bis.domain.bisItSystemschedule.BisItSystemschedule" >
+      INSERT INTO bis_it_systemschedule (
+            SCHEDULE_ID,
+            SCHEDULE_CODE,
+            START_DATE,
+            END_DATE,
+            START_TIME,
+            END_TIME,
+            SCHEDULE_VALUE,
+            REMARK,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{scheduleId},
+            #{scheduleCode},
+            #{startDate},
+            #{endDate},
+            #{startTime},
+            #{endTime},
+            #{scheduleValue},
+            #{remark},
+            #{userId},
+     	     date_format(now(),'%Y%m%d'),
+            #{useYn}
+        )ON DUPLICATE KEY
+		UPDATE
+            SCHEDULE_CODE=#{scheduleCode},
+            START_DATE=#{startDate},
+            END_DATE=#{endDate},
+            START_TIME=#{startTime},
+            END_TIME=#{endTime},
+            SCHEDULE_VALUE=#{scheduleValue},
+            REMARK=#{remark},
+            USER_ID=#{userId},
+            UPDATE_DATE=date_format(now(),'%Y%m%d'),
+            USE_YN=#{useYn}
+    </update>
+    
+  <select id="maxPlus" parameterType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute" resultType="string">
+		SELECT LPAD(MAX(SUBSTRING(SCHEDULE_ID,4,7))+1,7,0)
+		FROM bis_it_systemschedule
+	</select>
+    
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItSystemschedulegroup.BisItSystemschedulegroupMapper">
+ 
+    <select id="findAll" resultType="kr.tracom.bis.domain.bisItSystemschedulegroup.BisItSystemschedulegroup" parameterType="map" >
+		SELECT
+            SCHEDULE_GROUP_ID AS scheduleGroupId,
+            SCHEDULE_CODE AS scheduleCode,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_systemsschedulegroup
+       <if test="Select == 'scheduleGroupId'">
+			WHERE
+			SCHEDULE_GROUP_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+    </select>
+   
+  
+ 
+   <update id="add" parameterType="kr.tracom.bis.domain.bisItSystemschedulegroup.BisItSystemschedulegroup" >
+          INSERT INTO bis_it_systemsschedulegroup (
+            SCHEDULE_GROUP_ID,
+            SCHEDULE_CODE,
+            REMARK,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{scheduleGroupId},
+            #{scheduleCode},
+            #{remark},
+            #{userId},
+            date_format(now(),'%Y%m%d'),
+            #{useYn}
+        )ON DUPLICATE KEY
+		UPDATE
+            SCHEDULE_CODE=#{scheduleCode},
+            REMARK=#{remark},
+            USER_ID=#{userId},
+            UPDATE_DATE=date_format(now(),'%Y%m%d'),
+            USE_YN=#{useYn}
+    </update>
+    
+  <select id="maxPlus" parameterType="kr.tracom.bis.domain.bisMtRoute.BisMtRoute" resultType="string">
+		SELECT LPAD(MAX(SUBSTRING(SCHEDULE_GROUP_ID,4,7))+1,7,0)
+		FROM bis_it_systemsschedulegroup
+	</select>
+  
+    
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtStation.BisMtStationMapper">
+
+	<select id="findAll" parameterType="kr.tracom.bis.domain.bisMtStation.BisMtStation"
+		resultType="kr.tracom.bis.domain.bisMtStation.BisMtStation">
+		SELECT
+		STATION_ID AS stationId,
+		STATION_TYPE AS stationType,
+		LINK_ID AS linkId,
+		NODE_ID AS nodeId,
+		STATION_NAME AS stationName,
+		STATION_ENAME AS stationEname,
+		DISPLAY_NAME AS displayName,
+		DISPLAY_ENAME AS displayEname,
+		GPS_X AS gpsX,
+		GPS_Y AS gpsY,
+		TM_X AS tmX,
+		TM_Y AS tmY,
+		CENTER_YN AS centerYn,
+		MOBILE_NO AS mobileNo,
+		REPRESENTATION_YN AS representationYn,
+		COUNTRY_CODE AS countryCode,
+		AREA_CODE AS areaCode,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+		UPDATE_DATE AS updateDate,
+		REMARK AS remark,
+		USER_ID AS userId,
+		USE_YN AS useYn
+		FROM
+		bis_mt_station T1
+	</select>
+
+	<select id="findSearch" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtStation.BisMtStation">
+		SELECT
+		STATION_ID AS stationId,
+		STATION_TYPE AS stationType,
+		LINK_ID AS linkId,
+		NODE_ID AS nodeId,
+		STATION_NAME AS stationName,
+		STATION_ENAME AS stationEname,
+		DISPLAY_NAME AS displayName,
+		DISPLAY_ENAME AS displayEname,
+		GPS_X AS gpsX,
+		GPS_Y AS gpsY,
+		TM_X AS tmX,
+		TM_Y AS tmY,
+		CENTER_YN AS centerYn,
+		MOBILE_NO AS mobileNo,
+		REPRESENTATION_YN AS representationYn,
+		COUNTRY_CODE AS countryCode,
+		AREA_CODE AS areaCode,
+		(SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+		UPDATE_DATE AS updateDate,
+		REMARK AS remark,
+		USER_ID AS userId,
+		USE_YN AS useYn
+		FROM
+		bis_mt_station T1
+		<if test="Select == 'stationName'">
+			WHERE
+			STATION_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'stationId'">
+			WHERE
+			STATION_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+
+
+	</select>
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtStation.BisMtStation"
+		resultType="kr.tracom.bis.domain.bisMtStation.BisMtStation">
+		INSERT INTO bis_mt_station (
+		STATION_ID,
+		STATION_TYPE,
+		LINK_ID,
+		NODE_ID,
+		STATION_NAME,
+		STATION_ENAME,
+		DISPLAY_NAME,
+		DISPLAY_ENAME,
+		GPS_X,
+		GPS_Y,
+		TM_X,
+		TM_Y,
+		CENTER_YN,
+		MOBILE_NO,
+		REPRESENTATION_YN,
+		COUNTRY_CODE,
+		AREA_CODE,
+		UPDATE_DATE,
+		USER_ID,
+		USE_YN
+		) VALUES (
+		#{stationId},
+		#{stationType},
+		#{linkId},
+		#{nodeId},
+		#{stationName},
+		#{stationEname},
+		#{displayName},
+		#{displayEname},
+		#{gpsX},
+		#{gpsY},
+		#{tmX},
+		#{tmY},
+		#{centerYn},
+		#{mobileNo},
+		#{representationYn},
+		#{countryCode},
+		#{areaCode},
+		date_format(now(),'%Y%m%d'),
+		#{userId},
+		#{useYn}
+		) ON DUPLICATE KEY
+		UPDATE
+		STATION_TYPE=#{stationType},
+		LINK_ID=#{linkId},
+		NODE_ID=#{nodeId},
+		STATION_NAME=#{stationName},
+		STATION_ENAME=#{stationEname},
+		DISPLAY_NAME=#{displayName},
+		DISPLAY_ENAME=#{displayEname},
+		GPS_X=#{gpsX},
+		GPS_Y=#{gpsY},
+		TM_X= #{tmX},
+		TM_Y=#{tmY},
+		CENTER_YN=#{centerYn},
+		MOBILE_NO=#{mobileNo},
+		REPRESENTATION_YN=#{representationYn},
+		COUNTRY_CODE=#{countryCode},
+		AREA_CODE=#{areaCode},
+		UPDATE_DATE=date_format(now(),'%Y%m%d'),
+		USER_ID=#{userId},
+		USE_YN=#{useYn}
+
+
+	</select>
+	<update id="update" parameterType="kr.tracom.bis.domain.bisMtStation.BisMtStation"
+		statementType="PREPARED">
+		UPDATE bis_mt_station
+		SET
+		STATION_ID = #{stationId},
+		STATION_TYPE = #{stationType},
+		NODE_ID = #{nodeId},
+		STATION_NAME = #{stationName},
+		STATION_ENAME = #{stationEname},
+		DISPLAY_NAME = #{displayName},
+		DISPLAY_ENAME = #{displayEname},
+		GPS_X = #{gpsX},
+		GPS_Y = #{gpsY},
+		TM_X = #{tmX},
+		TM_Y = #{tmY},
+		CENTER_YN = #{centerYn},
+		MOBILE_NO = #{mobileNo},
+		REPRESENTATION_YN = #{representationYn},
+		COUNTRY_CODE = #{countryCode},
+		AREA_CODE = #{areaCode},
+		UPDATE_DATE = #{updateDate},
+		USER_ID = #{userId},
+		USE_YN = #{useYn}
+		WHERE
+		STATION_ID = #{stationId}
+	</update>
+	<select id="maxPlus" parameterType="kr.tracom.bis.domain.bisMtStation.BisMtStation" resultType="string">
+				SELECT LPAD(MAX(SUBSTRING(STATION_ID,3,7))+1,8,0)
+    			FROM BIS_MT_STATION
+	</select>
+</mapper>

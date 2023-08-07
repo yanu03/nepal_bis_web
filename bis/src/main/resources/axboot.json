@@ -1,0 +1,24 @@
+{
+  "title": "Bhutan Thimphu",
+  "copyrights": "",
+  "logo": {
+    "header": "",
+    "login": "",
+    "logo": ""
+  },
+  "background": {
+    "login": "/assets/images/login-bg.jpg"  
+  },
+  "layout": {
+    "leftSideMenu": "visible"
+  },
+  "sessionCookie": "8612c415-200d-4095-a534-813cecd79015",
+  "extendedCss": [
+    "/assets/css/axboot.css"
+  ],
+  "extendedCssforIE9": [
+    "/assets/css/axboot-01.css",
+    "/assets/css/axboot-02.css",
+    "/assets/css/axboot-03.css"
+  ]
+}

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMaHistory.BisMaHistoryMapper">
+	<select id="operationHistory" resultType="bisMaHistory" parameterType="map" statementType="PREPARED">
+		SELECT
+			VEHICLE_ID AS vehicleId, 
+	        FN_MT_GET_PLATE_NUMBER(VEHICLE_ID) AS plateNumber,
+	        COLLECT_DATE AS collectDate,
+	        EVENT_CODE AS eventCode,
+	        FN_CT_GET_CODE_ENAME('EVENT_CODE', EVENT_CODE) AS eventName,
+	        EVENT_DATA AS eventData,
+	        FN_MT_GET_NODE_ENAME(EVENT_DATA) AS spotName,
+	        EVENT_NUMBER AS eventNumber,
+	        TERMINAL_ID AS terminalId, 
+	        ROUTE_ID AS routeId,
+	        FN_MT_GET_ROUTE_ENAME(ROUTE_ID) AS routeName,
+	        RUN_CODE AS runCode,
+	        FN_CT_GET_CODE_ENAME('RUN_CODE', RUN_CODE) AS runName,
+	        GPS_X AS gpsX,
+	        GPS_Y AS gpsY,
+	        HEADING AS heading,
+	        SPEED AS speed,
+	        STOP_TIME AS stopTime,
+	        SYSTEM_DATE AS systemDate
+		FROM
+		   BIS_HT_EVENTINFO
+		
+		WHERE
+			COLLECT_DATE BETWEEN #{startDate} AND #{endDate}
+		<if test="Select == 'plateNumber'">
+			AND
+				VEHICLE_ID IN		
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.vehicleId}
+	        	</foreach>
+        		ORDER BY
+			VEHICLE_ID ASC , COLLECT_DATE DESC
+		</if>
+		<if test="Select == 'routeName'">
+			AND
+				ROUTE_ID IN
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.routeId}
+	        	</foreach>
+	        		ORDER BY
+			ROUTE_ID ASC , COLLECT_DATE DESC
+        </if>
+	
+	</select>
+	
+	<select id="systemStateHistory" resultType="bisHtSystemState" parameterType="map" statementType="PREPARED">
+		<if test="Select == 'bitName'">
+			SELECT
+				t1.BIT_ID AS systemId,
+				t1.BIT_NAME AS systemName,
+				t2.SYSTEM_ID AS systemId,
+				t2.SYSTEM_TYPE AS systemType,
+				t2.SYSTEM_DATE AS systemDate,
+				t2.STATE_CODE AS stateCode,
+				t2.STATE_VALUE AS stateValue
+			FROM
+				bis_mt_bit AS t1 JOIN bis_ht_systemstate AS t2 ON t1.BIT_ID=t2.SYSTEM_ID
+			WHERE
+				t2.SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				t1.BIT_ID IN		
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.bitId}
+	        	</foreach>
+	        ORDER BY
+	        	t1.BIT_ID ASC, t2.SYSTEM_DATE DESC
+		</if>
+		<if test="Select == 'plateNumber'">
+			SELECT
+				t1.TERMINAL_ID AS systemId
+				,FN_MT_GET_PLATE_NUMBER(t1.TERMINAL_ID) AS systemName
+				,t2.SYSTEM_ID AS systemId
+				,t2.SYSTEM_TYPE AS systemType
+				,t2.SYSTEM_DATE AS systemDate
+				,t2.STATE_CODE AS stateCode
+				,t2.STATE_VALUE AS stateValue
+			FROM
+				bis_mt_terminal AS t1 JOIN bis_ht_systemstate AS t2 ON t1.TERMINAL_ID=t2.SYSTEM_ID
+			WHERE
+				t2.SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				t1.TERMINAL_ID IN		
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.terminalId}
+	        	</foreach>
+	        ORDER BY
+				t1.TERMINAL_ID ASC , t2.SYSTEM_DATE DESC
+		</if>
+	</select>
+	
+	<select id="systemControlHistory" resultType="bisHtSystemControl" parameterType="map" statementType="PREPARED">
+		<if test="Select == 'bitName'">
+			SELECT
+				t1.BIT_ID AS systemId
+			   ,t1.BIT_NAME AS systemName
+			   ,t2.SYSTEM_ID AS systemId
+       		   ,t2.SYSTEM_TYPE AS systemType
+               ,t2.SYSTEM_DATE AS systemDate
+	           ,t2.CONTROL_CODE AS controlCode
+	           ,t2.CONTROL_VALUE AS controlValue
+               ,t2.CONTROL_RESULT AS controlResult  
+			FROM
+				bis_mt_bit AS t1 JOIN bis_ht_systemcontrol AS t2 ON t1.BIT_ID=t2.SYSTEM_ID
+			WHERE
+				t2.SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				t1.BIT_ID IN		
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.bitId}
+	        	</foreach>
+	        ORDER BY
+	        	t1.BIT_ID ASC, t2.SYSTEM_DATE DESC
+		</if>
+		<if test="Select == 'plateNumber'">
+			SELECT
+				t1.TERMINAL_ID AS systemId
+			   ,FN_MT_GET_PLATE_NUMBER(t1.TERMINAL_ID) AS systemName
+			   ,t2.SYSTEM_ID AS systemId
+       		   ,t2.SYSTEM_TYPE AS systemType
+               ,t2.SYSTEM_DATE AS systemDate
+	           ,t2.CONTROL_CODE AS controlCode
+	           ,t2.CONTROL_VALUE AS controlValue
+               ,t2.CONTROL_RESULT AS controlResult 
+			FROM
+				bis_mt_terminal AS t1 JOIN bis_ht_systemcontrol AS t2 ON t1.TERMINAL_ID=t2.SYSTEM_ID
+			WHERE
+				t2.SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				t1.TERMINAL_ID IN		
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.terminalId}
+	        	</foreach>
+	        ORDER BY
+				t1.TERMINAL_ID ASC , t2.SYSTEM_DATE DESC
+		</if>
+	</select>
+	
+	<select id="fileSendHistory" resultType="bisHtFileSend" parameterType="map" statementType="PREPARED">
+	<if test="Select == 'bitName'">
+		SELECT 
+			t2.SESSION_ID AS sessionId
+			,t1.BIT_NAME AS bitName
+			,t2.SYS_DT AS sysDt
+			,t2.PLF_ID AS plfId
+			,t2.FILE_NAME AS fileName
+			,t2.FILE_CD AS fileCd
+			,t2.SEND_TYPE AS sendType
+			,t2.FILE_PATH AS filePath
+			,t2.FILE_SIZE AS fileSize
+			,t2.FILE_POINTER AS filePointer
+			,t2.SEND_STATE AS sendState
+			,t2.SEND_ST_DT AS sendStDt
+			,t2.SEND_ED_DT AS sendEdDt
+		FROM
+			bis_mt_bit AS t1 JOIN plf_ht_file_transfer AS t2 ON t1.BIT_ID=t2.SESSION_ID
+		WHERE
+			SYS_DT BETWEEN #{startDate} AND #{endDate}
+		AND
+			t2.SESSION_ID IN
+			<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+	           		#{item.bitId}
+	        </foreach>
+	    ORDER BY
+			SESSION_ID ASC, SYS_DT DESC	
+			</if>
+			<if test="Select == 'plateNumber'">
+				SELECT 
+					t2.SESSION_ID AS sessionId
+					,FN_MT_GET_PLATE_NUMBER(t1.VEHICLE_ID) AS plateNumber
+					,t2.SYS_DT AS sysDt
+					,t2.PLF_ID AS plfId
+					,t2.FILE_NAME AS fileName
+					,t2.FILE_CD AS fileCd
+					,t2.SEND_TYPE AS sendType
+					,t2.FILE_PATH AS filePath
+					,t2.FILE_SIZE AS fileSize
+					,t2.FILE_POINTER AS filePointer
+					,t2.SEND_STATE AS sendState
+					,t2.SEND_ST_DT AS sendStDt
+					,t2.SEND_ED_DT AS sendEdDt
+				FROM
+					bis_mt_terminal AS t1 JOIN plf_ht_file_transfer AS t2 ON t1.TERMINAL_ID=t2.SESSION_ID
+				WHERE
+					SYS_DT BETWEEN #{startDate} AND #{endDate}
+				AND
+					t2.SESSION_ID IN
+					<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+			           		#{item.terminalId}
+			        </foreach>
+			    ORDER BY
+					SESSION_ID ASC, SYS_DT DESC	
+			  </if>
+	</select>
+	
+	<select id="serviceBitHistory" resultType="bisHtServiceBit" parameterType="map" statementType="PREPARED">
+		<if test="Select == 'bitName'">
+			SELECT
+				BIT_ID AS bitId,
+				FN_MT_GET_BIT_ENAME(BIT_ID) AS bitName,
+				VEHICLE_ID AS vehicleId,
+				FN_MT_GET_PLATE_NUMBER(VEHICLE_ID) AS vehicleName,
+				SYSTEM_DATE AS systemDate,
+				ROUTE_ID AS routeId,
+				FN_MT_GET_ROUTE_ENAME(ROUTE_ID) AS routeName,
+				ROUTE_TYPE AS routeType,
+				BUS_TYPE AS busType,
+				ARRIVE_TYPE AS arriveType,
+				RUN_CODE AS runCode,
+				LOCATION_NO AS locationNo
+			FROM
+				bis_ht_servicebit
+			WHERE
+				SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				BIT_ID IN
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+		           		#{item.bitId}
+		        </foreach>	
+			ORDER BY
+				BIT_ID ASC, SYSTEM_DATE DESC
+		</if>
+	</select>
+	
+	<select id="serviceVehicleHistory" resultType="bisHtServiceVehicle" parameterType="map" statementType="PREPARED">
+		<if test="Select == 'plateNumber'">
+			SELECT
+				VEHICLE_ID AS vehicleId,
+				FN_MT_GET_PLATE_NUMBER(VEHICLE_ID) AS vehicleName,
+				SYSTEM_DATE AS systemDate,
+				PREPLATE_NUMBER AS preplateNumber,
+				NEXTPLATE_NUMBER AS nextplateNumber,
+				PREDISTANCE_GAP AS predistanceGap,
+				NEXTDISTANCE_GAP AS nextdistanceGap,
+				PRELOCATION_NUMBER AS prelocationNumber,
+				PRETIME_GAP AS pretimeGap,
+				NEXTTIME_GAP AS nexttimeGap
+			FROM
+				bis_ht_servicevehicle
+			WHERE
+				SYSTEM_DATE BETWEEN #{startDate} AND #{endDate}
+			AND
+				VEHICLE_ID IN
+				<foreach collection="itemList" item="item" index="index" separator="," open="(" close=")">
+		           		#{item.vehicleId}
+		        </foreach>	
+			ORDER BY
+				VEHICLE_ID ASC, SYSTEM_DATE DESC
+		</if>
+	</select>
+</mapper>

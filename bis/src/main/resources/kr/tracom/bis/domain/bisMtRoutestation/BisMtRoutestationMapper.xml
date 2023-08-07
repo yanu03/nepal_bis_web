@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestationMapper">
+
+    <select id="findAll" parameterType="Map" resultType="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestation">
+		
+		select 
+			B.ROUTE_ID as routeId,B.STATION_SEQUENCE as stationSequence,B.UPDOWN_DIR as updownDir,B.REMAIN_DISTANCE as RemainDistance,B.SUM_DISTANCE AS SUMDISTANCE,
+			B.STAT_DISTANCE AS STATDISTANCE,B.NEXT_DISTANCE AS NEXTDISTANCE,B.STAT_TYPE AS STATTYPE,B.LINK_SEQUENCE AS LINKSEQUENCE,A.STATION_ID AS STATIONID,
+			B.UPDATE_DATE AS UPDATEDATE,B.USER_ID AS USERID,B.USE_YN AS USEYN,A.GPS_X AS GPSX ,A.GPS_Y AS GPSY,B.REMARK AS REMARK,
+			A.STATION_NAME AS STATIONNAME
+		 FROM
+		bis_mt_routeStation B, bis_mt_Station A  
+		WHERE
+			A.STATION_ID = B.STATION_ID
+		<if test="stationId != null"> 
+		AND
+			B.STATION_ID = #{stationId}
+		</if>
+		<if test="routeId != null"> 
+		AND
+			B.ROUTE_ID = #{routeId}
+		</if>	
+			<if test="select != stationId"> 
+		AND
+			B.STATION_ID = #{stationId}
+		</if>	
+		ORDER BY B.station_sequence
+    </select>
+    
+    <select id="add" parameterType="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestation" resultType="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestation">
+   INSERT INTO bis_mt_routestation (
+            ROUTE_ID,
+                   <if test="stationSequence != null"> 
+            STATION_SEQUENCE,
+             </if>
+              <if test="stationId != null"> 
+            STATION_ID,
+              </if>
+                <if test="updownDir != null"> 
+            UPDOWN_DIR,
+             </if>
+            SUM_DISTANCE,
+            REMAIN_DISTANCE,
+            STAT_DISTANCE,
+            NEXT_DISTANCE,
+            STAT_TYPE,
+            LINK_SEQUENCE,
+            UPDATE_DATE,
+            REMARK,
+            USER_ID,
+            USE_YN
+        ) VALUES (
+            #{routeId},
+              <if test="stationSequence != null"> 
+             #{stationSequence},
+             </if>
+              <if test="stationId != null"> 
+             #{stationId},
+              </if>
+                <if test="updownDir != null"> 
+             #{updownDir},
+             </if>
+            #{sumDistance},
+            #{remainDistance},
+            #{statDistance},
+            #{nextDistance},
+            #{statType},
+            #{linkSequence},
+            date_format(now(),'%Y%m%d') ,
+            #{remark},
+           #{userId},
+            #{useYn}
+        )
+    
+    </select>
+       <update id="update" parameterType="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestation" statementType="PREPARED">
+        UPDATE bis_mt_routestation
+        SET
+        
+            STATION_SEQUENCE = #{STATION_SEQUENCE},
+          
+        WHERE
+            ROUTE_ID=#{ROUTE_ID},STATION_ID=#{STATION_ID}
+    </update>
+    <delete id="delete" parameterType="hashmap">
+    	delete
+    	 from 
+    		bis_mt_routeStation
+    	 where 
+    	ROUTE_ID=#{route_ID}
+    </delete>
+	<select id="routemonitor" parameterType="Map" resultType="kr.tracom.bis.domain.bisMtRoutestation.BisMtRoutestation">
+		SELECT TA.ROUTE_ID AS ROUTEID, 
+       TA.STATION_SEQUENCE AS STATIONSEQ,
+       TA.UPDOWN_DIR AS UPDOWNDIR,
+       TA.STAT_TYPE AS STATTYPE,
+       FN_MT_GET_ROUTE_TYPE(TA.ROUTE_ID) AS ROUTETYPE,
+       FN_MT_GET_ROUTE_NAME(TA.ROUTE_ID) AS ROUTENAME,
+       TA.STATION_ID AS STATIONID,
+       FN_MT_GET_STATION_TYPE(TA.STATION_ID) AS STATIONTYPE,
+       FN_MT_GET_STATION_NAME(TA.STATION_ID)  AS STATIONNAME,
+       TB.VEHICLE_ID AS VEHICLEID,
+       FN_MT_GET_PLATE_NUMBER(TB.VEHICLE_ID) AS PLATENUMBER,
+		 FN_MT_GET_BUS_TYPE(TB.VEHICLE_ID) AS BUSTYPE,
+		 TB.RUN_CODE AS RUNCODE,
+		 TB.ALARM_CODE AS ALARMCODE	 
+		FROM   BIS_MT_ROUTESTATION TA LEFT JOIN 
+		       (SELECT ROUTE_ID, VEHICLE_ID, STATION_SEQUENCE, RUN_CODE, ALARM_CODE 
+				  FROM   BIS_IT_LOCATION
+				  WHERE  date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s') > DATE_SUB(NOW(), INTERVAL 10 MINUTE)) TB
+		       ON (TA.ROUTE_ID = TB.ROUTE_ID AND TA.STATION_SEQUENCE = TB.STATION_SEQUENCE)
+		       INNER JOIN BIS_MT_ROUTE TC 
+		       ON (TA.ROUTE_ID = TC.ROUTE_ID)
+		       INNER JOIN BIS_MT_STATION TD
+		       ON (TA.STATION_ID = TD.STATION_ID)
+		WHERE  TA.ROUTE_ID = #{routeId}
+		AND    TA.USE_YN = 'Y'
+		AND    TC.USE_YN = 'Y'
+		AND    TD.USE_YN = 'Y'
+		ORDER BY TA.ROUTE_ID, TA.STATION_SEQUENCE
+	</select>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisItNotice.BisItNoticeMapper">
+
+	<select id="findAll" resultType="bisItNotice" parameterType="map" statementType="PREPARED">
+		SELECT
+			NOTICE_ID AS noticeId,
+			NOTICE_NAME AS noticeName,
+			NOTICE_CONTENT AS noticeContent,
+			USER_ID AS userId,
+			UPDATE_DATE AS updateDate
+		FROM
+			bis_it_notice
+       	WHERE
+       		${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+	</select>
+	
+	<update id="insert" parameterType="map" statementType="PREPARED">
+		INSERT INTO	bis_it_notice(
+				NOTICE_ID,
+				NOTICE_NAME,
+				NOTICE_CONTENT,
+				USER_ID,
+				UPDATE_DATE
+		)
+		VALUES(
+			(SELECT IFNULL(CONCAT('N',LPAD(MAX(SUBSTRING(NOTICE_ID,2,10))+1,9,0)),'N000000000') FROM bis_it_notice AS t1),
+			#{noticeName},
+			#{noticeContent},
+			#{userId},
+			#{updateDate}
+		)ON DUPLICATE KEY
+          UPDATE
+            NOTICE_NAME = #{noticeName},
+            NOTICE_CONTENT = #{noticeContent},
+            USER_ID = #{userId},
+            UPDATE_DATE = #{updateDate}
+	</update>
+	
+	<update id="update" parameterType="map" statementType="PREPARED">
+		UPDATE
+			bis_it_notice
+		SET
+			NOTICE_NAME = #{noticeName},
+            NOTICE_CONTENT = #{noticeContent},
+            USER_ID = #{userId},
+            UPDATE_DATE = #{updateDate}
+        WHERE
+        	NOTICE_ID=#{noticeId}
+	</update>
+	
+	<select id="noticeMaxId" resultType="string" statementType="PREPARED">
+		SELECT
+			CONCAT('N',LPAD(MAX(SUBSTRING(notice_id,2,10))+1,9,0)) AS noticeId
+		FROM bis_it_notice;
+	</select>
+	
+	<delete id="delete" parameterType="string" statementType="PREPARED">
+		DELETE FROM
+			bis_it_notice
+		WHERE
+			NOTICE_ID LIKE #{noticeID}
+	</delete>
+</mapper>

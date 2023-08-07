@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.comMtArea.ComMtAreaMapper">
+
+	<select id="findAll" parameterType="map"
+		resultType="kr.tracom.bis.domain.comMtArea.ComMtArea">
+		  SELECT
+            AREA_CODE AS areaCode,
+            MOI_ID AS moiId,
+            ADMIN_NAME1 AS adminName1,
+            ADMIN_NAME2 AS adminName2,
+            UPDATE_DATE AS updateDate,
+            REMARK AS remark,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            com_mt_area
+       
+		<if test="Select == 'areaCode'">
+            	WHERE
+			AREA_CODE LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'adminName1'">
+               	WHERE
+			ADMIN_NAME1 LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+
+	</select>
+
+
+
+</mapper>

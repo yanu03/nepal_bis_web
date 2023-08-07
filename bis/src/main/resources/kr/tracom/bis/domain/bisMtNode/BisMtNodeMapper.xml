@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtNode.BisMtNodeMapper">
+
+	<select id="findAll" parameterType="map"
+		resultType="kr.tracom.bis.domain.bisMtNode.BisMtNode">
+	  SELECT
+            NODE_ID AS nodeId,
+            NODE_TYPE AS nodeType,
+            NODE_NAME AS nodeName,
+            NODE_ENAME AS nodeEname,
+            TURN_REST_TYPE AS turnRestType,
+            GPS_X AS gpsX,
+            GPS_Y AS gpsY,
+            TM_X AS tmX,
+            TM_Y AS tmY,
+            ENTRY_RECOG_RADS AS entryRecogRads,
+            ADVNC_RECOG_RADS AS advncRecogRads,
+            COUNTRY_CODE AS countryCode,
+            AREA_CODE AS areaCode,
+            UPDATE_DATE AS updateDate,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_node
+            
+		<if test="Select == 'nodeId'">
+			WHERE
+			NODE_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'nodeName'">
+			WHERE
+			NODE_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test='useYn == "Y"'>
+			AND
+			USE_YN='Y'
+		</if>
+		<if test='useYn == "N"'>
+			AND
+			USE_YN='N'
+		</if>
+	</select>
+
+	<select id="add" parameterType="kr.tracom.bis.domain.bisMtNode.BisMtNode"
+		resultType="kr.tracom.bis.domain.bisMtNode.BisMtNode">
+
+	</select>
+	
+</mapper>

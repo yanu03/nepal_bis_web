@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMtBit.BisMtBitMapper">
+  <select id="findAll" resultType="map" parameterType="kr.tracom.bis.domain.bisMtBit.BisMtBit" statementType="PREPARED">
+        SELECT
+            BIT_ID AS bitId,
+            BIT_TYPE AS bitType,
+            BIT_NAME AS bitName,
+            BIT_ENAME AS bitEname,
+            TERMINAL_VERSION AS terminalVersion,
+            IP_ADDRESS AS ipAddress,
+            CAMERA_IP_ADDRESS AS cameraIpAddress,
+            INSTALL_DATE AS installDate,
+            SERIAL_NO AS serialNo,
+            COUNTRY_CODE AS countryCode,
+            AREA_CODE AS areaCode,
+            (SELECT ADMIN_NAME1 FROM COM_MT_AREA WHERE AREA_CODE=T1.AREA_CODE)AS adminName1,
+            UPDATE_DATE AS updateDate,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_bit T1
+            <if test="Select == 'bitId'">            
+ 		     WHERE 
+            BIT_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+                <if test="Select == 'bitName'">           
+ 		     WHERE 
+            BIT_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
+            
+             <if test='useYn == "Y"'>           
+ 		    AND
+            USE_YN='Y'
+             </if>
+             <if test='useYn == "N"'>           
+ 		    AND
+            USE_YN='N'
+             </if>
+    </select>
+     <select id="findId" resultType="kr.tracom.bis.domain.bisMtBit.BisMtBit" parameterType="kr.tracom.bis.domain.bisMtBit.BisMtBit" statementType="PREPARED">
+        SELECT
+            BIT_ID AS bitId
+        FROM
+            bis_mt_bit T1
+         WHERE
+          USE_YN='Y'
+    </select>
+   <select id="count" resultType="kr.tracom.bis.domain.bisMtBit.BisMtBit" parameterType="kr.tracom.bis.domain.bisMtBit.BisMtBit" statementType="PREPARED">
+        SELECT
+        COUNT(*) AS COUNT
+        FROM
+        BIS_MT_BIT
+        </select>
+   
+    <select id="add" parameterType="kr.tracom.bis.domain.bisMtBit.BisMtBit" resultType="kr.tracom.bis.domain.bisMtBit.BisMtBit">
+	   <if test="bitId != null">       
+	 	  <if test="bitType != null">      
+	 		  <if test="areaCode != null">      
+				   <if test="useYn != null">       
+			        INSERT INTO bis_mt_bit (
+			            BIT_ID,
+			            BIT_TYPE,
+			            BIT_NAME,
+			            BIT_ENAME,
+			            TERMINAL_VERSION,
+			            IP_ADDRESS,
+			            CAMERA_IP_ADDRESS,
+			            INSTALL_DATE,
+			            SERIAL_NO,
+			            COUNTRY_CODE,
+			            AREA_CODE,
+			            UPDATE_DATE,
+			            USER_ID,
+			            USE_YN
+			        ) VALUES (
+			            #{bitId},
+			            #{bitType},
+			            #{bitName},
+			            #{bitEname},
+			            #{terminalVersion},
+			            #{ipAddress},
+			            #{cameraIpAddress},
+			            #{installDate},
+			            #{serialNo},
+			            #{countryCode},
+			            #{areaCode},
+			            date_format(now(),'%Y%m%d'),
+			            #{userId},
+			            #{useYn}
+			        )ON DUPLICATE KEY
+					UPDATE
+			            BIT_TYPE=#{bitType},
+			            BIT_NAME=#{bitName},
+			            BIT_ENAME=#{bitEname},
+			            TERMINAL_VERSION=#{terminalVersion},
+			            IP_ADDRESS=#{ipAddress},
+			            CAMERA_IP_ADDRESS=#{cameraIpAddress},
+			            INSTALL_DATE=#{installDate},
+						SERIAL_NO=#{serialNo},
+			            COUNTRY_CODE=#{countryCode},
+			            AREA_CODE=#{areaCode},
+			            UPDATE_DATE=date_format(now(),'%Y%m%d'),
+			            USER_ID=#{userId},
+			            USE_YN=#{useYn}
+	      			  </if>
+	     		   </if>
+	     	   </if>
+	        </if>
+            
+    </select>
+    
+<select id="terminalBitFind" resultType="map" parameterType="map" statementType="PREPARED">
+	SELECT
+		TYPE AS systemType, 
+		SYSTEM_ID AS systemId, 
+		SYSTEM_NAME AS systemName,
+		IFNULL(LOCAL_FW1, '-') AS localFw1, 
+		IFNULL(REMOTE_FW1, '-') AS remoteFw1, 
+		IFNULL(LOCAL_FW2, '-') AS localFw2, 
+		IFNULL(REMOTE_FW2, '-') AS remoteFw2, 
+		IFNULL(LOCAL_MDB, '-') AS localMdb,
+		IFNULL(REMOTE_MDB, '-') AS remoteMdb
+	FROM (
+	<if test="Select != 'BIT'">   
+		SELECT
+			'TERMINAL' AS TYPE,
+			SYSTEM_ID,
+			SYSTEM_NAME,
+			MAX(CASE WHEN V1_CD = '100' THEN V1_VAL END) AS 'LOCAL_FW1',
+			MAX(CASE WHEN V1_CD = '101' THEN V1_VAL END) AS 'LOCAL_FW2',
+			MAX(CASE WHEN V1_CD = '102' THEN V1_VAL END) AS 'LOCAL_MDB',
+			MAX(CASE WHEN V2_CD = '100' THEN V2_VAL END) AS 'REMOTE_FW1',
+			MAX(CASE WHEN V2_CD = '101' THEN V2_VAL END) AS 'REMOTE_FW2',
+			MAX(CASE WHEN V2_CD = '102' THEN V2_VAL END) AS 'REMOTE_MDB'	
+		FROM (	
+			SELECT 
+				T1.SYSTEM_ID, 
+				T1.SYSTEM_NAME,
+				T2.VERSION_CODE AS V1_CD,
+				 T2.VERSION_VALUE AS V1_VAL,
+				T3.VERSION_CODE AS V2_CD, 
+				T3.VERSION_VALUE AS V2_VAL
+			FROM (
+			SELECT 
+				*
+			 FROM(
+				SELECT TERMINAL_ID AS SYSTEM_ID ,
+				FN_MT_GET_PLATE_NUMBER(VEHICLE_ID) AS SYSTEM_NAME
+				FROM BIS_MT_TERMINAL
+				WHERE use_yn='Y'
+				)T1
+				WHERE SYSTEM_ID LIKE CONCAT('%',IFNULL(#{Keyword},""),'%')
+				OR SYSTEM_NAME LIKE CONCAT('%',IFNULL(#{Keyword},""),'%')
+			) T1 
+			LEFT JOIN BIS_IT_SENDSYSTEMVERSION T2 ON T1.SYSTEM_ID = T2.SYSTEM_ID
+			LEFT JOIN BIS_IT_SYSTEMVERSION T3 ON T1.SYSTEM_ID = T3.SYSTEM_ID
+		) T4	
+		GROUP BY SYSTEM_ID
+	</if>
+	<if test="Select == 'ALL'"> 
+		UNION ALL
+	</if>
+		<if test="Select != 'TERMINAL'"> 
+		SELECT 
+			'BIT' AS TYPE,
+			SYSTEM_ID,
+			SYSTEM_NAME,
+			MAX(CASE WHEN V1_CD = '150' THEN V1_VAL END) AS 'LOCAL_FW1',
+			'-' AS 'LOCAL_FW2',
+			MAX(CASE WHEN V1_CD = '151' THEN V1_VAL END) AS 'LOCAL_MDB',
+			MAX(CASE WHEN V2_CD = '150' THEN V2_VAL END) AS 'REMOTE_FW1',
+			'-' AS 'REMOTE_FW2',
+			MAX(CASE WHEN V2_CD = '151' THEN V2_VAL END) AS 'REMOTE_MDB'
+		FROM (	
+			SELECT 
+				T1.SYSTEM_ID,
+				T1.SYSTEM_NAME,
+				T2.VERSION_CODE AS V1_CD, T2.VERSION_VALUE AS V1_VAL,
+				T3.VERSION_CODE AS V2_CD, T3.VERSION_VALUE AS V2_VAL
+			FROM (
+				SELECT BIT_ID AS SYSTEM_ID ,
+				 BIT_NAME AS SYSTEM_NAME
+				FROM BIS_MT_BIT
+				WHERE use_yn='Y'
+				AND BIT_ID LIKE CONCAT('%',IFNULL(#{Keyword},""),'%')
+				or BIT_NAME LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+			) T1 
+			LEFT JOIN BIS_IT_SENDSYSTEMVERSION T2 ON T1.SYSTEM_ID = T2.SYSTEM_ID
+			LEFT JOIN BIS_IT_SYSTEMVERSION T3 ON T1.SYSTEM_ID = T3.SYSTEM_ID
+		) T4	
+		GROUP BY SYSTEM_ID
+		</if>
+	) T5 
+	ORDER BY SYSTEM_ID
+	      
+</select>
+  <!--     SELECT type, id, name FROM(
+          SELECT
+          'BIT' AS type,
+           T1.BIT_ID AS id,
+           T1.BIT_NAME AS name
+        FROM
+            bis_mt_bit T1
+           UNION ALL 
+        SELECT
+        'TERMINAL' AS type,
+           T1.TERMINAL_ID AS id,
+           FN_MT_GET_PLATE_NUMBER(T1.VEHICLE_ID) AS name
+        FROM
+            BIS_MT_TERMINAL T1) T1
+		      <if test="Select == 'ALL'">   
+		      WHERE 
+		     	  id LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+          		  or name LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		      </if>
+            <if test="Select == 'BIT'">            
+ 		     WHERE 
+          	 id LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             and type="BIT"
+            or name LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+            and type="BIT"
+             </if>
+                <if test="Select == 'TERMINAL'">           
+ 		    WHERE 
+          	 id LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             and type="BIT"
+            or name LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+            and type="TERMINAL"
+             </if> -->
+    
+  <select id="maxPlus"  parameterType="string" resultType="string">
+	SELECT LPAD(MAX(SUBSTRING(BIT_ID,3,8))+1,9,0)
+    			FROM BIS_MT_BIT
+	</select>
+</mapper>

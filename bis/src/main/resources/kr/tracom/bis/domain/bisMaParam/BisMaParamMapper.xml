@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMaParam.BisMaParamMapper">
+ 
+    <select id="findAll" resultType="bisMaParam" parameterType="bisMaParam" statementType="PREPARED">
+        SELECT
+            PARAM_ID AS paramId,
+            PARAM_NAME AS paramName,
+            DATA_1 AS data1,
+            DATA_2 AS data2,
+            DATA_3 AS data3,
+            UPDATE_DATE AS updateDate,
+            REMARK AS remark,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_param
+    </select>
+    
+    <select id="serchFind" resultType="bisMaParam" parameterType="map" statementType="PREPARED">
+        SELECT
+            PARAM_ID AS paramId,
+            PARAM_NAME AS paramName,
+            DATA_1 AS data1,
+            DATA_2 AS data2,
+            DATA_3 AS data3,
+            UPDATE_DATE AS updateDate,
+            REMARK AS remark,
+            USER_ID AS userId,
+            USE_YN AS useYn
+        FROM
+            bis_mt_param
+    <if test="searchData != null">
+    	WHERE 
+    		${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+    	AND
+    		USE_YN LIKE CONCAT('%',#{useYn} ,'%')
+	</if>
+    </select>
+ 
+   <update id="insert" parameterType="map" statementType="PREPARED">
+        INSERT INTO bis_mt_param (
+            PARAM_ID,
+            PARAM_NAME,
+            DATA_1,
+            DATA_2,
+            DATA_3,
+            UPDATE_DATE,
+            REMARK,
+            USER_ID,
+            USE_YN
+        ) VALUES (
+            #{paramId},
+            #{paramName},
+            #{data1},
+            #{data2},
+            #{data3},
+            #{updateDate},
+            #{remark},
+            #{userId},
+            #{useYn}
+        ) ON DUPLICATE KEY
+        UPDATE
+            PARAM_NAME = #{paramName},
+            DATA_1 = #{data1},
+            DATA_2 = #{data2},
+            DATA_3 = #{data3},
+            UPDATE_DATE = #{updateDate},
+            REMARK = #{remark},
+            USER_ID= #{userId},
+			USE_YN = #{useYn}           
+    </update>
+</mapper>

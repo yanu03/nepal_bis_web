@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItBitschedulegroup.BisItBitschedulegroupMapper">
+ 
+    <select id="findAll" resultType="kr.tracom.bis.domain.bisItBitschedulegroup.BisItBitschedulegroup" parameterType="map" >
+	    SELECT * FROM (SELECT
+        BIT_ID AS bitId,
+        SCHEDULE_GROUP_ID AS scheduleGroupId,
+        (SELECT
+            SCHEDULE_CODE 
+        FROM
+            bis_it_systemsschedulegroup 
+        WHERE
+            SCHEDULE_GROUP_ID = T1.SCHEDULE_GROUP_ID                        
+                                 ) AS scheduleCode,
+        APPLY_DATE AS applyDate,
+        USER_ID AS userId,
+        UPDATE_DATE AS updateDate,
+        USE_YN AS useYn             
+    FROM
+        bis_it_bitschedulegroup T1                   
+   		<if test="Select == 'bitId'">
+			 WHERE
+            BIT_ID = #{Keyword}
+		</if>
+		) t1
+    <if test="ScheduleCode != null">
+    	WHERE     
+		scheduleCode =#{ScheduleCode}
+	</if>
+	<if test="ScheduleCode == null">
+		<if test='useYn == "Y"'>
+			WHERE
+			USEYN='Y'
+		</if> 
+		<if test='useYn == "N"'>
+			WHERE
+			USEYN='N'
+		</if>
+	</if>
+    </select>
+
+   <update id="add" parameterType="kr.tracom.bis.domain.bisItBitschedulegroup.BisItBitschedulegroup" >
+         INSERT INTO bis_it_bitschedulegroup (
+            BIT_ID,
+            SCHEDULE_GROUP_ID,
+            APPLY_DATE,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{bitId},
+            #{scheduleGroupId},
+            date_format(now(),'%Y%m%d%H%i'),
+            #{userId},
+           date_format(now(),'%Y%m%d'),
+            #{useYn}
+        )
+    </update>
+
+   <delete id="delete" parameterType="kr.tracom.bis.domain.bisItBitschedulegroup.BisItBitschedulegroup">
+    	  DELETE FROM
+            bis_it_bitschedulegroup
+        WHERE
+            BIT_ID = #{bitId}
+    </delete>
+</mapper>

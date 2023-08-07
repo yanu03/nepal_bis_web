@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItScenarioform.BisItScenarioformMapper">
+ 
+    <select id="findAll" resultType="bisItScenarioform" parameterType="bisItScenarioform" statementType="PREPARED">
+        SELECT
+            SCENARIO_ID AS scenarioId,
+            FORM_ID AS formId,
+            SEQUENCE AS sequence,
+            DISPLAY_TIME AS displayTime,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_scenarioform
+    </select>
+   
+    <select id="keyFormFind" resultType="map" parameterType="String" statementType="PREPARED">
+        SELECT
+            t1.SCENARIO_ID AS scenarioId,
+            t1.FORM_ID AS formId,
+            t2.FORM_NAME AS formName,
+            t2.FORM_TYPE AS formType,
+            t1.SEQUENCE AS sequence,
+            t1.DISPLAY_TIME AS displayTime,
+            t1.USER_ID AS userId,
+            t1.UPDATE_DATE AS updateDate,
+            t1.USE_YN AS useYn,
+            t2.FILE_NAME AS fileName
+        FROM
+            bis_it_scenarioform AS t1 JOIN bis_it_form AS t2
+        ON
+        	t1.FORM_ID=t2.FORM_ID
+        WHERE
+        	t1.SCENARIO_ID=#{parentKey}
+        ORDER BY
+        	t1.SEQUENCE
+    </select>
+ 
+    <select id="findOne" resultType="bisItScenarioform" parameterType="bisItScenarioform" statementType="PREPARED">
+        SELECT
+            SCENARIO_ID AS scenarioId,
+            FORM_ID AS formId,
+            SEQUENCE AS sequence,
+            DISPLAY_TIME AS displayTime,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_it_scenarioform
+        WHERE
+            SCENARIO_ID = #{scenarioId}, FORM_ID = #{formId}, SEQUENCE = #{sequence}
+    </select>
+ 
+   <update id="delete" parameterType="String" statementType="PREPARED">
+        DELETE FROM
+            bis_it_scenarioform
+        WHERE
+            SCENARIO_ID = #{parentKey}
+    </update>
+ 
+   <update id="update" parameterType="map" statementType="PREPARED">
+        UPDATE bis_it_scenarioform
+        SET
+        	SEQUENCE = #{sequence},
+            DISPLAY_TIME = #{displayTime},
+            USER_ID = #{userId},
+            UPDATE_DATE = #{updateDate},
+            USE_YN = #{useYn}
+        WHERE
+            SCENARIO_ID = #{scenarioId}, FORM_ID = #{formId}
+    </update>
+ 
+   <update id="insert" parameterType="map" statementType="PREPARED">
+        INSERT INTO bis_it_scenarioform (
+            SCENARIO_ID,
+            FORM_ID,
+            SEQUENCE,
+            DISPLAY_TIME,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{parentKey},
+            #{formId},
+            #{sequence},
+            #{displayTime},
+            #{userId},
+            #{updateDate},
+            #{useYn}
+        ) 
+    </update>
+    
+  
+    
+</mapper>

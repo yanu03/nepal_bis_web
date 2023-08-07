@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.openAPI.BisOpenAPIMapper">
+
+	<select id="routeInfo" parameterType="map" resultType="map" statementType="PREPARED">
+		SELECT
+	        ROUTE_ID AS routeId,
+	        ROUTE_TYPE AS routeType,
+	        ROUTE_NAME AS routeName,
+	        ROUTE_ENAME AS routeEname,
+	        FROM_STATION_ID AS fromStationId,
+	        TO_STATION_ID AS toStationId,
+	        TURN_STATION_ID AS turnStationId,
+	        PERMISSION_COUNT AS permissionCount,
+	        BEGIN_DATE AS beginDate,
+	        CLOSE_DATE AS closeDate,
+	        ROUTE_EX AS routeEx,
+	        ROUTE_DISTANCE AS routeDistance,
+	        COUNTRY_CODE AS countryCode,
+	        AREA_CODE AS areaCode,
+	        REQUEST_TIME AS requestTime,
+	        CHARGE AS charge,
+	        RUN_TYPE AS runType
+	    FROM
+	        bis_mt_route
+	    WHERE
+	    	USE_YN = 'Y'
+	   <if test="routeId != null">
+	         AND
+	        	ROUTE_ID=#{routeId}
+       	</if>
+	    <if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+	    </if>
+	</select>
+
+	<select id="routeInfoCount" resultType="String" parameterType="map" statementType="PREPARED">
+        	SELECT
+        		COUNT(*) AS total
+        	FROM
+		        bis_mt_route
+		    WHERE
+		    	USE_YN = 'Y'
+		   <if test="routeId != null">
+	         AND
+	        	ROUTE_ID=#{routeId}
+       		</if>
+	</select>
+
+    <select id="stationInfo" resultType="map" parameterType="map" statementType="PREPARED">
+        SELECT
+            STATION_ID AS stationId,
+            STATION_TYPE AS stationType,
+            LINK_ID AS linkId,
+            NODE_ID AS nodeId,
+            STATION_NAME AS stationName,
+            STATION_ENAME AS stationEname,
+            DISPLAY_NAME AS displayName,
+            DISPLAY_ENAME AS displayEname,
+            GPS_X AS gpsX,
+            GPS_Y AS gpsY,
+            TM_X AS tmX,
+            TM_Y AS tmY,
+            CENTER_YN AS centerYn,
+            MOBILE_NO AS mobileNo,
+            REPRESENTATION_YN AS representationYn,
+            COUNTRY_CODE AS countryCode,
+            AREA_CODE AS areaCode,
+            (
+            	SELECT
+            		COUNT(*)
+            	FROM
+            		bis_mt_station
+            	WHERE
+            		USE_YN='Y'
+            ) AS total
+        FROM
+            bis_mt_station
+        WHERE 
+        	USE_YN='Y'
+        <if test="stationId != null">
+	         AND
+	        	STATION_ID=#{stationId}
+       	</if>
+        <if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+	<select id="routeStationInfo" resultType="map" parameterType="map" statementType="PREPARED">
+		SELECT
+		    ROUTE_ID AS routeId,
+		    STATION_SEQUENCE AS stationSequence,
+		    STATION_ID AS stationId,
+		    UPDOWN_DIR AS updownDir,
+		    SUM_DISTANCE AS sumDistance,
+		    REMAIN_DISTANCE AS remainDistance,
+		    STAT_DISTANCE AS statDistance,
+		    NEXT_DISTANCE AS nextDistance,
+		    STAT_TYPE AS statType,
+		    LINK_SEQUENCE AS linkSequence,
+		    (
+		    	SELECT
+		    		COUNT(*)
+		    	FROM
+		    		bis_mt_routestation
+		    	WHERE
+		    		USE_YN='Y'
+		    ) AS total
+		FROM
+		    bis_mt_routestation
+		WHERE
+			USE_YN='Y'
+       <if test="routeId != null">
+	         AND
+	        	ROUTE_ID=#{routeId}
+       	</if>
+        <if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>	
+	</select>
+	
+	<select id="routeNodeInfo" resultType="map" parameterType="map" statementType="PREPARED">
+        SELECT
+            ROUTE_ID AS routeId,
+            NODE_SEQUENCE AS nodeSequence,
+            NODE_ID AS nodeId,
+            (
+            	SELECT
+            		COUNT(*)
+            	FROM
+            		bis_mt_routenode
+            	WHERE
+            		USE_YN='Y'
+            		<if test="routeId != null">
+            			AND ROUTE_ID=#{routeId}
+            		</if>
+            ) AS total
+        FROM
+            bis_mt_routenode
+        WHERE
+        	USE_YN='Y'
+        <if test="routeId != null">
+	        AND
+	        	ROUTE_ID=#{routeId}
+       	</if>
+        <if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>	
+    </select>
+    
+    <select id="routeVertexInfo" resultType="map" parameterType="map" statementType="PREPARED">
+    	SELECT
+    		t1.ROUTE_ID AS routeId,
+    		t1.LINK_SEQUENCE AS linkSequence,
+    		t2.VERTEX_SEQUENCE AS vertexSequence,
+			t2.GPS_X AS gpsX,
+			t2.GPS_Y AS gpsY,
+			t1.UPDOWN_DIR AS updownDir,
+	        (SELECT
+				COUNT(*)
+			FROM
+				bis_mt_routelink AS t1     
+		    JOIN
+				bis_mt_linkvertex AS t2     
+			ON
+			    t1.LINK_ID=t2.LINK_ID     
+		    JOIN
+				bis_mt_link AS t3     
+			ON
+			     t2.LINK_ID=t3.LINK_ID     
+		    JOIN
+				bis_mt_route AS t4     
+			ON
+			    t1.ROUTE_ID=t4.ROUTE_ID     
+		    WHERE
+				t1.USE_YN='Y'     
+			AND
+			    t2.USE_YN='Y'     
+			AND
+			    t3.USE_YN='Y'     
+			AND
+			    t4.USE_YN='Y'           
+			AND
+				t1.ROUTE_ID LIKE #{routeId}) AS total		
+		FROM
+			bis_mt_routelink AS t1
+		JOIN
+			bis_mt_linkvertex AS t2
+		ON
+			t1.LINK_ID=t2.LINK_ID
+		JOIN
+			bis_mt_link AS t3
+		ON 
+			t2.LINK_ID=t3.LINK_ID
+		JOIN
+			bis_mt_route AS t4
+		ON
+			t1.ROUTE_ID=t4.ROUTE_ID
+		WHERE
+			t1.USE_YN='Y'
+		AND
+			t2.USE_YN='Y'
+		AND
+			t3.USE_YN='Y'
+		AND
+			t4.USE_YN='Y'
+		AND
+			t1.ROUTE_ID LIKE #{routeId}
+   		ORDER BY
+			t1.LINK_SEQUENCE ASC,
+			t2.VERTEX_SEQUENCE ASC
+		<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+    <select id="routeStationCoordinate" resultType="map" parameterType="map"  statementType="PREPARED">
+    	SELECT
+			t1.ROUTE_ID AS routeId,
+			t1.STATION_SEQUENCE AS stationSequence,
+			t2.STATION_ID AS stationId,
+			t2.GPS_X AS gpsX,
+			t2.GPS_Y AS gpsY,
+			t1.UPDOWN_DIR AS updownDir,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					bis_mt_routestation AS t1
+				JOIN 
+					bis_mt_station AS t2
+				ON
+					t1.STATION_ID = t2.STATION_ID
+				JOIN
+					bis_mt_route AS t3
+				ON
+					t1.ROUTE_ID = t3.ROUTE_ID
+		
+				WHERE
+					t1.USE_YN='Y'
+				AND
+					t2.USE_YN='Y'
+				AND
+					t3.USE_YN='Y'
+				AND
+					t1.ROUTE_ID=#{routeId}
+			)AS total
+		FROM
+			bis_mt_routestation AS t1
+		JOIN 
+			bis_mt_station AS t2
+		ON
+			t1.STATION_ID = t2.STATION_ID
+		JOIN
+			bis_mt_route AS t3
+		ON
+			t1.ROUTE_ID = t3.ROUTE_ID
+		
+		WHERE
+			t1.USE_YN='Y'
+		AND
+			t2.USE_YN='Y'
+		AND
+			t3.USE_YN='Y'
+		AND
+			t1.ROUTE_ID LIKE #{routeId}
+		ORDER BY
+			t1.STATION_SEQUENCE ASC
+		<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+    <select id="routeNodeCoordrinate" parameterType="map" resultType="map" statementType="PREPARED">
+		SELECT
+			t1.ROUTE_ID AS routeId,
+			t4.STATION_ID AS stationId,
+			t4.STATION_NAME AS stationName,
+			t1.NODE_SEQUENCE AS nodeSequence,
+			t2.NODE_ID AS nodeId,
+			t2.GPS_X AS gpsX,
+			t2.GPS_Y AS gpsY
+		FROM
+			bis_mt_routenode AS t1
+		JOIN
+			bis_mt_node AS t2
+		ON
+			t1.NODE_ID=t2.NODE_ID
+		JOIN
+			bis_mt_route AS t3
+		ON
+			t1.ROUTE_ID=t3.ROUTE_ID
+		JOIN
+			bis_mt_station AS t4
+		ON
+			t2.NODE_ID = t4.NODE_ID
+		WHERE
+			t1.USE_YN = 'Y'
+		AND
+			t2.USE_YN='Y'
+		AND
+			t3.USE_YN='Y'
+		AND
+			t4.USE_YN='Y'
+		AND
+			t1.ROUTE_ID=#{routeId}
+		ORDER BY
+			t1.NODE_SEQUENCE
+		<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+    <select id="routeNodeCoordrinateCount" parameterType="map" resultType="String" statementType="PREPARED">
+			SELECT
+				count(*) AS total
+			FROM
+				bis_mt_routenode AS t1
+			JOIN
+				bis_mt_node AS t2
+			ON
+				t1.NODE_ID=t2.NODE_ID
+			JOIN
+				bis_mt_route AS t3
+			ON
+				t1.ROUTE_ID=t3.ROUTE_ID
+			JOIN
+				bis_mt_station AS t4
+			ON
+				t2.NODE_ID = t4.NODE_ID
+			WHERE
+				t1.USE_YN = 'Y'
+			AND
+				t2.USE_YN='Y'
+			AND
+				t3.USE_YN='Y'
+			AND
+				t4.USE_YN='Y'
+			AND
+				t1.ROUTE_ID=#{routeId}
+    </select>
+    
+    <select id="busLocationInfo"  parameterType="map" resultType="map" statementType="PREPARED">
+       SELECT	TA.VEHICLE_ID AS VEHICLEID,
+               FN_MT_GET_PLATE_NUMBER(TA.VEHICLE_ID) AS plateNumber,
+               FN_MT_GET_BUS_TYPE(TA.VEHICLE_ID) AS busType,
+            	TA.ROUTE_ID AS routeId,
+            	TA.NODE_SEQUENCE AS nodeSequence,
+            	TA.NODE_ID AS nodeId,
+            	TA.STATION_SEQUENCE AS stationSequence,
+            	TA.STATION_ID AS stationId,
+            	TA.COLLECT_DATE AS collectDate,
+            	TA.RUN_CODE AS runCode,
+            	TA.ALARM_CODE AS alarmCode,
+            	TA.GPS_X AS gpsX,
+           		TA.GPS_Y AS gpsY,
+           		TC.UPDOWN_DIR AS updownDir
+        FROM	BIS_IT_LOCATION TA 
+				   INNER JOIN BIS_MT_ROUTE TB
+					ON(TA.ROUTE_ID = TB.ROUTE_ID)
+					INNER JOIN BIS_MT_ROUTENODE TC
+					ON(TA.ROUTE_ID = TC.ROUTE_ID AND TA.NODE_SEQUENCE = TC.NODE_SEQUENCE) 
+		  WHERE  TB.USE_YN = 'Y'
+		  	<if test="routeId != null">
+	    	AND    TB.ROUTE_ID = #{routeId}	  
+	   	 </if>
+		  AND     DATE_SUB(NOW(), INTERVAL 10 MINUTE)	  >  date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s')
+		  ORDER BY TC.ROUTE_ID, TA.NODE_SEQUENCE 
+		  	<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if> 
+    </select>
+    
+    <select id="busLocationInfoCount"  parameterType="map" resultType="map" statementType="PREPARED">
+    	 SELECT	COUNT(*) AS total
+         FROM	BIS_IT_LOCATION TA 
+				   INNER JOIN BIS_MT_ROUTE TB
+					ON(TA.ROUTE_ID = TB.ROUTE_ID)
+					INNER JOIN BIS_MT_ROUTENODE TC
+					ON(TA.ROUTE_ID = TC.ROUTE_ID AND TA.NODE_SEQUENCE = TC.NODE_SEQUENCE) 
+		  WHERE  TB.USE_YN = 'Y'
+		  	  	<if test="routeId != null">
+	    	AND    TB.ROUTE_ID = #{routeId}	  
+	   	 </if>  
+		  AND    date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s') > DATE_SUB(NOW(), INTERVAL 10 MINUTE)	   
+		  ORDER BY TC.ROUTE_ID, TA.NODE_SEQUENCE    
+		  	<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+    <select id="routeLine"  parameterType="map" resultType="map" statementType="PREPARED">
+    	SELECT TA.ROUTE_ID AS routeId, 
+		       TA.STATION_SEQUENCE AS stationSequence,
+		       TA.UPDOWN_DIR AS updownDir,
+		       TA.STAT_TYPE AS statType,
+		       FN_MT_GET_ROUTE_TYPE(TA.ROUTE_ID) AS routeType,
+		       FN_MT_GET_ROUTE_NAME(TA.ROUTE_ID) AS routeName,
+		       TA.STATION_ID AS stationId,
+		       FN_MT_GET_STATION_TYPE(TA.STATION_ID) AS stationType,
+		       FN_MT_GET_STATION_NAME(TA.STATION_ID)  AS stationName,
+		       TB.VEHICLE_ID AS vehicleId,
+		       FN_MT_GET_PLATE_NUMBER(TB.VEHICLE_ID) AS plateNumber,
+				 FN_MT_GET_BUS_TYPE(TB.VEHICLE_ID) AS busType,
+				 TB.RUN_CODE AS runCode,
+				 TB.ALARM_CODE AS alarmCode	 
+		FROM   BIS_MT_ROUTESTATION TA LEFT JOIN 
+		       (SELECT ROUTE_ID, VEHICLE_ID, STATION_SEQUENCE, RUN_CODE, ALARM_CODE 
+				  FROM   BIS_IT_LOCATION
+				  WHERE    DATE_SUB(NOW(), INTERVAL 10 MINUTE) > date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s')) TB
+		       ON (TA.ROUTE_ID = TB.ROUTE_ID AND TA.STATION_SEQUENCE = TB.STATION_SEQUENCE)
+		       INNER JOIN BIS_MT_ROUTE TC 
+		       ON (TA.ROUTE_ID = TC.ROUTE_ID)
+		       INNER JOIN BIS_MT_STATION TD
+		       ON (TA.STATION_ID = TD.STATION_ID)
+		       
+		WHERE  TA.ROUTE_ID = #{routeId}
+		AND    TA.USE_YN = 'Y'
+		AND    TC.USE_YN = 'Y'
+		AND    TD.USE_YN = 'Y'
+		ORDER BY TA.ROUTE_ID, TA.STATION_SEQUENCE
+			<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+    <select id="routeLineCount"  parameterType="map" resultType="map" statementType="PREPARED">
+    	 SELECT	COUNT(*) AS total
+        FROM   BIS_MT_ROUTESTATION TA LEFT JOIN 
+		       (SELECT ROUTE_ID, VEHICLE_ID, STATION_SEQUENCE, RUN_CODE, ALARM_CODE 
+				  FROM   BIS_IT_LOCATION
+				  WHERE  date_format(COLLECT_DATE, '%Y-%m-%d %H:%i:%s') > DATE_SUB(NOW(), INTERVAL 10 MINUTE)) TB
+		       ON (TA.ROUTE_ID = TB.ROUTE_ID AND TA.STATION_SEQUENCE = TB.STATION_SEQUENCE)
+		       INNER JOIN BIS_MT_ROUTE TC 
+		       ON (TA.ROUTE_ID = TC.ROUTE_ID)
+		       INNER JOIN BIS_MT_STATION TD
+		       ON (TA.STATION_ID = TD.STATION_ID)
+		WHERE  TA.ROUTE_ID = #{routeId}
+		AND    TA.USE_YN = 'Y'
+		AND    TC.USE_YN = 'Y'
+		AND    TD.USE_YN = 'Y'
+		ORDER BY TA.ROUTE_ID, TA.STATION_SEQUENCE
+			<if test="startIndex != null and endIndex !=null">
+	    	LIMIT ${startIndex}, ${endIndex}
+	    </if>
+	    <if test="startIndex == null and endIndex !=null">
+	    	LIMIT ${endIndex}
+	    </if>
+	    <if test="startIndex != null and endIndex ==null">
+	    	LIMIT ${startIndex}
+   		</if>
+    </select>
+    
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.bisMaAuth.BisMaAuthMapper">
+    <select id="serchFind" resultType="bisMaAuth" parameterType="map" statementType="PREPARED">
+        SELECT
+        	group_cd AS groupCd,
+            group_nm AS groupNm,
+            code AS code,
+            name AS name,
+            sort AS sort,
+            data1 AS data1,
+            data2 AS data2,
+            data3 AS data3,
+            data4 AS data4,
+            data5 AS data5,
+            remark AS remark,
+            use_yn AS useYn,
+            created_at AS createdAt,
+            created_by AS createdBy,
+            updated_at AS updatedAt,
+            updated_by AS updatedBy
+        FROM
+            common_code_m
+       WHERE
+       		group_cd LIKE 'AUTH_GROUP'
+     <if test="searchData != null">
+       AND
+       		${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+       AND
+       		use_yn LIKE CONCAT('%',#{useYn},'%')
+	</if>
+    </select>
+ 
+   <update id="insert" parameterType="map" statementType="PREPARED">
+        INSERT INTO common_code_m (
+            group_cd,
+            group_nm,
+            code,
+            name,
+            sort,
+            data1,
+            data2,
+            data3,
+            remark,
+            use_yn,
+            created_by,
+            updated_at
+        ) VALUES (
+            'AUTH_GROUP',
+            '권한그룹',
+            #{code},
+            #{name},
+            #{sort},
+            #{data1},
+            #{data2},
+            #{data3},
+            #{remark},
+            #{useYn},
+            #{userId},
+            #{update_at}
+        ) ON DUPLICATE KEY
+        UPDATE
+        	name=#{name},
+            sort = #{sort},
+            data1 = #{data1},
+            data2 = #{data2},
+            data3 = #{data3},
+            remark = #{remark},
+            use_yn = #{useYn},
+            created_by=#{userId},
+            updated_at = #{update_at}
+    </update>
+</mapper>

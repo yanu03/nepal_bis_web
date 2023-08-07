@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisItSendsystemversion.BisItSendsystemversionMapper">
+<select id="add" parameterType="kr.tracom.bis.domain.bisItSendsystemversion.BisItSendsystemversion" resultType="kr.tracom.bis.domain.bisItSendsystemversion.BisItSendsystemversion">
+			        INSERT INTO bis_it_sendsystemversion (
+				        SYSTEM_ID,
+				        VERSION_CODE,
+				        SYSTEM_TYPE,
+				        VERSION_VALUE
+				        ) VALUES (
+				        #{systemId},
+				        #{versionCode},
+				        #{systemType},
+				        #{versionValue}
+			        )ON DUPLICATE KEY
+					UPDATE
+						SYSTEM_TYPE=#{systemType},
+						VERSION_VALUE=#{versionValue}
+    </select>
+</mapper>

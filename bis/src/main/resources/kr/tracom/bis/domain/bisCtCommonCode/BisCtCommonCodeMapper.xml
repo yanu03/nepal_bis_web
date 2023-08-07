@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisCtCommonCode.BisCtCommonCodeMapper">
+    <select id="searchAll" resultType="bisCtCommonCode" parameterType="map" statementType="PREPARED">
+        SELECT
+            COMMON_CODE AS commonCode,
+            COMMON_CODE_NAME AS commonCodeName,
+            COMMON_CODE_ENAME AS commonCodeEname,
+            VALUE_1 AS value1,
+            VALUE_2 AS value2,
+            VALUE_3 AS value3,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_ct_common_code
+       <if test="searchData != null">
+       	 WHERE
+        	${searchDiv} LIKE CONCAT('%',#{searchData},'%')
+         AND
+        	USE_YN LIKE CONCAT('%',#{useYn} ,'%')  
+       </if>
+       
+    </select>
+ 
+    <select id="findOne" resultType="bisCtCommonCode" parameterType="bisCtCommonCode" statementType="PREPARED">
+        SELECT
+            COMMON_CODE AS commonCode,
+            COMMON_CODE_NAME AS commonCodeName,
+            COMMON_CODE_ENAME AS commonCodeEname,
+            VALUE_1 AS value1,
+            VALUE_2 AS value2,
+            VALUE_3 AS value3,
+            REMARK AS remark,
+            USER_ID AS userId,
+            UPDATE_DATE AS updateDate,
+            USE_YN AS useYn
+        FROM
+            bis_ct_common_code
+        WHERE
+            COMMON_CODE LIKE #{commonCode}
+    </select>
+ 
+   <update id="delete" parameterType="bisCtCommonCode" statementType="PREPARED">
+        DELETE FROM
+            bis_ct_common_code
+        WHERE
+            COMMON_CODE LIKE #{commonCode}
+    </update>
+ 
+   <update id="update" parameterType="bisCtCommonCode" statementType="PREPARED">
+        UPDATE bis_ct_common_code
+        SET
+            COMMON_CODE_NAME = #{commonCodeName},
+            COMMON_CODE_ENAME = #{commonCodeEname},
+            VALUE_1 = #{value1},
+            VALUE_2 = #{value2},
+            VALUE_3 = #{value3},
+            REMARK = #{remark},
+            USER_ID = #{userId},
+            UPDATE_DATE = now(),
+            USE_YN = #{useYn}
+        WHERE
+            COMMON_CODE LIKE #{commonCode}
+    </update>
+ 
+   <update id="insert" parameterType="bisCtCommonCode" statementType="PREPARED">
+        INSERT INTO bis_ct_common_code (
+            COMMON_CODE,
+            COMMON_CODE_NAME,
+            COMMON_CODE_ENAME,
+            VALUE_1,
+            VALUE_2,
+            VALUE_3,
+            REMARK,
+            USER_ID,
+            UPDATE_DATE,
+            USE_YN
+        ) VALUES (
+            #{commonCode},
+            #{commonCodeName},
+            #{commonCodeEname},
+            #{value1},
+            #{value2},
+            #{value3},
+            #{remark},
+            #{userId},
+            #{updateDate},
+            #{useYn}
+        ) ON DUPLICATE KEY
+        UPDATE
+            COMMON_CODE_NAME = #{commonCodeName},
+            COMMON_CODE_ENAME = #{commonCodeEname},
+            VALUE_1 = #{value1},
+            VALUE_2 = #{value2},
+            VALUE_3 = #{value3},
+            REMARK = #{remark},
+            USER_ID = #{userId},
+            UPDATE_DATE =  #{updateDate},
+            USE_YN = #{useYn}
+    </update>
+</mapper>

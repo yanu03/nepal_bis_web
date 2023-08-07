@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.tracom.bis.domain.bisFirmware.BisFirmwareMapper">
+ 
+    <select id="formPath" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS formPath FROM bis_mt_param WHERE PARAM_ID LIKE 'FIRMWARE_PATH'
+ 	</select>
+ 	
+ 	<select id="ftpId" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpId FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_ID'
+ 	</select>
+ 	
+ 	<select id="ftpPw" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpPort FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_PW'
+ 	</select>
+ 	
+ 	<select id="ftpPort" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpPort FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_PORT'
+ 	</select>
+ 	
+ 	<select id="ftpIp" resultType="String" statementType="PREPARED">
+ 		SELECT DATA_1 AS ftpIp FROM bis_mt_param WHERE PARAM_ID LIKE 'FTP_IP'
+ 	</select>
+ 
+</mapper>
