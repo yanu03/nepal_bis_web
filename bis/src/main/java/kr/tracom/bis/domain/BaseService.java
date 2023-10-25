@@ -1,9 +1,5 @@
 package kr.tracom.bis.domain;
 
-import java.io.Serializable;
-
-import com.chequer.axboot.core.domain.base.AXBootBaseService;
-import com.chequer.axboot.core.domain.base.AXBootJPAQueryDSLRepository;
 import kr.tracom.bis.domain.code.QCommonCode;
 import kr.tracom.bis.domain.file.QCommonFile;
 import kr.tracom.bis.domain.program.QProgram;
@@ -12,6 +8,10 @@ import kr.tracom.bis.domain.user.QUser;
 import kr.tracom.bis.domain.user.auth.QUserAuth;
 import kr.tracom.bis.domain.user.auth.menu.QAuthGroupMenu;
 import kr.tracom.bis.domain.user.role.QUserRole;
+import com.chequer.axboot.core.domain.base.AXBootBaseService;
+import com.chequer.axboot.core.domain.base.AXBootJPAQueryDSLRepository;
+
+import java.io.Serializable;
 
 
 public class BaseService<T, ID extends Serializable> extends AXBootBaseService<T, ID> {

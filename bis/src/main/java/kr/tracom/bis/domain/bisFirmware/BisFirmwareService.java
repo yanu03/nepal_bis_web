@@ -13,7 +13,10 @@ public class BisFirmwareService {
 	public String formPath(){
 		return bisFirmwareMapper.formPath();
 	}
-	
+	public String obeFormPath()
+	{
+		return bisFirmwareMapper.obeFormPath();
+	}
 	public String ftpId(){
 		return bisFirmwareMapper.ftpId();
 	}

@@ -4,7 +4,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
     	data = caller.searchView.getData();
     	data.useYn="Y";
-    	axboot.ajax({
+/*    	axboot.ajax({
             type: "GET",
             url: '/api/v1/bisMtBits',
             data:data ,
@@ -17,7 +17,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                     console.log(err);
                 }
             }
-        });
+        });*/
         return false;
     },
     SET_FROM_VIEW: function (caller, act, data) {
