@@ -44,15 +44,23 @@ public class BisFirmwareController extends BaseController {
     public @ResponseBody Map<String,Object> fileUpload(@RequestPart(value="upFile",required=false) MultipartFile mfile, @RequestParam Map<String, Object> fileMap, HttpServletRequest request) {
     	String defaultPath = request.getSession().getServletContext().getRealPath("/");
     	String path=defaultPath + "resource" + File.separator + "BisFile" + File.separator;
-    String storedFileName= (String) fileMap.get("filename");
- 	Map<String,Object> map=new HashMap<String,Object>();
-	BisFileUtil bfu=new BisFileUtil();
-	Map<String,Object> ftpInfo=new HashMap<String,Object>();
-	ftpInfo.put("formPath", bisFirmwareService.formPath());
-	ftpInfo.put("ftpId", bisFirmwareService.ftpId());
-	ftpInfo.put("ftpIp", bisFirmwareService.ftpIp());
-	ftpInfo.put("ftpPw", bisFirmwareService.ftpPw());
-	ftpInfo.put("ftpPort", bisFirmwareService.ftpPort());
+	    String storedFileName= (String) fileMap.get("filename");
+	 	Map<String,Object> map=new HashMap<String,Object>();
+		BisFileUtil bfu=new BisFileUtil();
+		Map<String,Object> ftpInfo=new HashMap<String,Object>();
+		int deviceType= (int) fileMap.get("deviceType");
+		if(deviceType == 2)
+		{
+			ftpInfo.put("formPath", bisFirmwareService.obeFormPath());
+		}
+		else
+		{
+			ftpInfo.put("formPath", bisFirmwareService.formPath());
+		}
+		ftpInfo.put("ftpId", bisFirmwareService.ftpId());
+		ftpInfo.put("ftpIp", bisFirmwareService.ftpIp());
+		ftpInfo.put("ftpPw", bisFirmwareService.ftpPw());
+		ftpInfo.put("ftpPort", bisFirmwareService.ftpPort());
 	
     	try{
     		File convFile = new File(path+ storedFileName);

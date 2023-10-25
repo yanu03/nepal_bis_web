@@ -5,5 +5,6 @@ public class url {
 	{
 		//return "http://192.168.34.250:8085";
 		return "http://127.0.0.1:8085";
+		//return "http://192.168.40.100:8085";
 	}
 }

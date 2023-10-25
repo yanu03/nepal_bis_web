@@ -1,11 +1,10 @@
 package kr.tracom.bis.logging;
 
 
+import kr.tracom.bis.utils.SessionUtils;
 import com.chequer.axboot.core.utils.HttpUtils;
 import com.chequer.axboot.core.utils.MDCUtil;
 import com.chequer.axboot.core.utils.RequestUtils;
-
-import kr.tracom.bis.utils.SessionUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

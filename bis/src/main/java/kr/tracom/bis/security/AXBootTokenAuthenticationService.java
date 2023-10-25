@@ -1,17 +1,13 @@
 package kr.tracom.bis.security;
 
-import kr.tracom.bis.code.GlobalConstants;
-import kr.tracom.bis.domain.program.Program;
-import kr.tracom.bis.domain.program.ProgramService;
-import kr.tracom.bis.domain.program.menu.Menu;
-import kr.tracom.bis.domain.program.menu.MenuService;
-import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenu;
-import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenuService;
-import com.chequer.axboot.core.code.AXBootTypes;
-import com.chequer.axboot.core.domain.user.SessionUser;
-import com.chequer.axboot.core.session.JWTSessionHandler;
-import com.chequer.axboot.core.utils.*;
-import com.chequer.axboot.core.vo.ScriptSessionVO;
+import java.io.IOException;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,12 +15,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
-import java.io.IOException;
-import java.util.List;
+import com.chequer.axboot.core.code.AXBootTypes;
+import com.chequer.axboot.core.utils.ContextUtil;
+import com.chequer.axboot.core.utils.CookieUtils;
+import com.chequer.axboot.core.utils.JsonUtils;
+import com.chequer.axboot.core.utils.ModelMapperUtils;
+import com.chequer.axboot.core.utils.PhaseUtils;
+import com.chequer.axboot.core.utils.RequestUtils;
+import com.chequer.axboot.core.vo.ScriptSessionVO;
+
+import kr.tracom.bis.code.GlobalConstants;
+import kr.tracom.bis.domain.program.Program;
+import kr.tracom.bis.domain.program.ProgramService;
+import kr.tracom.bis.domain.program.menu.Menu;
+import kr.tracom.bis.domain.program.menu.MenuService;
+import kr.tracom.bis.domain.user.SessionUser;
+import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenu;
+import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenuService;
+import kr.tracom.bis.utils.JWTSessionHandler;
 
 @Service
 public class AXBootTokenAuthenticationService {

@@ -1,5 +1,6 @@
 package kr.tracom.bis.security;
 
+import kr.tracom.bis.domain.user.SessionUser;
 import kr.tracom.bis.domain.user.User;
 import kr.tracom.bis.domain.user.UserService;
 import kr.tracom.bis.domain.user.auth.UserAuth;
@@ -7,7 +8,7 @@ import kr.tracom.bis.domain.user.auth.UserAuthService;
 import kr.tracom.bis.domain.user.role.UserRole;
 import kr.tracom.bis.domain.user.role.UserRoleService;
 import com.chequer.axboot.core.code.AXBootTypes;
-import com.chequer.axboot.core.domain.user.SessionUser;
+//import com.chequer.axboot.core.domain.user.SessionUser;
 import com.chequer.axboot.core.utils.DateTimeUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

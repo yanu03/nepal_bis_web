@@ -10,6 +10,7 @@
     <name>bis</name>
     <description>bis</description>
  <repositories>
+ 
     	<repository>
 	        <id>in-project</id>
 	        <name>In Project Repo</name>
@@ -29,6 +30,8 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        
+         
     </repositories>
 
     <properties>
@@ -37,9 +40,9 @@
         <maven.test.skip>true</maven.test.skip>
         <disable.checks>true</disable.checks>
         <main.basedir>${basedir}</main.basedir>
-        <start-class>com.tracom.brt.AXBootApplicationInitializer</start-class>
+        <start-class>kr.tracom.bis.AXBootApplicationInitializer</start-class>
     </properties>
-
+    
     <parent>
         <groupId>com.chequer.axboot</groupId>
         <artifactId>ax-boot-framework</artifactId>
@@ -130,13 +133,13 @@
 		    <artifactId>unirest-java</artifactId>
 		    <version>1.4.9</version>
 		</dependency>
-		
+		<!-- 
  		<dependency>
 			<groupId>selvytts</groupId>
 			<artifactId>selvytts</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
+		 -->
 		<dependency>
 		    <groupId>ws.schild</groupId>
 		    <artifactId>jave-core</artifactId>

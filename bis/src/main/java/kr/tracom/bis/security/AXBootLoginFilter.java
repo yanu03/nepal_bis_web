@@ -1,9 +1,11 @@
 package kr.tracom.bis.security;
 
+import kr.tracom.bis.domain.user.SessionUser;
 import kr.tracom.bis.domain.user.UserService;
+import kr.tracom.bis.utils.SessionUtils;
 import com.chequer.axboot.core.api.response.ApiResponse;
 import com.chequer.axboot.core.code.ApiStatus;
-import com.chequer.axboot.core.domain.user.SessionUser;
+//import com.chequer.axboot.core.domain.user.SessionUser;
 import com.chequer.axboot.core.utils.HttpUtils;
 import com.chequer.axboot.core.utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;

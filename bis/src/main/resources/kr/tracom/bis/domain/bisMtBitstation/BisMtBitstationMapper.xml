@@ -14,9 +14,9 @@
         FROM
             bis_mt_bitstation T1
               
-            <if test="Select == 'bitId'">            
+            <if test="Select == 'stationId'">            
  		     WHERE 
-            BIT_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+            STATION_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
              </if>
                 <if test="Select == 'bitName'">           
  		     WHERE 
@@ -38,6 +38,8 @@
     		BIS_MT_BITSTATION
     	 where 
     	BIT_ID=#{bitId}
+	and
+	STATION_ID=#{stationId}
     </delete>
     <select id="add" parameterType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation" resultType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation">
 	   <if test="bitId != null">       

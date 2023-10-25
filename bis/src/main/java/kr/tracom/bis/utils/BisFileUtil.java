@@ -26,6 +26,7 @@ import kr.tracom.bis.domain.bisItForm.BisItFile;
 
 public class BisFileUtil {
 	
+	//final static String URL="http://192.168.40.100:8085/";	//클라우드
 	final static String URL="http://127.0.0.1:8085/bis/";	//클라우드
 	//final static String URL="http://192.168.34.250:8085/bis/";	//파일서버
 	
@@ -46,7 +47,6 @@ public class BisFileUtil {
 			ftp = new FTPClient(); // FTP Client 객체 생성
 			ftp.setControlEncoding("UTF-8"); // 문자 코드를 UTF-8로 인코딩
 			ftp.connect(ip); // 서버접속 " "안에 서버 주소 입력 또는
-														// "서버주소", 포트번호
 			ftp.login(id, pwd); // FTP 로그인 ID, PASSWORLD 입력
 			ftp.enterLocalPassiveMode(); // Passive Mode 접속일때
 			boolean checkFolder=ftp.changeWorkingDirectory(dir); // 작업 디렉토리 변경
@@ -58,6 +58,7 @@ public class BisFileUtil {
 			System.out.println("stored : "+uploadFile.getPath());
 			
 			ftp.setFileType(FTP.BINARY_FILE_TYPE); // 업로드 파일 타입 셋팅
+			System.out.println("체크1");
 			try {
 				fis = new FileInputStream(uploadFile); // 업로드할 File 생성
 				boolean isSuccess = ftp.storeFile(fileName, fis); // File 업로드

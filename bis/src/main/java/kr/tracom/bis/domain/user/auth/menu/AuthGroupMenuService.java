@@ -1,11 +1,14 @@
 package kr.tracom.bis.domain.user.auth.menu;
 
 import kr.tracom.bis.domain.BaseService;
+import kr.tracom.bis.utils.SessionUtils;
 import kr.tracom.bis.domain.program.ProgramService;
 import kr.tracom.bis.domain.program.menu.Menu;
 import kr.tracom.bis.domain.program.menu.MenuService;
+import kr.tracom.bis.domain.user.SessionUser;
+
 import com.chequer.axboot.core.code.AXBootTypes;
-import com.chequer.axboot.core.domain.user.SessionUser;
+//import com.chequer.axboot.core.domain.user.SessionUser;
 import com.chequer.axboot.core.parameter.RequestParams;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Service;
