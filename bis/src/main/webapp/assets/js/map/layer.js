@@ -186,7 +186,6 @@ function RouteLayer(coordinates,dir)
   			 removeStationMaker();
   			}*/
   		 removeBusMaker();
-
   		 
   		 var url = COL("bis.apiserverip")+'busLocation';
   		 var data = {};

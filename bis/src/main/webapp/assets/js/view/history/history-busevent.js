@@ -82,8 +82,69 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	    	        return false;
 	    	}
     },
-    ITEM_CLICK: function (caller, act, data) {
+    Routestation_GET: function (caller, act, data) {
+    	data.key="bisKey";
+    	data.useYn="Y";
+    	var url = BIS("bis.apiserverip")+'routeVertex';
+    	ajaxCall(function(result,res){
+    		if(result){
+    			 res= res.Information;
+          		 RouteStationLayer(res);
+          		 url = BIS("bis.apiserverip")+'routeNodeCoordinate';
+          		ajaxCall(function(result,res){
+          			if(result){
+          				  res= res.Information;
+	                   	 
+						  removeStationMaker();
+						 
+						  for(var i = 0 ;i < res.length;i++)
+						  {
+						      	var center = ol.proj.transform([res[i].gpsX, res[i].gpsY], 'EPSG:4326', 'EPSG:3857');
+						
+						      	var stationLayer = makerLayer(center,'/assets/images/map/busstopicon.png',res[i].stationName);
+								
+								stationLayers.push(stationLayer);
+						  }
+						  addStationMaker();
+          			}else{
+          				console.log(err);
+                        axDialog.alert({
+                            theme: "primary",
+                            title:" ",
+                            msg: "not responding."
+                        });		
+          			}
+          		 },url,data);
+    		}else{
+    			console.log(err);
+                axDialog.alert({
+                    theme: "primary",
+                    title:" ",
+                    msg: "not responding."
+                });		
+    		}
+    	},url,data);
     	
+   	 axboot.ajax({
+         type: "GET",
+         url: '/api/v1/bisMtRoutestations',
+         data:  {routeId: data.routeId},
+         callback: function (res) {
+             caller.gridView02.setData(res);
+             caller.gridView02.routeId=data.routeId;
+            
+             	
+            },
+         options: {
+             // axboot.ajax 함수에 2번째 인자는 필수가 아닙니다. ajax의 옵션을 전달하고자 할때 사용합니다.
+             onError: function (err) {
+                 console.log(err);
+             }
+         }
+     });    
+},
+    ITEM_CLICK: function (caller, act, data) {
+    	ACTIONS.dispatch(ACTIONS.Routestation_GET, {routeId:data.routeId});
     },
     ITEM_ADD: function (caller, act, data) {
         caller.gridView01.addRow();
@@ -202,9 +263,10 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: swapColumns,
             body: {
-                /*onClick: function () {
+                onClick: function () {
                     this.self.select(this.dindex, {selectedClear: true});
-                }*/
+                    ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);
+                }
             }
         });
 
@@ -271,9 +333,21 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
                  {key: "systemDate", label: COL("ax.history.systemDate"),width:130, align: "center", editor: {type: "text", disabled: "notCreated"}}
             ],
             body: {
-              /*  onClick: function () {
+                onClick: function () {
                     this.self.select(this.dindex, {selectedClear: true});
-                }*/
+	               	temprow = this.list[this.dindex];
+	            	tempindex = this.dindex;
+	            	tempthis = this; 
+	            	 
+	            	removeBusMaker(); 
+	            	var gps = ol.proj.transform([temprow.gpsX, temprow.gpsY], 'EPSG:4326', 'EPSG:3857');
+	         		var busLayer = makerLayer(gps,'/assets/images/map/icon_bus_vehicle_42_blue.png',temprow.plateNumber);
+	         		busLayers.push(busLayer);
+	         		addBusMaker();
+	         		
+	         		map.getView().setCenter(gps); 
+	         		map.getView().setZoom(17);                    
+                }
             }
         });
 
