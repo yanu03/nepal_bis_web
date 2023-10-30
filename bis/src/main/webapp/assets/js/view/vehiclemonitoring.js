@@ -3,7 +3,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
         axboot.ajax({
             type: "GET",
-            url: ["samples", "parent"],
+            url: '/api/v1/bisMtRoutes',
             data: caller.searchView.getData(),
             callback: function (res) {
                 caller.gridView01.setData(res);
@@ -32,8 +32,66 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             }
         });
     },
+    Routestation_GET: function (caller, act, data) {
+    	data.key="bisKey";
+    	data.useYn="Y";
+    	var url = COL("bis.apiserverip")+'routeVertex';
+    	ajaxCall(function(result,res){
+    		if(result){
+    			 res= res.Information;
+          		 RouteStationLayer(res);
+          		 url = COL("bis.apiserverip")+'routeNodeCoordinate';
+          		ajaxCall(function(result,res){
+          			if(result){
+          				  res= res.Information;
+	                   	 
+						  removeStationMaker();
+						 
+						  for(var i = 0 ;i < res.length;i++)
+						  {
+						      	var center = ol.proj.transform([res[i].gpsX, res[i].gpsY], 'EPSG:4326', 'EPSG:3857');
+						
+						      	var stationLayer = makerLayer(center,'/assets/images/map/busstopicon.png',res[i].stationName);
+								
+								stationLayers.push(stationLayer);
+						  }
+						  addStationMaker();
+          			}else{
+          				console.log(err);
+                        axDialog.alert({
+                            theme: "primary",
+                            title:" ",
+                            msg: "not responding."
+                        });		
+          			}
+          		 },url,data);
+    		}else{
+    			console.log(err);
+                axDialog.alert({
+                    theme: "primary",
+                    title:" ",
+                    msg: "not responding."
+                });		
+    		}
+    	},url,data);
+   	
+   	 axboot.ajax({
+         type: "GET",
+         url: '/api/v1/bisMtRoutestations',
+         data:  {routeId: data.routeId},
+         callback: function (res) {
+        	 
+            },
+         options: {
+             // axboot.ajax 함수에 2번째 인자는 필수가 아닙니다. ajax의 옵션을 전달하고자 할때 사용합니다.
+             onError: function (err) {
+                 console.log(err);
+             }
+         }
+     });
+},    
     ITEM_CLICK: function (caller, act, data) {
-
+    	ACTIONS.dispatch(ACTIONS.Routestation_GET, {routeId:data.routeId});
     },
     ITEM_ADD: function (caller, act, data) {
         caller.gridView01.addRow();
@@ -110,31 +168,20 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         var _this = this;
 
         this.target = axboot.gridBuilder({
-            showRowSelector: true,
-            frozenColumnIndex: 0,
-            multipleSelect: true,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "key", label: "KEY", width: 160, align: "left", editor: "text"},
-                {key: "value", label: "VALUE", width: 350, align: "left", editor: "text"},
-                {key: "etc1", label: "ETC1", width: 100, align: "center", editor: "text"},
-                {key: "etc2", label: "ETC2", width: 100, align: "center", editor: "text"},
-                {key: "etc3", label: "ETC3", width: 100, align: "center", editor: "text"},
-                {key: "etc4", label: "ETC4", width: 100, align: "center", editor: "text"}
+            	{key: "routeId", label: COL("bis.route.routeid"), width: 140, align: "center"},
+                {key: "routeType", label: COL("bis.route.routetype"), width:140, align: "center",formatter: function () {
+            		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
+                    return detailCode;
+                    }},
+                {key: "routeName", label: COL("bis.route.routename"), width: 200, align: "center"}
             ],
             body: {
                 onClick: function () {
-                    this.self.select(this.dindex, {selectedClear: true});
+                    this.self.select(this.dindex);
+                    ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);
                 }
-            }
-        });
-
-        axboot.buttonClick(this, "data-grid-view-01-btn", {
-            "add": function () {
-                ACTIONS.dispatch(ACTIONS.ITEM_ADD);
-            },
-            "delete": function () {
-                ACTIONS.dispatch(ACTIONS.ITEM_DEL);
             }
         });
     },
