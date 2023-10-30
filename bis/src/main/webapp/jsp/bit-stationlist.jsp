@@ -63,7 +63,7 @@
                               <div class="ax-button-group">
                   				  <div class="left">
                        				 <h2><i class="cqc-list"></i>
-                         		     <ax:lang id="bis.bitlist" /> </h2>
+                         		     <ax:lang id="bis.stationlist" /> </h2>
                  				   </div>
               					  </div>
             				

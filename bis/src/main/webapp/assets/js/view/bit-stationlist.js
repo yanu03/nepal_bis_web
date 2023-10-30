@@ -4,7 +4,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
     	data = caller.searchView.getData();
     	data.useYn="Y";
-/*    	axboot.ajax({
+    	/*axboot.ajax({
             type: "GET",
             url: '/api/v1/bisMtBits',
             data:data ,
@@ -17,7 +17,16 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                     console.log(err);
                 }
             }
-        });*/
+        });
+        */
+        axboot.ajax({
+           type: "GET",
+           url: '/api/v1/bisMtStations',
+           data: caller.searchView.getData(),
+           callback: function (res) {
+               caller.gridView01.setData(res);
+           }
+       });
         return false;
     },
     SET_FROM_VIEW: function (caller, act, data) {
@@ -59,11 +68,35 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	           sendData: function(){
 
 	           },
-	           callback: function (data) {
-	          	 var json = caller.formView01.getData();
-	          	 json.bitId = data.bitId;
-	          	this.close();
-	           }
+             callback: function (data) {
+            	 
+            	 data.stationId=caller.gridView02.stationId;
+            	 data.stationName=caller.gridView02.stationName;
+            	 data.updateDate="";
+            	 data.userId=loginid;
+            	 list = caller.gridView02.getData();
+            	 var check= 0;
+            	 if(list.length != 0)
+            	 {
+            	 	for(var i = 0 ;i < list.length;i++)
+            	 	{
+            	 	if(list[i].stationId == data.stationId &&list[i].bitId==data.bitId)	
+            	 		{
+            	 		check=1;
+            	 		}
+            	 	}
+            	 }
+             	 if(check == 0)
+            	{
+             		 caller.gridView02.addRow(data);
+            	}else
+            		{
+            		alert("BIT already added");
+            		}
+
+            	  this.close();
+             }
+
 	       });
 	  	
 	  },
@@ -130,16 +163,18 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     	//데이터 옆에뜨게 하기
     	 if(data!=null)
     		 {
-    		 	caller.gridView02.bitId=data.bitId;
-    		 	caller.gridView02.bitName=data.bitName;
-    			data.Select ="bitId";
-    	    	data.Keyword=data.bitId;
+    		 	//caller.gridView02.bitId=data.bitId;
+    		 	//caller.gridView02.bitName=data.bitName;
+     		 	caller.gridView02.stationId=data.stationId;
+    		 	caller.gridView02.stationName=data.stationName;
+    			data.Select ="stationId";
+    	    	data.Keyword=data.stationId;
     		 }
     	 else
     		 {
     		 data={};
-    			data.Select ="bitId";
-    	    	data.Keyword=caller.gridView02.bitId;
+    			data.Select ="stationId";
+    	    	data.Keyword=caller.gridView02.stationId;
     		 }
     
     	axboot.ajax({
@@ -163,6 +198,9 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         caller.gridView01.addRow();
     },
     STATION_DELETE: function (caller, act, data) {
+        caller.gridView02.delRow("selected");
+    },
+    BIT_DELETE: function (caller, act, data) {
         caller.gridView02.delRow("selected");
     },
     ITEM_DEL: function (caller, act, data) {
@@ -264,28 +302,24 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "bitId", label: COL("bis.bit.bitid"), width: 90, align: "center"},
-            	{key: "bitType", label: COL("bis.bit.bittype"), width: 145, align: "center",formatter: function () {
-            		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
-                return detailCode;
-                }},
-            	{key: "bitName", label:COL("bis.bit.bitname"), width: 90, align: "center"},
-            	{key: "bitEname", label: COL("bis.bit.bitename"), width: 90, align: "center"},
-            	{key: "terminalVersion", label: COL("bis.bit.terminalversion"), width: 140, align: "center"},
-            	{key: "ipAddress", label: COL("bis.bit.ipaddress"), width: 90, align: "center"},
-            	{key: "cameraIpAddress", label: COL("bis.bit.cameraipaddress"), width: 135, align: "center"},            	
-            	{key: "installDate", label: COL("bis.bit.installdate"), width: 100, align: "center"},          
-            	{key: "countryCode", label:  COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
+                {key: "stationName", label: COL("bis.station.stationname"), width: 170, align: "center"},
+                {key: "stationType", label: COL("bis.station.stationtype"), width: 100, align: "center",formatter: function () {
+            		var detailCode = getDetailCode("STATION_TYPE",this.item.stationType);
+                    return detailCode;
+                    }},
+
+                {key: "gpsX", label:COL("bis.station.gpsx"), width: 100, align: "center"},
+                {key: "gpsY", label:COL("bis.station.gpsx"), width: 100, align: "center"},
+
+                {key: "representationYn", label: COL("bis.station.representationyn"), width: 170, align: "center"},
+                {key: "countryCode", label: COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},
                     {key: "areaCode", label:  COL("bis.areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;
-                        }},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "userId", label:COL("bis.userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 80, align: "center"}
+                        }}
             ],
          
             body: {
@@ -310,32 +344,32 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         var _this = this;
         axboot.buttonClick(this, "data-grid-view-02-btn", {
         	"add": function () {
-        		if(this.bitId==null||this.bitId=="")
+        		if(this.stationId==null||this.stationId=="")
 				{
         		      axDialog.alert({
                           theme: "primary",
                           title:" ",
-                          msg: COL("bis.error.bitselect")
+                          msg: COL("bis.error.stationselect")
                       });
 				}
         		else
         		{
-
-            		ACTIONS.dispatch(ACTIONS.STATION_MODAL);
+  
+            		ACTIONS.dispatch(ACTIONS.BIT_MODAL);
         		}
         	},
         	"delete": function () {
-        		if(this.bitId==null||this.bitId=="")
+        		if(this.stationId==null||this.stationId=="")
 				{
         		    axDialog.alert({
                         theme: "primary",
                         title:" ",
-                        msg: COL("bis.error.bitselect")
+                        msg: COL("bis.error.stationselect")
                     });
         		}
         		else
         		{
-        			ACTIONS.dispatch(ACTIONS.STATION_DELETE);
+        			ACTIONS.dispatch(ACTIONS.BIT_DELETE);
                 
         		}
         	}
