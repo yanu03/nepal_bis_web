@@ -16,11 +16,44 @@
         <ax:script-lang key="ax.history" var="COL" />
         <ax:script-lang key="ax.promotion" var="PRO" />
         <ax:script-lang key="bis" var="BIS" />
-        <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
+        
         <script type="text/javascript" src="<c:url value='/assets/js/common/common.js' />"></script>
         <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
         <script type="text/javascript" src="<c:url value='/assets/js/view/history/history-busevent.js' />"></script>
         <script type="text/javascript" src="<c:url value='/assets/js/jquery.datetimepicker.full.min.js' />"></script>
+        <script src="<c:url value='/assets/js/map/proj4.js' />" type="text/javascript"></script>
+        <script src="<c:url value='/assets/js/map/proj4js.js' />" type="text/javascript"></script>
+        <script src="<c:url value='/assets/js/openlayers/v3.4.0/build/ol.js' />" type="text/javascript"></script>
+        <script type="text/javascript" src="<c:url value='/assets/js/map/layer.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
+        <script>
+	        var projection = ol.proj.get('EPSG:3857');
+	
+	        var center = [9981537.517655358, 3183208.900300782];
+	        //View
+	        var view = new ol.View({
+	            center: center,
+	            zoom: 15,
+	            minZoom: 1
+	        });
+	        var vectorSource = new ol.source.Vector();
+	        var vectorLayer = new ol.layer.Vector({ source: vectorSource });
+	        //Map
+	        map = new ol.Map({
+	            target: 'dmap',
+	            projection:projection,
+	            view: view
+	        });
+	      
+	        avc= new ol.layer.Tile({
+	            source: new ol.source.OSM()
+	        });
+	        map.addLayer(avc);        
+        
+        
+        
+        </script>
+        
     </jsp:attribute>
    
     <jsp:body>
@@ -62,9 +95,14 @@
                 <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 300px;"></div>
 
             </ax:split-panel>
+            
             <ax:splitter></ax:splitter>
+            
             <ax:split-panel width="*" style="padding-left:10px;" >
-            	 <div   data-fit-height-aside="grid-view-02">
+            
+            <ax:split-layout name="ax2" orientation="horizontal">
+				<ax:split-panel height="40%" scroll="scroll" >
+            	 <div data-fit-height-aside="grid-view-02">
 				            <ax:form name="searchView1">
 				                <ax:tbl clazz="ax-search-tbl" minWidth="500px">
 									<ax:tr>
@@ -95,7 +133,20 @@
 				        <div class="H10"></div>
                 <div data-ax5grid="grid-view-02"  data-fit-height-content="grid-view-02" style="height: 300px;" ></div>
             </ax:split-panel>
-        </ax:split-layout>
-
+            
+            
+			  <ax:split-panel height="*">
+			        <div id="dmap" style="width:100%;height:100%;">
+	          	      	<div id="info"></div>
+	          	    </div>
+	          	    <div>
+				      <div id="popup">
+						 <div id="popup-content"></div>
+				      </div>
+			   	 	</div>    
+			 </ax:split-panel>            
+        	</ax:split-layout>
+        	</ax:split-panel>
+		</ax:split-layout>
     </jsp:body>
 </ax:layout>

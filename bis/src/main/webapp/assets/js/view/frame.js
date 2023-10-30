@@ -241,7 +241,6 @@ fnObj.frameView = axboot.viewExtend({
  */
 fnObj.topMenuView = axboot.viewExtend({
     initView: function () {
-    	debugger;
         this.target = $("#ax-top-menu");
 
         var menuItems = fnObj.menuItems;
