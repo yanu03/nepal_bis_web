@@ -77,7 +77,7 @@
         <script src="<c:url value='/assets/js/map/proj4js.js' />" type="text/javascript"></script>
         <script src="<c:url value='/assets/js/openlayers/v3.4.0/build/ol.js' />" type="text/javascript"></script>
 	<%--<script src="<c:url value='/assets/js/map/bootstrap.js'/>" type="text/javascript"></script> --%>
-        <script type="text/javascript" src="<c:url value='/assets/js/view/vehiclelist.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/assets/js/view/vehiclemonitoring.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/assets/js/map/layer.js' />"></script>
 		 <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
          <script>
