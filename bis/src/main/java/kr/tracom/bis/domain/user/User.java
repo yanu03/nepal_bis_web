@@ -50,11 +50,11 @@ public class User extends BaseJpaModel<String> {
     @Comment(value = "이메일")
     @ColumnPosition(4)
     private String email;
-
+/*
     @Column(name = "HP_NO", length = 15)
     @Comment(value = "휴대폰")
     @ColumnPosition(5)
-    private String hpNo;
+    private String hpNo;*/
 
     @Column(name = "REMARK", length = 200)
     @Comment(value = "비고")

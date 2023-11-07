@@ -31,8 +31,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
-    public final StringPath hpNo = createString("hpNo");
-
     public final StringPath ip = createString("ip");
 
     public final DateTimePath<java.time.Instant> lastLoginDate = createDateTime("lastLoginDate", java.time.Instant.class);

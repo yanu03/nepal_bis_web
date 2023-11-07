@@ -16,13 +16,6 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         	rightItem.push(sendData);
         	rightItem.push(division);
         	
-        	/*rightItem.forEach(function(n){
-        		n.startDate=sendData.startDate;
-        		n.endDate=sendData.endDate;
-        		n.Select=division.Select;
-        	});*/
-        	//sendData.itemList=rightItem;
-        	//sendData.Select=division.Select;
         	axboot.ajax({
                 type: "PUT",
                 url: "/api/v1/bisMaHistory",
@@ -130,8 +123,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
          url: '/api/v1/bisMtRoutestations',
          data:  {routeId: data.routeId},
          callback: function (res) {
-             //caller.gridView02.setData(res);
-             //caller.gridView02.routeId=data.routeId;
+             caller.gridView02.setData(res);
+             caller.gridView02.routeId=data.routeId;
             
              	
             },

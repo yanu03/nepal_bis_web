@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.tracom.bis.domain.user.UserHistoryMapper">
+
+	<select id="loginHistory" resultType="user" parameterType="map" statementType="PREPARED">
+		SELECT
+	        COLLECT_DATE AS collectDate,
+	        USER_CD AS userCode,
+	        USER_NM AS userName,
+	        LOCALE AS locale
+		FROM
+		   bis_ht_login
+		
+		WHERE
+			COLLECT_DATE BETWEEN #{startDate} AND #{endDate}
+	
+	</select>
+	
+	<select id="add" parameterType="kr.tracom.bis.domain.user.User"
+		resultType="kr.tracom.bis.domain.user.User">
+			INSERT INTO bis_ht_login 
+			(
+				COLLECT_DATE,
+				USER_CD,
+				USER_NM,
+				LOCALE
+			) 
+			VALUES 
+			(
+				#{collectDate},
+				#{userCode},
+				#{userName},
+				#{locale}
+			)
+	</select>	
+
+</mapper>
