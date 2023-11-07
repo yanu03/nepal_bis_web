@@ -50,6 +50,7 @@ public class AXBootLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     @Transactional
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    	//로그인 success
         final AXBootUserAuthentication userAuthentication = new AXBootUserAuthentication((SessionUser) authentication.getPrincipal());
         adminTokenAuthenticationService.addAuthentication(response, userAuthentication);
 

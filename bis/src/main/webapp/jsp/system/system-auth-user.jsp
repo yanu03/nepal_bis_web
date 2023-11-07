@@ -116,10 +116,11 @@
                             <ax:td label="ax.admin.user.email" width="300px">
                                 <input type="text" name="email" data-ax-path="email" maxlength="50" title="이메일" placeholder="abc@abc.com" class="av-email form-control" value=""/>
                             </ax:td>
+			<%--     
                             <ax:td label="ax.admin.user.hp" width="220px" labelWidth="120px">
                                 <input type="text" name="hpNo" data-ax-path="hpNo" maxlength="15" placeholder="" class="av-phone form-control W120" data-ax5formatter="phone" value=""/>
                             </ax:td>
-                        </ax:tr>
+                        </ax:tr> --%>
                         <ax:tr labelWidth="120px">
                             <ax:td label="ax.admin.user.language" width="300px">
                                 <ax:common-code groupCd="LOCALE" dataPath="locale" clazz="form-control W100"/>
