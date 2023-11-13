@@ -119,8 +119,8 @@
 			<%--     
                             <ax:td label="ax.admin.user.hp" width="220px" labelWidth="120px">
                                 <input type="text" name="hpNo" data-ax-path="hpNo" maxlength="15" placeholder="" class="av-phone form-control W120" data-ax5formatter="phone" value=""/>
-                            </ax:td>
-                        </ax:tr> --%>
+                            </ax:td>--%>
+                        </ax:tr> 
                         <ax:tr labelWidth="120px">
                             <ax:td label="ax.admin.user.language" width="300px">
                                 <ax:common-code groupCd="LOCALE" dataPath="locale" clazz="form-control W100"/>

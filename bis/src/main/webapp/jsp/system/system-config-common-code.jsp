@@ -11,8 +11,7 @@
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" var="LANG" />
         <ax:script-lang key="ax.admin" var="COL" />
-        <%-- <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-config-common-code.js' />"></script> --%>
-        <script type="text/javascript" src="<c:url value='/assets/js/view/system/system-config-common-code.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-config-common-code.js' />"></script>
     </jsp:attribute>
     <jsp:body>
 
