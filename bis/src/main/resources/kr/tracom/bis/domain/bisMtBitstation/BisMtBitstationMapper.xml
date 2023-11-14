@@ -57,8 +57,11 @@
 			            date_format(now(),'%Y%m%d'),
 			            #{userId},
 			            #{useYn}
-			        )
-	      	
+			        )ON DUPLICATE KEY
+			        UPDATE
+			        	UPDATE_DATE = date_format(now(),'%Y%m%d'),
+			        	USER_ID=#{userId},
+			        	USE_YN=#{useYn}
 	     	   </if>
 	        </if>
             

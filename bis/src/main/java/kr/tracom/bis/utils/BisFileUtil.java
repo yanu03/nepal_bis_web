@@ -27,7 +27,7 @@ import kr.tracom.bis.domain.bisItForm.BisItFile;
 public class BisFileUtil {
 	
 	//final static String URL="http://192.168.40.100:8085/";	//클라우드
-	final static String URL="http://127.0.0.1:8085/bis/";	//클라우드
+	final static String URL="http://127.0.0.1:8385/bis/";	//클라우드
 	//final static String URL="http://192.168.34.250:8085/bis/";	//파일서버
 	
 	public int upload(File uploadFile, String fileName, Map<String,Object> fileMap, HttpServletRequest request)
