@@ -543,7 +543,6 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         			senddata.ScheduleCode = 0;
         			sendList.push(senddata);
         		}
-
             	axboot.ajax({
       		         type: "POST",
       		         async:false,

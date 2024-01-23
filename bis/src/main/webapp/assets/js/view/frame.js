@@ -28,8 +28,8 @@ fnObj.pageStart = function () {
             if(item.hasChildren = (item.children && item.children.length)){
                 item.children = convertMenuItems(item.children);
             }
-            if(item.multiLanguageJson && item.multiLanguageJson['en']){
-                item.name = item.multiLanguageJson['en'];
+            if(item.multiLanguageJson && item.multiLanguageJson[SCRIPT_SESSION.details.language]){
+                item.name = item.multiLanguageJson[SCRIPT_SESSION.details.language];
             }
             _list.push(item);
         });
@@ -207,8 +207,8 @@ fnObj.frameView = axboot.viewExtend({
                                     if (treeNode.program) {
 
                                         var menuNm = treeNode.menuNm;
-                                        if(treeNode.multiLanguageJson && treeNode.multiLanguageJson['en']){
-                                            menuNm = treeNode.multiLanguageJson['en'];
+                                        if(treeNode.multiLanguageJson && treeNode.multiLanguageJson[SCRIPT_SESSION.details.language]){
+                                            menuNm = treeNode.multiLanguageJson[SCRIPT_SESSION.details.language];
                                         }
 
                                         ACTIONS.dispatch(ACTIONS.MENU_OPEN, $.extend({}, treeNode.program, {menuId: treeNode.menuId, menuNm: menuNm}));
@@ -269,8 +269,8 @@ fnObj.topMenuView = axboot.viewExtend({
         this.menu.onClick = function () {
             if (this.program) {
                 var menuNm = this.menuNm;
-                if(this.multiLanguageJson && this.multiLanguageJson['en']){
-                    menuNm = this.multiLanguageJson['en'];
+                if(this.multiLanguageJson && this.multiLanguageJson[SCRIPT_SESSION.details.language]){
+                    menuNm = this.multiLanguageJson[SCRIPT_SESSION.details.language];
                 }
                 ACTIONS.dispatch(ACTIONS.MENU_OPEN, $.extend({}, this.program, {menuId: this.menuId, menuNm: menuNm}));
             }

@@ -242,7 +242,7 @@
 					    <div style="width:120px; " data-ax-td-label="" >Command</div>
 					    <div data-ax-td-wrap="">
 						    <ul class="checkList" style="margin-top:7px">
-								<li><input type="radio" name="box" data-ax-path="schedule"  value="0">Scenario</li>
+								<!-- <li><input type="radio" name="box" data-ax-path="schedule"  value="0">Scenario</li> -->
 							 	<li><input type="radio" name="box" data-ax-path="schedule" value="1">Monitor ON/OFF</li>
 								<li><input type="radio" name="box" data-ax-path="schedule" value="2">Illuminance</li>
 			       			</ul>

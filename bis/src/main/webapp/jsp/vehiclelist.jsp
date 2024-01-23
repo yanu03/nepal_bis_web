@@ -104,7 +104,7 @@
                             </ax:td>
                         </ax:tr>
                         
-                        <ax:tr labelWidth="120px">
+                        <%-- <ax:tr labelWidth="120px">
                           <ax:td label="bis.company.companyname" width="300px" style="height:62px;">
                                      <input type="hidden" name="companyId" title="<ax:lang id="bis.company.companyid"/>" data-ax-path="companyId" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
@@ -119,12 +119,12 @@
                                 <ax:td label="bis.vehicle.vehiclecapa" width="300px">
                             	    <input type="text" name="vehicleCapa" data-ax-validate="required" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.vehicle.vehiclecapa"/>" data-ax-path="vehicleCapa" maxlength="100" title="" class="form-control" value=""/>
                             </ax:td>
-                        </ax:tr>
+                        </ax:tr> --%>
                         
                         <ax:tr labelWidth="120px">
-                                <ax:td label="bis.countrycode" width="300px">
+                                <%-- <ax:td label="bis.countrycode" width="300px">
                         		    <ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>
-                                </ax:td>
+                                </ax:td> --%>
                              <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="255" title="" class="form-control" value=""/>
                            		<div class="input-group">

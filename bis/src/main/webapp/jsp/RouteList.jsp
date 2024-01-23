@@ -150,26 +150,37 @@
                             </ax:td>
                         </ax:tr>
                         <ax:tr labelWidth="120px">
-                                <ax:td label="bis.route.turnstationid" width="300px" style="height:62px;">
+                                <%-- <ax:td label="bis.route.turnstationid" width="300px" style="height:62px;">
                                  <div class="input-group">
                                   <input type="hidden" name="turnStationId"  title="<ax:lang id="bis.route.turnstationid"/>" data-ax-path="turnStationId" maxlength="100" title="" class="form-control" value=""/>
                             	   <input type="text" name="turnStationName" data-ax-path="turnStationName" maxlength="100" title="" class="form-control" value="" readonly/>
                             		<span class="input-group-addon station_button3"><i class="cqc-magnifier"></i></span>
                         	    </div>
-                                </ax:td>
-                                 <ax:td label="bis.route.permissioncount" width="300px">
+                                </ax:td> --%>
+                            <%--      <ax:td label="bis.route.permissioncount" width="300px">
                                 <input type="text" name="permissionCount" data-ax-validate="required" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.route.permissioncount"/>" data-ax-path="permissionCount" maxlength="100" title="" class="form-control" value=""/>
-                            </ax:td>
-                                 <ax:td label="bis.route.begindate" width="300px" style="height:62px;">
+                            </ax:td> --%>
+                                 <ax:td label="bis.route.begindate" width="300px">
                                <div class="input-group" >
                                 <input type="text" class="form-control" id="datepicker1" placeholder="yyyymmdd" data-ax-path="beginDate" readonly/>
                                 <span class="input-group-addon" id="datepickerbutton1"><i class="cqc-calendar"></i></span>
                             </div>
                          <!--        <input type="text" name="beginDate" data-ax-path="beginDate" maxlength="100" title="" class="form-control" value=""/>
                      -->        </ax:td>
-             
+                       <ax:td label="bis.route.closedate" width="300px">
+                          <div class="input-group" >
+                                <input type="text" class="form-control"  id="datepicker2" placeholder="yyyymmdd" data-ax-path="closeDate" readonly/>
+                                <span class="input-group-addon " id="datepickerbutton2"><i class="cqc-calendar"></i></span>
+                            </div>
+                           <!--   
+                           
+                              <input type="text" name="closeDate" data-ax-path="closeDate" maxlength="100" title="" class="form-control" value=""/>
+                       -->      </ax:td>
+           					<ax:td label="bis.route.routedistance" width="300px">
+                                <input type="text" name="routeDistance" data-ax-validate="required" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.route.routedistance"/>" data-ax-path="routeDistance" maxlength="100" title="" class="form-control" value=""/>
+                            </ax:td>
                         </ax:tr>
-  						<ax:tr labelWidth="120px">
+  						<%-- <ax:tr labelWidth="120px">
                           <ax:td label="bis.route.closedate" width="300px">
                           <div class="input-group" >
                                 <input type="text" class="form-control"  id="datepicker2" placeholder="yyyymmdd" data-ax-path="closeDate" readonly/>
@@ -186,11 +197,11 @@
                                 <input type="text" name="routeDistance" data-ax-validate="required" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.route.routedistance"/>" data-ax-path="routeDistance" maxlength="100" title="" class="form-control" value=""/>
                             </ax:td>
                             
-                        </ax:tr>
+                        </ax:tr> --%>
                         <ax:tr labelWidth="120px">
-                          <ax:td label="bis.countrycode" width="300px">
+                          <%-- <ax:td label="bis.countrycode" width="300px">
                                 	<ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>  
-                           </ax:td>
+                           </ax:td> --%>
                                   <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
@@ -201,9 +212,12 @@
                                   <ax:td label="bis.route.requesttime" width="300px">
                                 <input type="text" name="requestTime" onkeydown="onlyNumber(this)" data-ax-path="requestTime" maxlength="100" title="" class="form-control" value=""/>
                             </ax:td>
+                            <ax:td label="bis.updatedate" width="300px">
+                  		            <input type="text" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
+                             </ax:td>
                             
                         </ax:tr>
-          			   <ax:tr labelWidth="120px">
+          			   <%-- <ax:tr labelWidth="120px">
                           <ax:td label="bis.route.charge" width="300px">
                                 <input type="text" name="charge" data-ax-path="charge" onkeydown="onlyNumber(this)" maxlength="100" title="" class="form-control" value=""/>
                             </ax:td>
@@ -213,7 +227,7 @@
                                   <ax:td label="bis.updatedate" width="300px">
                     		            <input type="text" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
                                   </ax:td>
-                        </ax:tr>
+                        </ax:tr> --%>
                         
                         <ax:tr labelWidth="120px">
       						 <ax:td label="bis.remark" width="300px">

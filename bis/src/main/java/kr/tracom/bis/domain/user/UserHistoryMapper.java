@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.chequer.axboot.core.mybatis.MyBatisMapper;
 
-@Repository
+
 public interface UserHistoryMapper extends MyBatisMapper {
 	List<User> loginHistory(Map<String,Object> map);
-	void add(User user);
+	//void add(User user);
+	//void add(SessionUser user);
+	void add(Map<String,Object> user);
 }

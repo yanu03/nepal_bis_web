@@ -19,8 +19,7 @@
 	
 	</select>
 	
-	<select id="add" parameterType="kr.tracom.bis.domain.user.User"
-		resultType="kr.tracom.bis.domain.user.User">
+	<insert id="add" parameterType="map">
 			INSERT INTO bis_ht_login 
 			(
 				COLLECT_DATE,
@@ -30,11 +29,11 @@
 			) 
 			VALUES 
 			(
-				#{collectDate},
-				#{userCode},
-				#{userName},
+				date_format(now(),'%Y%m%d%H%i%s'),
+				#{userCd},
+				#{userNm},
 				#{locale}
 			)
-	</select>	
+	</insert>	
 
 </mapper>

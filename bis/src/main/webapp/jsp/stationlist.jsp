@@ -317,7 +317,7 @@ ul.businfomenu>li {
                              
                         </ax:tr>
                         <ax:tr labelWidth="120px">
-                           <ax:td label="bis.station.displayname"
+                           <%-- <ax:td label="bis.station.displayname"
 										width="300px">
                                <input type="text" name="displayName"
 											data-ax-path="displayName" maxlength="100" title=""
@@ -330,55 +330,66 @@ ul.businfomenu>li {
 											data-ax-path="displayEname" maxlength="100" title=""
 											class="form-control" value="" />
                         
-                                </ax:td>
+                                </ax:td> --%>
                                      <ax:td label="bis.station.gpsx" width="300px">
                               	 	 <input type="text" name="gpsX" data-ax-validate="required"  title="<ax:lang id="bis.station.gpsx"/>"
 											data-ax-path="gpsX" maxlength="100"
 											class="form-control" value="" />
                             	</ax:td>
-                              
-             
-                        </ax:tr>
-  						<ax:tr labelWidth="120px">
-  						   <ax:td label="bis.station.gpsy" width="300px">
+                              <ax:td label="bis.station.gpsy" width="300px">
                             	   <input type="text" name="gpsY" data-ax-validate="required"  title="<ax:lang id="bis.station.gpsy"/>"
 											data-ax-path="gpsY" maxlength="100" 
 											class="form-control" value="" />
                    		  	   </ax:td>
-                          <ax:td label="bis.station.tmx" width="300px">
-                        
-                              <input type="text" name="tmX"
-											data-ax-path="tmX" maxlength="100" title=""
-											class="form-control" value="" />
-                           </ax:td>
-                                  <ax:td label="bis.station.tmy" width="300px">
+	                          <ax:td label="bis.station.tmx" width="300px">
+	                        
+	                              <input type="text" name="tmX"
+												data-ax-path="tmX" maxlength="100" title=""
+												class="form-control" value="" />
+	                           </ax:td>
+             
+                        </ax:tr>
+  						<ax:tr labelWidth="120px">
+                            <ax:td label="bis.station.tmy" width="300px">
                                 <input type="text" name="tmY"
 											data-ax-path="tmY" maxlength="100" title=""
 											class="form-control" value="" />
                             </ax:td>
-                            
+                            <ax:td label="bis.areacode" width="300px">
+                                   <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
+                           		<div class="input-group">
+                            	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
+                              	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
+                                </div>
+                            </ax:td>
+                                  <ax:td label="bis.updatedate"
+										width="300px">
+                                <input type="text" name="updateDate"
+											data-ax-path="updateDate" maxlength="100" title=""
+											class="form-control" value="" readonly />
+                            </ax:td>
                             
                         </ax:tr>
                         <ax:tr labelWidth="120px">
-                           <ax:td label="bis.station.centeryn" width="300px" style="height:46px;">
+                           <%-- <ax:td label="bis.station.centeryn" width="300px" style="height:46px;">
 									<ax:BisCtDetailCode groupCd="CENTER_YN" dataPath="centerYn" clazz="form-control"/>
-                            </ax:td>
-                                  <ax:td label="bis.station.mobileno" width="300px" style="height:46px;" >
+                            </ax:td> --%>
+                            <%--       <ax:td label="bis.station.mobileno" width="300px" style="height:46px;" >
                                 <input type="text" name="mobileNo"
 											data-ax-path="mobileNo" onkeydown="onlyNumber(this)" maxlength="7" title=""
 											class="form-control" value="" />
-                            </ax:td>
-                                  <ax:td label="bis.station.representationyn"
+                            </ax:td> --%>
+                            <%--       <ax:td label="bis.station.representationyn"
 										width="300px">
                               <!--   <input type="text" name="representationYn"
 											data-ax-path="representationYn" maxlength="100" title=""
 											class="form-control" value="" /> -->
 											            <ax:common-code groupCd="REPRESENTATION_YN"
 											dataPath="representationYn" clazz="form-control" />
-                            </ax:td>
+                            </ax:td> --%>
                             
                         </ax:tr>
-          			   <ax:tr labelWidth="120px">
+          			   <%-- <ax:tr labelWidth="120px">
           			      <ax:td label="bis.countrycode" width="300px">
                    		            <ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>
                             
@@ -398,7 +409,7 @@ ul.businfomenu>li {
                             </ax:td>
                            
                            
-                        </ax:tr>
+                        </ax:tr> --%>
                         
                          <ax:tr labelWidth="120px">
                                 <ax:td label="bis.userid" width="300px">

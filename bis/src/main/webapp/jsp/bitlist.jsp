@@ -134,43 +134,40 @@
                                <ax:td label="bis.bit.cameraipaddress" width="300px">
                             	     <input type="text" name="cameraIpAddress" data-ax-path="cameraIpAddress" maxlength="15" title="" class="form-control" value=""/>
                           	  </ax:td>
-                              <ax:td label="bis.bit.installdate" width="300px" style="height:46px;">
+                            <%--   <ax:td label="bis.bit.installdate" width="300px" style="height:46px;">
                                <div class="input-group"  >
                                 <input type="text" class="form-control" id="datepicker1" placeholder="yyyy-mm-dd" data-ax-path="installDate" readonly/>
                                 <span class="input-group-addon" id="date_button"><i class="cqc-calendar"></i></span>
                             </div>
-                         	   	   </ax:td>
+                         	   	   </ax:td> --%>
                          	   <ax:td label="SERIAL NO" width="300px">
                             	     <input type="text" name="serialNo" data-ax-path="serialNo" maxlength="15" title="" class="form-control" value=""/>
                           	  </ax:td>
-			            </ax:tr>
-                        <ax:tr labelWidth="120px">
-	                         <ax:td label="bis.countrycode" width="300px" style="height:46px;">
-	                                	<ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>  
-	                               <!--  	 <input type="text" name="countryCode" data-ax-path="countryCode" maxlength="100" title="" class="form-control" value=""/>-->
-	                          </ax:td>
-                              <ax:td label="bis.areacode" width="300px">
+                          	  <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode" />" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
                               	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
                                 </div>
                             </ax:td>
+			            </ax:tr>
+                        <ax:tr labelWidth="120px">
+	                         <%-- <ax:td label="bis.countrycode" width="300px" style="height:46px;">
+	                                	<ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>  
+	                               <!--  	 <input type="text" name="countryCode" data-ax-path="countryCode" maxlength="100" title="" class="form-control" value=""/>-->
+	                          </ax:td> --%>
 			                     <ax:td label="bis.updatedate" width="300px">
 			                        <input type="text" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
 			                     </ax:td>
-			                       
-                        </ax:tr>
-                        <ax:tr labelWidth="120px">
-                       		<ax:td label="bis.userid" width="300px">
+			                     <ax:td label="bis.userid" width="300px">
                            		  <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
                           		  </ax:td>   
-                            <ax:td label="bis.useyn" width="300px">
-                          		  <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
-                           	</ax:td>
-                           
-                  		     <ax:td label="" width="300px">
-                  		    </ax:td>
+	                            <ax:td label="bis.useyn" width="300px">
+	                          		  <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
+	                           	</ax:td>
+	                           
+	                  		     <ax:td label="" width="300px">
+	                  		    </ax:td>  
                         </ax:tr>
                     </ax:tbl>
                 </ax:form>
