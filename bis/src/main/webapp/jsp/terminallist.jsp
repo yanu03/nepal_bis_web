@@ -121,9 +121,9 @@
                         </ax:tr>
                         
                         <ax:tr labelWidth="120px">
-              		          <ax:td label="bis.countrycode" width="300px" style="height:46px">
+              		          <%-- <ax:td label="bis.countrycode" width="300px" style="height:46px">
       								<ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>
-                     	       </ax:td>
+                     	       </ax:td> --%>
                                <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">

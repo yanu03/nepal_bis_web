@@ -1,6 +1,7 @@
 package kr.tracom.bis.security;
 
 import kr.tracom.bis.domain.user.SessionUser;
+import kr.tracom.bis.domain.user.UserHistoryService;
 import kr.tracom.bis.domain.user.UserService;
 import kr.tracom.bis.utils.SessionUtils;
 import com.chequer.axboot.core.api.response.ApiResponse;
@@ -29,6 +30,7 @@ public class AXBootLoginFilter extends AbstractAuthenticationProcessingFilter {
     private final AXBootTokenAuthenticationService adminTokenAuthenticationService;
     private final AXBootAuthenticationEntryPoint adminAuthenticationEntryPoint;
     private final UserService userService;
+    private UserHistoryService userHistoryService;
 
     public AXBootLoginFilter(String urlMapping, AXBootTokenAuthenticationService adminTokenAuthenticationService, UserService userService, AuthenticationManager authenticationManager, AXBootAuthenticationEntryPoint adminAuthenticationEntryPoint) {
         super(new AntPathRequestMatcher(urlMapping));
@@ -53,6 +55,10 @@ public class AXBootLoginFilter extends AbstractAuthenticationProcessingFilter {
     	//로그인 success
         final AXBootUserAuthentication userAuthentication = new AXBootUserAuthentication((SessionUser) authentication.getPrincipal());
         adminTokenAuthenticationService.addAuthentication(response, userAuthentication);
+        
+        // 로그인 이력 추가
+        SessionUser loggedInUser = (SessionUser) authentication.getPrincipal(); // 성공한 사용자 정보 가져오기
+       // userHistoryService.add(loggedInUser); // 로그인 이력 서비스를 통해 이력 추가
 
         response.setContentType(HttpUtils.getJsonContentType(request));
         response.getWriter().write(JsonUtils.toJson(ApiResponse.of(ApiStatus.SUCCESS, "Login Success")));

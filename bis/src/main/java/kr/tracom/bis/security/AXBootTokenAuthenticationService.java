@@ -1,7 +1,9 @@
 package kr.tracom.bis.security;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ import kr.tracom.bis.domain.program.ProgramService;
 import kr.tracom.bis.domain.program.menu.Menu;
 import kr.tracom.bis.domain.program.menu.MenuService;
 import kr.tracom.bis.domain.user.SessionUser;
+import kr.tracom.bis.domain.user.UserHistoryService;
 import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenu;
 import kr.tracom.bis.domain.user.auth.menu.AuthGroupMenuService;
 import kr.tracom.bis.utils.JWTSessionHandler;
@@ -47,6 +50,9 @@ public class AXBootTokenAuthenticationService {
 
     @Inject
     private MenuService menuService;
+    
+    @Inject
+    private UserHistoryService userHistoryService;
 
     public AXBootTokenAuthenticationService() {
         jwtSessionHandler = new JWTSessionHandler(DatatypeConverter.parseBase64Binary("YXhib290"));
@@ -64,6 +70,13 @@ public class AXBootTokenAuthenticationService {
         final SessionUser user = authentication.getDetails();
         setUserEnvironments(user, response);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+    	// 로그인 이력 추가
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("userCd", user.getUserCd());
+        userMap.put("userNm", user.getUsername());
+        userMap.put("locale", user.getLocale().toString());
+        userHistoryService.add(userMap);
     }
 
     public void setUserEnvironments(SessionUser user, HttpServletResponse response) throws IOException {

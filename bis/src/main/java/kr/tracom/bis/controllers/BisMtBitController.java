@@ -1,5 +1,7 @@
 package kr.tracom.bis.controllers;
 
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,4 +64,34 @@ public class BisMtBitController extends BaseController {
     	
 		return list;
 	}
+    
+    //선택된 디렉토리(폴더)에 존재하는 파일이름을 모두 불러옵니다.
+    public static void ftpFileReadFiles(String uri, String id, String pw,String directoryLocation){
+    	FTPClient ftp = null;
+		try {
+			ftp = new FTPClient();
+			ftp.setControlEncoding("UTF-8");
+			ftp.connect(uri);
+			ftp.login(id, pw);
+			ftp.changeWorkingDirectory(directoryLocation);//파일 가져올 디렉터리 위치
+			ftp.setFileType(FTP.BINARY_FILE_TYPE);//파일 타입 설정 기본적으로 파일을 전송할떄는 BINARY타입을 사용합니다.
+
+			for(String fileName :ftp.listNames()){
+				System.out.println(fileName);
+			}
+			
+			ftp.logout();
+		} catch (SocketException e) {
+			System.out.println("Socket:" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("IO:" + e.getMessage());
+		} finally {
+			if (ftp != null && ftp.isConnected()) {
+				try {
+					ftp.disconnect();//ftp연결 끊기
+				} catch (IOException e) {
+				}
+			}
+		}
+    }    
 }

@@ -141,7 +141,7 @@ public class Menu extends BaseJpaModel<Long> implements Cloneable {
         Locale locale = RequestUtils.getLocale(request);
         
         //프로그램명 locale 설정부분
-        locale = new Locale("en");
+        //locale = new Locale("en");
 
         if (getMultiLanguageJson() != null) {
             JsonNode jsonNode = getMultiLanguageJson().findPath(locale.getLanguage());

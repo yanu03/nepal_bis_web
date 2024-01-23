@@ -32,6 +32,19 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             }
         });
     },
+    ROUTEMAP: function (caller, act, data) {
+    	data.key="bisKey";
+    	data.useYn="Y";
+
+    	if(!($("#"+data.routeId).length))
+		{
+			 var str=" <div id='"+data.routeId+"' style='border:1px solid #b5b5b5'>";
+		     str+= " </div>";
+		     //$("#route").append(str);
+		}
+    	  routeMap(data);
+    },    
+    
     Routestation_GET: function (caller, act, data) {
     	data.key="bisKey";
     	data.useYn="Y";
@@ -203,3 +216,130 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         this.target.addRow({__created__: true}, "last");
     }
 });
+
+
+function routeMap(data)
+{
+	var url=COL("bis.apiserverip")+'routeLine';
+	ajaxCall(function(result,res){
+		if(result){
+			res = res.Information;
+        	if(0 < res.length)
+        		{
+        	    if($("#"+res[0].routeId).length)
+        	    	{
+        	    		var length = res.length;
+        	    		var str="";
+        	        	str+= "<div style='height:20px;background-color:#e3e3e3;'>";
+        	    	    str+= "<div style='float:right;'> <a href='javascript:void(0);' onclick='routeClose(\""+ data.routeId+"\","+data.dindex+")'><img src='/assets/images/map/close.gif'> </a></div>";
+        	    	    str+= "<div id=time"+data.routeId+" style='float:right;'>refreshTime:30</div>";
+        	    	    str+= "<div> "+COL("bis.route.routename")+" : "+data.routeName+"</div>";
+        	    	    
+        	    	    str+= "</div>";
+        	    	    str+=" <div style='height:240px;overflow:auto;overflow-y:hiden;'>";
+        	    	    str+=" <ol class='rt-line' style='position: relative;width:"+(90*length+60)+"px;'>";
+
+        	    	    for(var i = 0; i < length;i++)
+        	    	    	{
+        	    	    		var img="/assets/images/map/icon_bus_up.png";
+        	    	    		if(res[i].updownDir == 1)
+        	    	    			{
+        	    	    			img="/assets/images/map/icon_bus_down.png";
+        	    	    			}
+        	    	    		if(i == 0)
+        	    				{
+        	    	    			img = "/assets/images/map/icon_bus_start.png"
+        	    				}
+        	    	    		else if(i == length-1)
+        	    				{
+        	    	    			img = "/assets/images/map/icon_bus_end.png"
+        	    				}
+        	    	            str+=" <li class='line-up' >";
+        	    	            str+="<a class='busstopStart' href='javascript:void(0);' onclick=''><img src='"+img+"' alt='기점'></a>";
+        	    	            str+="<span class='busstop-name' title='"+res[i].stationName+"'>"+res[i].stationName+"</span>";
+        	    	            str+="<span class='busstop-stno' title='"+(i+1)+"'>"+(i+1)+"</span>";
+        	    	           
+        	    	                	if(res[i].updownDir == 0)
+        	    	        			{
+        	    	                		 if(res[i].vehicleId!=null)
+        	        	    	            	{
+        	    	                			 	str+="<span class='busicon' id='"+data.routeId+(i+1)+"'><img src='/assets/images/map/icon_bus_vehicle_42_blue.png' ></span>";
+        	        	    	            	}else
+    	        	    	            		{
+        	        	    	            		str+="<span class='busicon' id='"+data.routeId+(i+1)+"' style='display:none;'><img src='/assets/images/map/icon_bus_vehicle_42_blue.png' ></span>";
+    	        	    	            		}
+        	        	    	           }
+        	    	                	else
+        	    	            		{
+        	    	                		if(res[i].vehicleId!=null)
+    	        	    	            	{
+        	    	                			str+="<span class='busicon' id='"+data.routeId+(i+1)+"'><img src='/assets/images/map/icon_bus_vehicle_42_red.png' ></span>";        	    	            		
+    	        	    	            	}
+        	    	                		else
+        	    	                		{
+        	    	                			str+="<span class='busicon' id='"+data.routeId+(i+1)+"'  style='display:none;'><img src='/assets/images/map/icon_bus_vehicle_42_red.png' ></span>";
+        	    	                		}
+    	    	                		}
+        	    	            	
+        	    	            if(i != length-1)
+        	    	            	{
+        	    	            		str+="<span class='traffic-ok' onmouseover='displaySpe('spe1')' onmouseout='undisplSpe('spe1')'></span>";
+        	    	            	}
+        	    	            
+        	    	            str+= "</li>";   
+        	    	    	}
+        	    	    str+= "</ol>";
+        	    	    str+= " </div>";
+        	    	    $("#"+res[0].routeId).html(str);
+
+        	    	    var divid="#time"+data.routeId;
+        	    	    for(var j = 0;j < divtimecheck.length;j++)
+        				{
+        					if(divtimecheck[j].divid==divid)
+    						{
+    							clearTimeout(divtimecheck[j].timeout);
+    							divtimecheck.splice(j,1);
+    							break;
+    						}
+        				}
+        	  for(var j = 0;j < divcheck.length;j++)
+        				{
+        					if(divcheck[j].divid==divid)
+        						{
+        							clearTimeout(divcheck[j].timeout);
+        							divcheck.splice(j,1);
+        							break;
+        						}
+        				}
+		        	  var d = new Date();
+		        	  var time = d.getSeconds();
+		        	  if(29 < time )
+	        		  {
+	        		  time = time - 30;
+	        		  }
+		        	  time = time - 30;
+		        	  
+		        	  time = Math.abs(time);
+		        	  
+        	    	routeTime(divid,time);
+        	    	
+        	    	var timeout = setTimeout(function(){routeBus(data,length);},time*1000);
+        	    	var check={"divid":divid,"timeout":timeout};
+        			divcheck.push(check);
+        	    	}
+        		}else
+        		{
+        			routeClose(data.routeId,data.dindex);
+        			alert("There are no registered stations");
+        		}
+			}
+		else{
+    			console.log(err);
+                axDialog.alert({
+                    theme: "primary",
+                    title:" ",
+                    msg: "not responding."
+                });		
+    		}
+	},url,data);
+}

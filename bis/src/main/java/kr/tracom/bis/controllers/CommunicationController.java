@@ -843,6 +843,8 @@ public class CommunicationController extends BaseController {
 			
 			if (null == senddata.get("deviceId")) {
 				int type = (int) senddata.get("deviceType");
+				
+				//BIT장비
 				if (3 == type) 
 				{
 					bitlist = bisMtBitService.findId();
@@ -861,12 +863,15 @@ public class CommunicationController extends BaseController {
 							//return parameterMap;
 						} else {
 							int ret_code = (int) sendMap.get("ret_code");
+							//확인필요함 여기부터, ftp캡처 요청코드 필요
 							if (ret_code != 1) {
 
 							check++;
 							sendMap.put("id", bitlist.get(j).getBitId());
 							receiveList.add(sendMap);	
 							//return sendMap;
+							
+							
 							}
 						}
 					}

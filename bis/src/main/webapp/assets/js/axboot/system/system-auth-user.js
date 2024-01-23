@@ -63,10 +63,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             list.push(item);
         });
 
-        caller.gridView02.setData(list);
+        //caller.gridView02.setData(list);
     },
     ROLE_GRID_DATA_GET: function (caller, act, data) {
-        return caller.gridView02.getData("Y");
+        //return caller.gridView02.getData("Y");
     }
 });
 
@@ -100,7 +100,7 @@ fnObj.pageStart = function () {
             _this.pageButtonView.initView();
             _this.searchView.initView();
             _this.gridView01.initView();
-            _this.gridView02.initView();
+            //_this.gridView02.initView();
             _this.formView01.initView();
 
             ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);

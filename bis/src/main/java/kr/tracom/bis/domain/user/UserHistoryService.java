@@ -11,15 +11,17 @@ import kr.tracom.bis.domain.BaseService;
 
 
 @Service
-public class UserHistoryService extends BaseService<User, String> {
+public class UserHistoryService {
 	
-	private UserHistoryMapper userHistoryMapper;
+	@Inject
+	UserHistoryMapper userHistoryMapper;
 
 	public List<User> loginHistory(Map<String,Object> map) {
 		return userHistoryMapper.loginHistory(map);
 	}
 	
-	public void add(User user){
+	//public void add(SessionUser user){
+	public void add(Map<String, Object> user){
 		userHistoryMapper.add(user);
 	}
     

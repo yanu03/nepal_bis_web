@@ -459,3 +459,10 @@ function routeClose(routeId,dindex)
 	$("#"+routeId).remove();
 	 ACTIONS.dispatch(ACTIONS.GRID_SELECT_FLASE,dindex);
 	}
+
+function preview_Image(id){
+	var path;
+	//path 바꾸기
+	path = "/assets/images/BM0108/EmployeeDefault.jpg";//default path
+	document.getElementById(id).src=path;
+}
