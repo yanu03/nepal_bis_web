@@ -223,27 +223,27 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "terminalId", label: COL("bis.terminal.terminalid"), width: 90, align: "center"},
-            	{key: "terminalType", label: COL("bis.terminal.terminaltype"), width: 130, align: "center",formatter: function () {
+            	{key: "terminalId", label: COL("terminal.terminalid"), width: 90, align: "center"},
+            	{key: "terminalType", label: COL("terminal.terminaltype"), width: 130, align: "center",formatter: function () {
             		var detailCode = getDetailCode("TERMINAL_TYPE",this.item.terminalType);
                     return detailCode;
                     }},	
-                {key: "plateNumber", label:  COL("bis.vehicle.platenumber"), width: 100, align: "center"},
-            	{key: "vehicleId", label:  COL("bis.vehicle.vehicleid"), width: 90, align: "center"},
-             	{key: "terminalVersion", label:  COL("bis.terminal.terminalversion"), width: 90, align: "center"},
-            	{key: "ipAddress", label:  COL("bis.terminal.ipaddress"), width: 90, align: "center"},
+                {key: "plateNumber", label:  COL("vehicle.platenumber"), width: 100, align: "center"},
+            	{key: "vehicleId", label:  COL("vehicle.vehicleid"), width: 90, align: "center"},
+             	{key: "terminalVersion", label:  COL("terminal.terminalversion"), width: 90, align: "center"},
+            	{key: "ipAddress", label:  COL("terminal.ipaddress"), width: 90, align: "center"},
             	{key: "serialNo", label: "SERIAL NO", width: 90, align: "center"},
-            	{key: "countryCode", label:  COL("bis.countrycode"),  width: 105, align: "center",formatter: function () {
+            	{key: "countryCode", label:  COL("countrycode"),  width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},
-            	{key: "areaCode", label:  COL("bis.areacode"), width: 90, align: "center",formatter: function () {
+            	{key: "areaCode", label:  COL("areacode"), width: 90, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;
                     }},
-                {key: "updateDate", label: COL("bis.updatedate"),  width: 90, align: "center"},
-                {key: "userId", label: COL("bis.userid"),  width: 120, align: "center"},
-                {key: "useYn", label:  COL("bis.useyn"),  width: 80, align: "center"}
+                {key: "updateDate", label: COL("updatedate"),  width: 90, align: "center"},
+                {key: "userId", label: COL("userid"),  width: 120, align: "center"},
+                {key: "useYn", label:  COL("useyn"),  width: 80, align: "center"}
             ],
           
             body: {
@@ -335,7 +335,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
     	   var rs = this.model.validate();
            if (rs.error) {
-               alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+               alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
                rs.error[0].jquery.focus();
                return false;
            }

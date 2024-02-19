@@ -100,7 +100,8 @@
 		AREA_CODE,
 		UPDATE_DATE,
 		USER_ID,
-		USE_YN
+		USE_YN,
+		REMARK
 		) VALUES (
 		#{stationId},
 		#{stationType},
@@ -121,7 +122,8 @@
 		#{areaCode},
 		date_format(now(),'%Y%m%d'),
 		#{userId},
-		#{useYn}
+		#{useYn},
+		#{remark}
 		) ON DUPLICATE KEY
 		UPDATE
 		STATION_TYPE=#{stationType},
@@ -142,7 +144,8 @@
 		AREA_CODE=#{areaCode},
 		UPDATE_DATE=date_format(now(),'%Y%m%d'),
 		USER_ID=#{userId},
-		USE_YN=#{useYn}
+		USE_YN=#{useYn},
+		REMARK=#{remark}
 
 
 	</select>
@@ -168,7 +171,8 @@
 		AREA_CODE = #{areaCode},
 		UPDATE_DATE = #{updateDate},
 		USER_ID = #{userId},
-		USE_YN = #{useYn}
+		USE_YN = #{useYn},
+		REMARK = #{remark}
 		WHERE
 		STATION_ID = #{stationId}
 	</update>

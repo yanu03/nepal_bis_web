@@ -161,20 +161,19 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             columns: [
                 {
                     key: "userCd",
-                    label: COL("user.id"),
+                    label: COLA("admin.user.id"),
                     width: 120
                 },
                 {
                     key: "userNm",
-                    label: COL("user.name"),
+                    label: COLA("admin.user.name"),
                     width: 120
                 },
-                {key: "locale", label:COL("user.language")},
-                {key: "useYn", label:COL("ax.admin.use.or.not")}
+                {key: "locale", label:COLA("admin.user.language")},
+                {key: "useYn", label:COL("useyn")}
             ],
             body: {
                 onClick: function () {
-                	console.log("ddd");
                     this.self.select(this.dindex);
                     ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);
                 }
@@ -296,9 +295,9 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
             showLineNumber: false,
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-                {key: "hasYn", label: COL("ax.admin.select"), width: 50, align: "center", editor: "checkYn"},
-                {key: "roleCd", label: COL("ax.admin.user.role.code"), width: 150},
-                {key: "roleNm", label: COL("ax.admin.user.role.name"), width: 180},
+                {key: "hasYn", label: COLA("admin.select"), width: 50, align: "center", editor: "checkYn"},
+                {key: "roleCd", label: COLA("admin.user.role.code"), width: 150},
+                {key: "roleNm", label: COLA("admin.user.role.name"), width: 180},
             ],
             body: {
                 onClick: function () {

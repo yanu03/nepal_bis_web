@@ -15,19 +15,68 @@
         <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
         
         <c:if test="${authGroupMenu.schAh eq 'Y'}">
-            <button type="button" class="btn btn-info" data-page-btn="search"><i class="cqc-magnifier"></i> <%=MessageUtils.getMessage(request, "ax.admin.inquery")%> </button>
+            <button type="button" class="btn btn-info" data-page-btn="search"><i class="cqc-magnifier"></i> 
+			  <c:choose>
+			  	<c:when test="${loginLocale == 'nep'}">
+			  		<%=MessageUtils.getMessage(request, "axnep.admin.inquery")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'en'}">
+			  		<%=MessageUtils.getMessage(request, "axen.admin.inquery")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'ko'}">
+			  		<%=MessageUtils.getMessage(request, "axko.admin.inquery")%>
+			  	</c:when>
+			  </c:choose>            
+            </button>
         </c:if>
 
         <c:if test="${authGroupMenu.savAh eq 'Y'}">
-            <button type="button" class="btn btn-info" data-page-btn="save"><i class="cqc-save"></i> <%=MessageUtils.getMessage(request, "ax.admin.save")%></button>
+            <button type="button" class="btn btn-info" data-page-btn="save"><i class="cqc-save"></i>
+			  <c:choose>
+			  	<c:when test="${loginLocale == 'nep'}">
+			  		<%=MessageUtils.getMessage(request, "axnep.admin.save")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'en'}">
+			  		<%=MessageUtils.getMessage(request, "axen.admin.save")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'ko'}">
+			  		<%=MessageUtils.getMessage(request, "axko.admin.save")%>
+			  	</c:when>
+			  </c:choose>              
+            </button>
         </c:if>
 
         <c:if test="${authGroupMenu.exlAh eq 'Y'}">
-            <button type="button" class="btn btn-info" data-page-btn="excel"><i class="cqc-file-excel-o"></i> <%=MessageUtils.getMessage(request, "ax.admin.excel")%></button>
+            <button type="button" class="btn btn-info" data-page-btn="excel"><i class="cqc-file-excel-o"></i> 
+			  <c:choose>
+			  	<c:when test="${loginLocale == 'nep'}">
+			  		<%=MessageUtils.getMessage(request, "axnep.admin.excel")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'en'}">
+			  		<%=MessageUtils.getMessage(request, "axen.admin.excel")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'ko'}">
+			  		<%=MessageUtils.getMessage(request, "axko.admin.excel")%>
+			  	</c:when>
+			  </c:choose>            
+            </button>
         </c:if>
 
         <c:if test="${authGroupMenu.delAh eq 'Y'}">
-            <button type="button" class="btn btn-fn1" data-page-btn="fn1"><i class="cqc-minus"></i> <%=MessageUtils.getMessage(request, "ax.admin.delete")%></button>
+            <button type="button" class="btn btn-fn1" data-page-btn="fn1"><i class="cqc-minus"></i>
+			  <c:choose>
+			  	<c:when test="${loginLocale == 'nep'}">
+			  		<%=MessageUtils.getMessage(request, "axnep.admin.delete")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'en'}">
+			  		<%=MessageUtils.getMessage(request, "axen.admin.delete")%>
+			  	</c:when>
+			  	<c:when test="${loginLocale == 'ko'}">
+			  		<%=MessageUtils.getMessage(request, "axko.admin.delete")%>
+			  	</c:when>
+			  </c:choose>             
+            
+            </button>
         </c:if>
 
         <c:if test="${authGroupMenu.fn1Ah eq 'Y'}">

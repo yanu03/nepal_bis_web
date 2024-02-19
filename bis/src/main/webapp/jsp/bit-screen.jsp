@@ -21,8 +21,22 @@
 
     <jsp:attribute name="script">
    
-	  <ax:script-lang key="ax.script" var="LANG" />
-      <ax:script-lang key="bis" var="COL" />
+	  <%-- <ax:script-lang key="ax.script" var="LANG" /> --%>
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
+
       
       <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/view/bit-screen.js' />"></script>
@@ -85,7 +99,7 @@
                 <div class="ax-button-group" role="panel-header">
                     <div class="left">
                         <h2><i class="cqc-news"></i>
-                            <ax:lang id="ax.admin.sample.parent.information"/>
+                            <ax:lang id="ax.admin.sample.parent.fileList"/>
                         </h2>
                     </div>
                     <div class="right">
@@ -95,23 +109,13 @@
                         </button>
                     </div>
                 </div>        	
+                <div data-ax5grid="grid-view-02" style="height: 250px;"></div>
                 <ax:form name="formView01">
-                    <ax:tbl clazz="ax-form-tbl" minWidth="500px">
-                        <ax:tr labelWidth="120px">
-                       		<%-- <ax:td label="bis.userid" width="300px">
-                           		  <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
-                          		  </ax:td>   
-                            <ax:td label="bis.useyn" width="300px">
-                          		  <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
+                    <ax:tbl clazz="ax-form-tbl" minWidth="100px">
+                            <%-- <ax:td label="bis.bit.filelist" width="300px">
                            	</ax:td> --%>
-                            <ax:td label="bis.bit.filelist" width="300px">
-                            	 <%-- 파일목록 조회되어야 함 --%>
-                          		  <%-- <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/> --%>
-                           	</ax:td>
-                           
                   		     <ax:td label="" width="300px">
                   		    </ax:td>
-                        </ax:tr>                    
                     	<ax:tr>
                     		<ax:td labelStyle="height:360px;" label="bis.bit.bitimage" labelClazz="required">
                     			<div style="width:600px; text-align:center;">
@@ -121,9 +125,10 @@
 												onchange="preview_ChangeImage(this, 'previewImg');"
 												data-ax-path="employeeImg" />
 									 </div> -->
-									 <div style="height: 300px; padding: 10px;">
+									 <div style="height: 480px; padding: 10px;">
 									 	<img id="previewImg" src="#" alt="BIT Image"
-												style="width: 200px;" onError="preview_Image('previewImg');">
+												style="width: 300px;height:450px;" 
+												onError="preview_Image('previewImg');">
 									 </div>
 								</div>
                     		</ax:td>

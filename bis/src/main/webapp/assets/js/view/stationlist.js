@@ -279,38 +279,39 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "stationId", label: COL("bis.station.stationid"), width: 100, align: "center"},
-                {key: "stationName", label: COL("bis.station.stationname"), width: 170, align: "center"},
-                {key: "stationEname", label:COL("bis.station.stationename"), width: 170, align: "center"},
-                {key: "stationType", label: COL("bis.station.stationtype"), width: 100, align: "center",formatter: function () {
+                {key: "stationId", label: COL("station.stationid"), width: 100, align: "center"},
+                {key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
+                //{key: "stationEname", label:COL("station.stationename"), width: 170, align: "center"},
+                {key: "stationType", label: COL("station.stationtype"), width: 100, align: "center",formatter: function () {
             		var detailCode = getDetailCode("STATION_TYPE",this.item.stationType);
                     return detailCode;
                     }},
-                {key: "linkId", label: COL("bis.link.linkid"), width: 100, align: "center"},
-                {key: "nodeId", label: COL("bis.node.nodeid"), width: 100, align: "center"},
-                {key: "displayName", label: COL("bis.station.displayname"), width: 125, align: "center"},
-                {key: "displayEname", label: COL("bis.station.displayename"), width: 125, align: "center"},
-                {key: "gpsX", label:COL("bis.station.gpsx"), width: 100, align: "center"},
-                {key: "gpsY", label:COL("bis.station.gpsx"), width: 100, align: "center"},
-                {key: "tmX", label: COL("bis.station.tmx"), width: 100, align: "center"},
-                {key: "tmY", label:COL("bis.station.tmy"), width: 100, align: "center"},
-                {key: "centerYn", label: COL("bis.station.centeryn"), width: 130, align: "center",formatter: function () {
+                {key: "linkId", label: COL("link.linkid"), width: 100, align: "center"},
+                {key: "nodeId", label: COL("node.nodeid"), width: 100, align: "center"},
+               /* {key: "displayName", label: COL("station.displayname"), width: 125, align: "center"},
+                {key: "displayEname", label: COL("station.displayename"), width: 125, align: "center"},*/
+                {key: "gpsX", label:COL("station.gpsx"), width: 100, align: "center"},
+                {key: "gpsY", label:COL("station.gpsx"), width: 100, align: "center"},
+                {key: "tmX", label: COL("station.tmx"), width: 100, align: "center"},
+                {key: "tmY", label:COL("station.tmy"), width: 100, align: "center"},
+                /*{key: "centerYn", label: COL("station.centeryn"), width: 130, align: "center",formatter: function () {
             		var detailCode = getDetailCode("CENTER_YN",this.item.centerYn);
                     return detailCode;
-                    }},
-                {key: "mobileNo", label: COL("bis.station.mobileno"), width: 100, align: "center"},
-                {key: "representationYn", label: COL("bis.station.representationyn"), width: 170, align: "center"},
-                {key: "countryCode", label: COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
+                    }},*/
+                /*{key: "mobileNo", label: COL("station.mobileno"), width: 100, align: "center"},*/
+                /*{key: "representationYn", label: COL("station.representationyn"), width: 170, align: "center"},*/
+                /*{key: "countryCode", label: COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
-                    {key: "areaCode", label:  COL("bis.areacode"), width: 80, align: "center",formatter: function () {
+                    }},*/
+                {key: "areaCode", label:  COL("areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;
                         }},
-                {key: "updateDate", label: COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "userId", label:COL("bis.userid"), width: 100, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 100, align: "center"}
+                {key: "updateDate", label: COL("updatedate"), width: 90, align: "center"},
+                {key: "userId", label:COL("userid"), width: 100, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 100, align: "center"},
+                {key: "remark", label: COL("remark"), width: 200, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -369,7 +370,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }

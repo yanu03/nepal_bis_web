@@ -32,6 +32,44 @@ function makerLayer(gps,icon,Name)
   		});
 		return Layer;
 	}
+function makerLayerWithText(gps, icon, text){
+    var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point([gps[0], gps[1]]),
+        name: text
+    });
+
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 46],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: icon
+        }),
+        text: new ol.style.Text({
+            text: text,
+            offsetX: 0,
+            offsetY: -50,
+            font: '12px Calibri,sans-serif',
+            fill: new ol.style.Fill({ color: '#000' }),
+            stroke: new ol.style.Stroke({
+                color: '#fff', width: 2
+            })
+        })
+    });
+
+    iconFeature.setStyle(iconStyle);
+
+    var vectorSource = new ol.source.Vector({
+        features: [iconFeature]
+    });
+
+    var layer = new ol.layer.Vector({
+        source: vectorSource
+    });
+
+    return layer;	
+}
+
 function removeStationMaker()
 {
 	for(var i = 0;i < stationLayers.length;i++)

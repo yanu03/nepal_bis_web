@@ -35,6 +35,12 @@ public class BisMaHistoryController extends BaseController {
     	return bisMaHistoryService.operationHistory(map);
     }
     
+    @RequestMapping(value="/vehicleMonitor" ,method = RequestMethod.PUT, produces = APPLICATION_JSON)
+    public List<BisMaBusEvent> vehicleMonitor(@RequestBody Map<String,Object> map) {
+    	//Map<String,Object> map=historyUtils.getHistoryInfo(datas);
+    	return bisMaHistoryService.vehicleMonitor(map);
+    }
+    
     @RequestMapping(value="/systemState", method = RequestMethod.PUT, produces = APPLICATION_JSON)
     public List<BisHtSystemState> systemStateList(@RequestBody List<Map<String,Object>> datas) {
     	Map<String,Object> map=historyUtils.getHistoryInfo(datas);

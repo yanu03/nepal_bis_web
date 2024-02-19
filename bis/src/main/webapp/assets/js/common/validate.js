@@ -6,7 +6,7 @@ function onlyNumber(obj) {
     		{
     		axDialog.alert({
                 theme: "primary",
-                msg: COL("bis.maxnumber")
+                msg: COL("maxnumber")
             });
     		  $(this).val("").focus();
 

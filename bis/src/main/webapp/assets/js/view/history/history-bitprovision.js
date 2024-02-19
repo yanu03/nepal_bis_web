@@ -156,9 +156,9 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
     	var temp=fnObj.searchView.getData();
     	var swapColumns= [
-    			{key: "bitId", label: PRO("ax.promotion.bitId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-    			{key: "bitName", label: PRO("ax.promotion.bitName"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "bitType", label: PRO("ax.promotion.bitType"), width: 150, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "bitId", label: COL("bit.bitid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+    			{key: "bitName", label: COL("bit.bitname"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "bitType", label: COL("bit.bittype"), width: 150, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
                     return detailCode;
                    }},
@@ -210,30 +210,30 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
     	var temp=fnObj.searchView.getData();
     	var swapColumns=[
-			{key: "bitId", label: COL("ax.history.bitId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-			{key: "bitName", label: COL("ax.history.bitName"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
+			{key: "bitId", label: COL("bit.bitid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+			{key: "bitName", label: COL("bit.bitname"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
 			//{key: "vehicleId", label: COL("ax.history.vehicleId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            {key: "vehicleName", label: COL("ax.history.plateNumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            {key: "systemDate", label: COL("ax.history.systemDate"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            {key: "routeId", label: COL("ax.history.routeId"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            {key: "routeName", label: COL("ax.history.routeName"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            {key: "routeType", label: COL("ax.history.routeType"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+            {key: "vehicleName", label: COL("vehicle.platenumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            {key: "systemDate", label: COLA("history.systemDate"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            {key: "routeId", label: COL("route.routeid"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            {key: "routeName", label: COL("route.routename"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            {key: "routeType", label: COL("route.routetype"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
            		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
                 return detailCode;
             }},
-            {key: "busType", label: COL("ax.history.busType"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+            {key: "busType", label: COLA("history.busType"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
            		var detailCode = getDetailCode("BUS_TYPE",this.item.busType);
                 return detailCode;
             }},
-            {key: "arriveType", label: COL("ax.history.arriveType"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+            {key: "arriveType", label: COLA("history.arriveType"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
            		var detailCode = getDetailCode("ARRIVE_TYPE",this.item.arriveType);
                 return detailCode;
             }},
-            {key: "runCode", label: COL("ax.history.runCode"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+            {key: "runCode", label: COLA("history.runCode"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
            		var detailCode = getDetailCode("RUN_CODE",this.item.runCode);
                 return detailCode;
             }},
-            {key: "locationNo", label: COL("ax.history.locationNo"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}}
+            {key: "locationNo", label: COLA("history.locationNo"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}}
         ]
  
         var _this = this;

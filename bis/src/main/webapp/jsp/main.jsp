@@ -6,7 +6,17 @@
 <ax:layout name="frame">
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" var="LANG" />
-        <ax:script-lang key="ax.admin" var="COL" />
+       	<c:choose>
+		  	<c:when test="${loginLocale == 'nep'}">
+		  		<ax:script-lang key="axnep" var="COL" />
+		  	</c:when>
+		  	<c:when test="${loginLocale == 'en'}">
+		  		<ax:script-lang key="axen" var="COL" />
+		  	</c:when>
+		  	<c:when test="${loginLocale == 'ko'}">
+		  		<ax:script-lang key="axko" var="COL" />
+		  	</c:when>
+	 	 </c:choose>
 		<script type="text/javascript" src="<c:url value='/assets/js/view/frame.js' />"></script>
 	</jsp:attribute>
     <jsp:body>

@@ -162,9 +162,9 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     	var swapColumns=null;
     	if(temp.Select=="bitName"){
     		swapColumns= [
-    			{key: "bitId", label: PRO("ax.promotion.bitId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-    			{key: "bitName", label: PRO("ax.promotion.bitName"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "bitType", label: PRO("ax.promotion.bitType"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "bitId", label: COL("bit.bitid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+    			{key: "bitName", label: COL("bit.bitname"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "bitType", label: COL("bit.bittype"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
                     return detailCode;
                    }},
@@ -172,10 +172,10 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     		
     	}else{
     		swapColumns= [
-    			{key: "plateNumber", label: COL("ax.history.plateNumber"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-    			{key: "terminalId", label: BIS("bis.terminal.terminalid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "terminalVersion", label: BIS("bis.terminal.terminalversion"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "terminalType", label: BIS("bis.terminal.terminaltype"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "plateNumber", label: COL("vehicle.platenumber"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+    			{key: "terminalId", label: COL("terminal.terminalid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "terminalVersion", label: COL("terminal.terminalversion"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "terminalType", label: COL("terminal.terminaltype"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("TERMINAL_TYPE",this.item.terminalType);
                     return detailCode;
                    }},
@@ -227,19 +227,19 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
     	var temp=fnObj.searchView.getData();
     	var swapColumns=[
-    			{key: "systemId", label: COL("ax.history.systemId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-    			{key: "systemName", label: COL("ax.history.systemName"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                {key: "systemType", label: COL("ax.history.systemType"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "systemId", label: COLA("history.systemId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+    			{key: "systemName", label: COLA("history.systemName"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                {key: "systemType", label: COLA("history.systemType"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
                		var detailCode = getDetailCode("SYSTEM_TYPE",this.item.systemType);
                     return detailCode;
                    }},
-                {key: "systemDate", label: COL("ax.history.systemDate"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                {key: "controlCode", label: COL("ax.history.controlCode"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+                {key: "systemDate", label: COLA("history.systemDate"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                {key: "controlCode", label: COLA("history.controlCode"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
            		var detailCode = getDetailCode("CONTROL_CODE",this.item.controlCode);
                    return detailCode;
                   }},
-                {key: "controlValue", label: COL("ax.history.controlValue"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                {key: "controlResult", label: COL("ax.history.controlResult"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+                {key: "controlValue", label: COLA("history.controlValue"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                {key: "controlResult", label: COLA("history.controlResult"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
                		var detailCode = getDetailCode("CONTROL_RESULT",this.item.controlResult);
                     return detailCode;
                    }}

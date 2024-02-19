@@ -94,7 +94,17 @@ ul.businfomenu>li {
      <script type="text/javascript">
         var loginid ="${loginUser.userCd}";
     </script>
-	      <ax:script-lang key="bis" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+			<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+			<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+			<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
     	<script src="<c:url value='/assets/js/map/proj4.js' />"
 			type="text/javascript"></script>
         <script src="<c:url value='/assets/js/map/proj4js.js' />"
@@ -251,7 +261,7 @@ ul.businfomenu>li {
  
  
      <ax:split-layout name="ax2" orientation="horizontal">
-      <ax:split-panel height="40%" scroll="scroll">
+      <ax:split-panel height="37%" scroll="scroll">
                     <!-- 폼 -->
                 <div class="ax-button-group" role="panel-header">
            <%--          <div class="left">
@@ -308,10 +318,17 @@ ul.businfomenu>li {
 											data-ax-path="stationName" maxlength="100"
 											class="form-control" value="" />
                             </ax:td>
-                             <ax:td label="bis.station.stationename" width="300px">
+                           <%--   <ax:td label="bis.station.stationename" width="300px">
                            	   <input type="text" name="stationEname"
 											data-ax-path="stationEname" maxlength="100" title=""
 											class="form-control" value="" />
+                            </ax:td> --%>
+                            <ax:td label="bis.areacode" width="300px">
+                                   <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
+                           		<div class="input-group">
+                            	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
+                              	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
+                                </div>
                             </ax:td>
                             
                              
@@ -355,20 +372,24 @@ ul.businfomenu>li {
 											data-ax-path="tmY" maxlength="100" title=""
 											class="form-control" value="" />
                             </ax:td>
-                            <ax:td label="bis.areacode" width="300px">
+                            <%-- <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
                               	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
                                 </div>
-                            </ax:td>
+                            </ax:td> --%>
                                   <ax:td label="bis.updatedate"
 										width="300px">
                                 <input type="text" name="updateDate"
 											data-ax-path="updateDate" maxlength="100" title=""
 											class="form-control" value="" readonly />
                             </ax:td>
-                            
+                            <ax:td label="bis.useyn"
+										width="300px">
+                                <ax:common-code groupCd="USE_YN"
+											dataPath="useYn" clazz="form-control" />
+                            </ax:td>
                         </ax:tr>
                         <ax:tr labelWidth="120px">
                            <%-- <ax:td label="bis.station.centeryn" width="300px" style="height:46px;">
@@ -411,7 +432,7 @@ ul.businfomenu>li {
                            
                         </ax:tr> --%>
                         
-                         <ax:tr labelWidth="120px">
+                        <%--  <ax:tr labelWidth="120px">
                                 <ax:td label="bis.userid" width="300px">
                                 <input type="text" name="userId"
 											data-ax-path="userId" maxlength="100" title=""
@@ -425,6 +446,14 @@ ul.businfomenu>li {
                              <ax:td label="" width="300px">
                              </ax:td> 
                         
+                        </ax:tr> --%>
+                        
+                        <ax:tr labelWidth="120px">
+                          <ax:td label="bis.remark" width="600px">
+                                <input type="text" name="remark" data-ax-validate="required"  title="<ax:lang id="bis.remark"/>"
+											data-ax-path="remark" maxlength="100"
+											class="form-control" value="" />
+                            </ax:td>                        
                         </ax:tr>
                     </ax:tbl>
                 </ax:form>

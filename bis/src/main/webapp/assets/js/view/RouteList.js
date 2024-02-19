@@ -292,45 +292,45 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "routeId", label:  COL("bis.route.routeid"), width: 90, align: "center"},
-                {key: "routeType", label: COL("bis.route.routetype"), width:130, align: "center",formatter: function () {
+            	{key: "routeId", label:  COL("route.routeid"), width: 90, align: "center"},
+                {key: "routeType", label: COL("route.routetype"), width:130, align: "center",formatter: function () {
             		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
                     return detailCode;
                     }},
-                {key: "routeName", label: COL("bis.route.routename"), width: 200, align: "center"},
-                {key: "routeEname", label: COL("bis.route.routeename"), width: 200, align: "center"},
-                {key: "fromStationId", label: COL("bis.route.fromstationid"), width: 115, align: "center",formatter: function () {
+                {key: "routeName", label: COL("route.routename"), width: 200, align: "center"},
+                {key: "routeEname", label: COL("route.routeename"), width: 200, align: "center"},
+                {key: "fromStationId", label: COL("route.fromstationid"), width: 115, align: "center",formatter: function () {
                     return this.item.fromStationName;
                     }},
-                {key: "toStationId", label: COL("bis.route.tostationid"), width: 115, align: "center",formatter: function () {
+                {key: "toStationId", label: COL("route.tostationid"), width: 115, align: "center",formatter: function () {
                     return this.item.toStationName;
                 }},
-                {key: "turnStationId", label:COL("bis.route.turnstationid"), width: 115, align: "center",formatter: function () {
+                {key: "turnStationId", label:COL("route.turnstationid"), width: 115, align: "center",formatter: function () {
                     return this.item.turnStationName;
                 }},
-                {key: "permissionCount", label:COL("bis.route.permissioncount"), width: 225, align: "center"},
-                {key: "beginDate", label:COL("bis.route.begindate"), width: 160, align: "center"},
-                {key: "closeDate", label: COL("bis.route.closedate"), width: 180, align: "center"},
-                {key: "routeEx", label: COL("bis.route.routeex"), width: 80, align: "center"},
-                {key: "routeDistance", label: COL("bis.route.routedistance"), width: 115, align: "center"},
-                {key: "countryCode", label: COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
+                /*{key: "permissionCount", label:COL("route.permissioncount"), width: 225, align: "center"},*/
+                {key: "beginDate", label:COL("route.begindate"), width: 160, align: "center"},
+                {key: "closeDate", label: COL("route.closedate"), width: 180, align: "center"},
+                /*{key: "routeEx", label: COL("route.routeex"), width: 80, align: "center"},*/
+                {key: "routeDistance", label: COL("route.routedistance"), width: 115, align: "center"},
+                /*{key: "countryCode", label: COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
+                    }},*/
                 {key: "areaCode", label: "AREA CODE", width: 80, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;
                     }},
-                {key: "requestTime", label: COL("bis.route.requesttime"), width: 80, align: "center"},
-                {key: "charge", label:COL("bis.route.charge"), width: 80, align: "center"},
-                {key: "runType", label: COL("bis.route.runtype"), width: 80, align: "center",formatter: function () {
+                {key: "requestTime", label: COL("route.requesttime"), width: 80, align: "center"},
+                /*{key: "charge", label:COL("route.charge"), width: 80, align: "center"},*/
+                /*{key: "runType", label: COL("route.runtype"), width: 80, align: "center",formatter: function () {
             		var detailCode = getDetailCode("RUN_TYPE",this.item.runType);
                     return detailCode;
-                    }},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("bis.remark"), width: 80, align: "center"},
-                {key: "userId", label: COL("bis.userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 80, align: "center"}
+                    }},*/
+                {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                {key: "userId", label: COL("userid"), width: 120, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
           
             body: {
@@ -421,7 +421,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }

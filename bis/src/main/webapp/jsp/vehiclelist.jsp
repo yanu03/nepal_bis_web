@@ -19,7 +19,17 @@
      <script type="text/javascript">
         var loginid ="${loginUser.userCd}";
     </script>
-      <ax:script-lang key="bis" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+			<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+			<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+			<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
       <script type="text/javascript" src="<c:url value='/assets/js/view/vehiclelist.js' />"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/common/validate.js' />"></script>

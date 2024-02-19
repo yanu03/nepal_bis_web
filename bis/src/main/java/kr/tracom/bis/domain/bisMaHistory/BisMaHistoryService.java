@@ -15,6 +15,10 @@ public class BisMaHistoryService {
     	return bisMaParamMapper.operationHistory(map);
     }
     
+    public List<BisMaBusEvent> vehicleMonitor(Map<String,Object> map){
+    	return bisMaParamMapper.vehicleMonitor(map);
+    }
+    
     public List<BisHtSystemState> systemStateHistory(Map<String,Object> map){
     	return bisMaParamMapper.systemStateHistory(map);
     }

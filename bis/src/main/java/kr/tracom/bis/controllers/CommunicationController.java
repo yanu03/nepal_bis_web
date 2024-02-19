@@ -447,7 +447,7 @@ public class CommunicationController extends BaseController {
 				if(((String)senddata.get("deviceId")).equals("0000000000"))
 				{
 					BisItSendsystemversion version = new BisItSendsystemversion();
-					if(3 == (int)senddata.get("deviceType"))
+					if(3 == (int)senddata.get("deviceType")) //BIT, BIT는 Master Information 사용안함
 					{
 						bitlist = bisMtBitService.findId();
 						for (int i = 0; i < bitlist.size(); i++) {
@@ -863,7 +863,6 @@ public class CommunicationController extends BaseController {
 							//return parameterMap;
 						} else {
 							int ret_code = (int) sendMap.get("ret_code");
-							//확인필요함 여기부터, ftp캡처 요청코드 필요
 							if (ret_code != 1) {
 
 							check++;

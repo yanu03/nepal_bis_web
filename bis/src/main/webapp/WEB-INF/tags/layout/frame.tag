@@ -62,7 +62,7 @@
             <div class="ax-split-panel text-align-right">
 
                 <div class="ax-split-col ax-frame-user-info">
-                    <%-- <div class="ax-split-panel">
+                   <%--  <div class="ax-split-panel">
                         <a href="/?language=en">한국어</a> / <a href="/?language=ko">영어</a>
                     </div>
                     <div class="panel-split"></div>
@@ -72,11 +72,11 @@
                             <a href="#ax" onclick="window.open('/jsp/system/system-dev-tools.jsp');"><i class="cqc-tools"></i> <ax:lang id="ax.devtools"/></a>
                         </div>
                         <div class="panel-split"></div>
-                    </c:if>
+                    </c:if> --%>
                     <div class="ax-split-panel">
                         <a href="#ax" onclick="fcObj.open_user_info();"><ax:lang id="ax.admin.login.status.message" args="${loginUser.userNm}"/></a>
                     </div>
-                    <div class="panel-split"></div> --%>
+                    <div class="panel-split"></div>
                     <div class="ax-split-panel">
                         <a href="#ax" class="ax-frame-logout" onclick="location.href = '${pageContext.request.contextPath}/api/logout';">
                             <i class="cqc-log-out"></i>

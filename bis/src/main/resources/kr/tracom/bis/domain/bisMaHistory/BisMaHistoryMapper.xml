@@ -51,6 +51,42 @@
 	
 	</select>
 	
+	<select id="vehicleMonitor" resultType="bisMaHistory" parameterType="map" statementType="PREPARED">
+		SELECT
+		    A.VEHICLE_ID AS vehicleId,
+		    FN_MT_GET_PLATE_NUMBER(A.VEHICLE_ID) AS plateNumber,  
+		    A.COLLECT_DATE AS collectDate,
+		    A.EVENT_CODE AS eventCode,
+		    A.EVENT_DATA AS eventData,
+		    A.EVENT_NUMBER AS eventNumber,
+		    A.TERMINAL_ID AS terminalId, 
+		    A.ROUTE_ID AS routeId,
+		    A.RUN_CODE AS runCode,
+		    A.GPS_X AS gpsX,
+		    A.GPS_Y AS gpsY,
+		    A.HEADING AS heading,
+		    A.SPEED AS speed,
+		    A.STOP_TIME AS stopTime,
+		    A.SYSTEM_DATE AS systemDate
+		FROM
+		    BIS_HT_EVENTINFO A
+		INNER JOIN (
+		    SELECT
+		        VEHICLE_ID,
+		        MAX(COLLECT_DATE) AS MaxCollectDate
+		    FROM
+		        BIS_HT_EVENTINFO
+		    WHERE
+		        COLLECT_DATE > DATE_FORMAT(NOW() - INTERVAL 5 MINUTE, '%Y%m%d%H%i%s')
+		    AND
+		    	ROUTE_ID = #{routeId}    
+		    GROUP BY
+		        VEHICLE_ID
+		) AS B
+			ON A.VEHICLE_ID = B.VEHICLE_ID 
+			AND A.COLLECT_DATE = B.MaxCollectDate	
+	</select>
+	
 	<select id="systemStateHistory" resultType="bisHtSystemState" parameterType="map" statementType="PREPARED">
 		<if test="Select == 'bitName'">
 			SELECT

@@ -24,28 +24,15 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     },
     ITEM_CLICK: function (caller, act, data) {
     	//selectedData = data;
+    	let test = caller;
         axboot.ajax({
-            type: "POST",
-            url: '/communication/control',
-            //url: 'comm.nepalbis.com:8385/bis/control',
-            data: JSON.stringify(sendList),
+            type: "GET",
+            url: '/api/v1/bisMtBits/sftpFileList',
+            data: "bitId=" + data.bitId,
+            //data: JSON.stringify(data),
             callback: function (res) {
-	        	 if(res.ret_code == "1") {
-	         		axDialog.alert({
-	                    theme: "primary",
-	                    title:" ",
-	                    msg: "Capture request success."
-	            	}) 
-	        	 }//정상
-	        	 else {
-	         		axDialog.alert({
-	                    theme: "primary",
-	                    title:" ",
-	                    msg: "Error occurred during capture."
-	            	}) 
-	        		 
-	        	 } //오류	 
-        		          	
+            	caller.gridView02.setData(res);
+            	//caller.treeView01.setData(searchData, res.list, data)
             },
             options: {
                 // axboot.ajax 함수에 2번째 인자는 필수가 아닙니다. ajax의 옵션을 전달하고자 할때 사용합니다.
@@ -54,6 +41,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 }
             }
         });
+    },
+    CHILD_ITEM_CLICK : function (caller, act, data) {
+    	//$("#previewImg").attr("src", data.src);
+    	$("#previewImg").attr("src", "/srv/ftp/" + data.bitId + "/"+ data.fileName);
     },
     ITEM_ADD: function (caller, act, data) {
         caller.gridView01.addRow();
@@ -85,7 +76,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     		var senddata ={};
     		senddata.deviceId=selectedData[0].bitId;
     		senddata.deviceType=3;
-    		senddata.code="151";
+    		senddata.code="152";
     		sendList.push(senddata);
     		
             axboot.ajax({
@@ -129,6 +120,7 @@ fnObj.pageStart = function () {
     this.pageButtonView.initView();
     this.searchView.initView();
     this.gridView01.initView();
+    this.gridView02.initView();
 
     ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
 };
@@ -186,13 +178,13 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "bitId", label: COL("bis.bit.bitid"), width: 90, align: "center"},
-            	{key: "bitType", label: COL("bis.bit.bittype"), width: 145, align: "center",formatter: function () {
+            	{key: "bitId", label: COL("bit.bitid"), width: 90, align: "center"},
+            	{key: "bitType", label: COL("bit.bittype"), width: 145, align: "center",formatter: function () {
             		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
                 return detailCode;
                 }},
-            	{key: "bitName", label:COL("bis.bit.bitname"), width: 150, align: "center"},
-            	{key: "bitEname", label: COL("bis.bit.bitename"), width: 150, align: "center"},
+            	{key: "bitName", label:COL("bit.bitname"), width: 150, align: "center"},
+            	{key: "bitEname", label: COL("bit.bitename"), width: 150, align: "center"},
             ],
          
             body: {
@@ -212,6 +204,41 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             }
         });        
    
+    },
+    getData: function (_type) {
+    	
+        return this.target.getData();
+       
+    },
+    excel:function(n){
+    	this.target.exportExcel(n);
+    }
+});
+
+fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
+    initView: function () {
+        var _this = this;
+        //this.target = $(document["formView01"]);
+   
+        this.target = axboot.gridBuilder({
+      
+            target: $('[data-ax5grid="grid-view-02"]'),
+            columns: [
+            	{key: "lastModified", label: COLA("promotion.updateDateTime"), width: 300, align: "center"},
+            	{key: "fileName", label:COLA("promotion.fileName"), width: 200, align: "center"},
+            ],
+         
+            body: {
+                onClick: function () {
+                    this.self.select(this.dindex);
+
+                    ACTIONS.dispatch(ACTIONS.CHILD_ITEM_CLICK, this.list[this.dindex]);
+                }
+            },
+            excel:function(n){
+            	this.target.exportExcel(n);
+            }
+        });
     },
     getData: function (_type) {
     	

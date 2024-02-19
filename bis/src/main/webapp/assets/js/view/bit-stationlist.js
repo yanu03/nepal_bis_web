@@ -302,21 +302,21 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "stationName", label: COL("bis.station.stationname"), width: 170, align: "center"},
-                {key: "stationType", label: COL("bis.station.stationtype"), width: 100, align: "center",formatter: function () {
+                {key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
+                {key: "stationType", label: COL("station.stationtype"), width: 100, align: "center",formatter: function () {
             		var detailCode = getDetailCode("STATION_TYPE",this.item.stationType);
                     return detailCode;
                     }},
 
-                {key: "gpsX", label:COL("bis.station.gpsx"), width: 100, align: "center"},
-                {key: "gpsY", label:COL("bis.station.gpsx"), width: 100, align: "center"},
+                {key: "gpsX", label:COL("station.gpsx"), width: 100, align: "center"},
+                {key: "gpsY", label:COL("station.gpsx"), width: 100, align: "center"},
 
-                {key: "representationYn", label: COL("bis.station.representationyn"), width: 170, align: "center"},
-                {key: "countryCode", label: COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
+                {key: "representationYn", label: COL("station.representationyn"), width: 170, align: "center"},
+                {key: "countryCode", label: COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},
-                    {key: "areaCode", label:  COL("bis.areacode"), width: 80, align: "center",formatter: function () {
+                    {key: "areaCode", label:  COL("areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;
                         }}
@@ -349,7 +349,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         		      axDialog.alert({
                           theme: "primary",
                           title:" ",
-                          msg: COL("bis.error.stationselect")
+                          msg: COL("error.stationselect")
                       });
 				}
         		else
@@ -364,7 +364,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         		    axDialog.alert({
                         theme: "primary",
                         title:" ",
-                        msg: COL("bis.error.stationselect")
+                        msg: COL("error.stationselect")
                     });
         		}
         		else
@@ -378,13 +378,13 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-            	{key: "bitId", label: COL("bis.bit.bitid"), width: 90, align: "center"},
-            	{key: "bitName", label: COL("bis.bit.bitname"), width: 90, align: "center"},
-            	{key: "stationId", label: COL("bis.station.stationid"), width: 90, align: "center"},
-            	{key: "stationName", label: COL("bis.station.stationname"), width: 170, align: "center"},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "userId", label:COL("bis.userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 80, align: "center"}
+            	{key: "bitId", label: COL("bit.bitid"), width: 90, align: "center"},
+            	{key: "bitName", label: COL("bit.bitname"), width: 90, align: "center"},
+            	{key: "stationId", label: COL("station.stationid"), width: 90, align: "center"},
+            	{key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
+                {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                {key: "userId", label:COL("userid"), width: 120, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
          
             body: {

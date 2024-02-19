@@ -65,7 +65,16 @@
         background-color: #0FF;
         opacity: 0.5;
       }
-
+      #vienna {
+        text-decoration: none;
+        color: white;
+        font-size: 11pt;
+        font-weight: bold;
+        text-shadow: black 0.1em 0.1em 0.2em;
+      }
+      .popover-body {
+        min-width: 276px;
+      }
 
      
         </style>
@@ -73,6 +82,17 @@
 
     <jsp:attribute name="script">
     <ax:script-lang key="bis" var="COL" />
+	  <c:choose>
+	  	<c:when test="${loginLocale == 'nep'}">
+	  		<ax:script-lang key="bisnep" var="COL" />
+	  	</c:when>
+	  	<c:when test="${loginLocale == 'en'}">
+	  		<ax:script-lang key="bisen" var="COL" />
+	  	</c:when>
+	  	<c:when test="${loginLocale == 'ko'}">
+	  		<ax:script-lang key="bisko" var="COL" />
+	  	</c:when>
+	  </c:choose>    
     	<script src="<c:url value='/assets/js/map/proj4.js' />" type="text/javascript"></script>
         <script src="<c:url value='/assets/js/map/proj4js.js' />" type="text/javascript"></script>
         <script src="<c:url value='/assets/js/openlayers/v3.4.0/build/ol.js' />" type="text/javascript"></script>
@@ -209,7 +229,7 @@
                 <div class="ax-button-group">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                         		VEHICLE LIST</h2>
+                         		<ax:lang id="bis.routelist" /></h2>
                     </div>
                 </div>
                </div>

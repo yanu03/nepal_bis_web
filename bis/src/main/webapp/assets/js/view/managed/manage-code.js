@@ -35,14 +35,14 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             tempList.forEach(function(n){
             	if(n.__created__){
             		if(n.detailCode==null || n.detailCode==""){
-            			detailCodeStr="ax.code.detailCode";
+            			detailCodeStr="code.detailCode";
         				detailCodeValidate="fail";
         				return false;
             		}
             		tempList.forEach(function(t){
                 		if(!t.__created__){
                 			if(n.detailCode==t.detailCode){
-                				detailCodeStr="ax.code.detailCode";
+                				detailCodeStr="code.detailCode";
                 				detailCodeValidate="fail";
                 				return false;
                     		}
@@ -61,7 +61,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 	n.allClearCheck="no"
                 	if(n.detailCodeName==null || n.detailCodeName==""){
                 		detailCodeNameValidate="fail";
-                		detailCodeNameStr="ax.code.detailCodeName";
+                		detailCodeNameStr="code.detailCodeName";
                 		return;
                 	};
                 	
@@ -111,13 +111,13 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             	axDialog.alert({
                     theme: "primary",
                     title:" ",
-                    msg: COL(detailCodeStr)
+                    msg: COLA(detailCodeStr)
             	})
             }else{
             	axDialog.alert({
                     theme: "primary",
                     title:" ",
-                    msg: COL(detailCodeNameStr)
+                    msg: COLA(detailCodeNameStr)
             	})
             }
        // }
@@ -240,10 +240,10 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             target: $('[data-ax5grid="grid-view-01"]'),
             sortable: false,
             columns: [
-                {key: "commonCode", label: COL("ax.code.group.Code"), width: 100, align: "center"},
-                {key: "commonCodeName", label:COL("ax.code.group.CodeName"), width: 100, align: "center"},
-                {key: "commonCodeEname", label:COL("ax.code.group.CodeEname"), width: 140, align: "center"},
-                {key: "useYn", label: COL("ax.code.useYn"), width: 70, align: "center"}
+                {key: "commonCode", label: COLA("code.group.Code"), width: 100, align: "center"},
+                {key: "commonCodeName", label:COLA("code.group.CodeName"), width: 100, align: "center"},
+                {key: "commonCodeEname", label:COLA("code.group.CodeEname"), width: 140, align: "center"},
+                {key: "useYn", label: COLA("code.useYn"), width: 70, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -361,17 +361,17 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
             sortable: true,
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-            	{key: "sequence", label: COL("ax.code.detail.sequence"), width: 90, align: "center", editor: "text"},
-                {key: "detailCode", label: COL("ax.code.detail.code"), width: 80, align: "center", editor: "text"},
-                {key: "detailCodeName", label: COL("ax.code.detail.codeName"), width: 150, align: "center", editor: "text"},
-                {key: "detailCodeEname", label: COL("ax.code.detail.codeEName"), width: 150, align: "center", editor: "text"},
-                {key: "useYn", label: COL("ax.code.useYn"), width: 70, align: "center", editor: "checkYn"},
+            	{key: "sequence", label: COLA("code.detail.sequence"), width: 90, align: "center", editor: "text"},
+                {key: "detailCode", label: COLA("code.detail.code"), width: 80, align: "center", editor: "text"},
+                {key: "detailCodeName", label: COLA("code.detail.codeName"), width: 150, align: "center", editor: "text"},
+                {key: "detailCodeEname", label: COLA("code.detail.codeEName"), width: 150, align: "center", editor: "text"},
+                {key: "useYn", label: COLA("code.useYn"), width: 70, align: "center", editor: "checkYn"},
                /* {key: "userId", label: "등록자", width: 70, align: "center", editor: "text"},
                 {key: "updateDate", label: "등록날짜", width: 100, align: "center", editor: "text"},*/
-                {key: "value1", label: COL("ax.code.value1"), width: 70, align: "center", editor: "text"},
-                {key: "value2", label: COL("ax.code.value2"), width: 70, align: "center", editor: "text"},
-                {key: "value3", label: COL("ax.code.value3"), width: 70, align: "center", editor: "text"},
-                {key: "remark", label: COL("ax.code.remark"), width: 100, align: "center", editor: "text"}
+                {key: "value1", label: COLA("code.value1"), width: 70, align: "center", editor: "text"},
+                {key: "value2", label: COLA("code.value2"), width: 70, align: "center", editor: "text"},
+                {key: "value3", label: COLA("code.value3"), width: 70, align: "center", editor: "text"},
+                {key: "remark", label: COLA("code.remark"), width: 100, align: "center", editor: "text"}
             ],
             body: {
                 onClick: function () {

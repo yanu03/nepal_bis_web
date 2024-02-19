@@ -20,7 +20,17 @@
   </jsp:attribute>
 
     <jsp:attribute name="script">
-      <ax:script-lang key="bis" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+			<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+			<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+			<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
        <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/view/systemoperation/bit/remote-control.js' />"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
@@ -70,7 +80,7 @@
                         <ax:td label='bis.division' width="250px" labelWidth="80px">
                         <select class="form-control" id="" name="" data-ax-path="Select" >
                         	<option value="BIT">BIT</option>
-                        	<option value="TERMINAL">TERMINAL</option>
+                        	<option value="TERMINAL">OBE</option>
                      </select>
                         </ax:td>
                         <ax:td label='bis.search' width="180px" labelWidth="80px">
@@ -116,8 +126,8 @@
 			 
 			<br/> -->
 			
-		<ax:form name="formView01">
-			<div id="" class="ax-form-tbl" style="" data-ax-tbl="controll">
+		 <ax:form name="formView01">
+			<div id="masterform" class="ax-form-tbl" style="" data-ax-tbl="controll">
 					
 			<div data-ax-tr="" id="" class="" style="">
 				<div  style="width:100%;" data-ax-td="">
@@ -146,7 +156,7 @@
 		</div>
 	</ax:form> 
 	<br/>
-			<ax:form name="firmware">
+			<%-- <ax:form name="firmware">
 					<div id="" class="ax-form-tbl" style="" data-ax-tbl="controll">
 			<div data-ax-tr="" id="" class="" style="">
 				<div  style="width:100%;" data-ax-td="">
@@ -192,7 +202,7 @@
 				</div>
 		</div>
 			</div>
-			</ax:form>
+			</ax:form> --%>
  		
 			  <br/>
 				<div id="" class="ax-form-tbl" style="" data-ax-tbl="control">
@@ -212,17 +222,25 @@
 				 		  	</div>
 						</div>
 					
-							<div  style="width:300px;display:none;" id="monitorform" data-ax-td="">
-								<div style="width:120px; " data-ax-td-label="" >Monitor ON/OFF</div>
+							<div style="width:300px;display:none;" id="monitorform" data-ax-td="">
+								<div style="width:120px; " data-ax-td-label="" >Illuminance</div>
 								<div data-ax-td-wrap="">
 									<div class="form-inline">
 								   		  	<select class="form-control" style="width:80px" id="monitor" name="" data-ax-path="modem" >
-								   		  			 <option value="1">ON</option>
-													 <option value="2">OFF</option>
+								   		  			 <option value="1">1</option>
+													 <option value="2">2</option>
+								   		  			 <option value="3">3</option>
+													 <option value="4">4</option>
+								   		  			 <option value="5">5</option>
+													 <option value="6">6</option>
+								   		  			 <option value="7">7</option>
+													 <option value="8">8</option>
+								   		  			 <option value="9">9</option>
+													 <option value="10">10</option>
 											</select>
 											<div style="float:right;">
-								      		  	<button class="btn btn-primary"  data-ui-btn="MonitorOne">Send</button>
-							        			<button class="btn btn-primary"  data-ui-btn="MonitorAll">All</button>
+								      		  	<button class="btn btn-primary"  data-ui-btn="IlluminanceOne">Send</button>
+							        			<button class="btn btn-primary"  data-ui-btn="IlluminanceAll">All</button>
 						 		  		</div>		
 									</div>
 					 		  	</div>									
@@ -243,7 +261,7 @@
 					    <div data-ax-td-wrap="">
 						    <ul class="checkList" style="margin-top:7px">
 								<!-- <li><input type="radio" name="box" data-ax-path="schedule"  value="0">Scenario</li> -->
-							 	<li><input type="radio" name="box" data-ax-path="schedule" value="1">Monitor ON/OFF</li>
+							 	<li><input type="radio" name="box" data-ax-path="schedule" value="1">Power ON/OFF</li>
 								<li><input type="radio" name="box" data-ax-path="schedule" value="2">Illuminance</li>
 			       			</ul>
 					    </div>

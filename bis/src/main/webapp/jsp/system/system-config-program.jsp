@@ -10,7 +10,21 @@
 <ax:layout name="base">
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" />
-        <ax:script-lang key="ax.admin" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>        
+        <%-- <ax:script-lang key="ax.admin" var="COL" /> --%>
         <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-config-program.js' />"></script>
     </jsp:attribute>
     <jsp:body>
@@ -22,7 +36,8 @@
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
                         <ax:td label='ax.admin.search' width="300px">
-                            <ax:input type="text" name="filter" id="filter" clazz="form-control" placeholder="ax.admin.input.search"/>
+                            <%-- <ax:input type="text" name="filter" id="filter" clazz="form-control" placeholder="ax.admin.input.search"/> --%>
+                            <ax:input type="text" name="filter" id="filter" clazz="form-control"/>
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>

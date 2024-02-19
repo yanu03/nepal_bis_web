@@ -38,7 +38,6 @@ public class MenuController extends BaseController {
 
     @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody MenuRequestVO menuVO) {
-    	System.out.println("test1");
         menuService.processMenu(menuVO);
         return ok();
     }

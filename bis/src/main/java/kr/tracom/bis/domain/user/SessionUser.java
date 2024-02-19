@@ -20,6 +20,8 @@ public class SessionUser implements UserDetails {
     private String userNm;
 
     private Locale locale;
+    
+    private String loginLocale;
 
     private String timeZone;
 

@@ -16,6 +16,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	           	 {
 	           		$("#scheduleManaged").attr("style","");
 	           		$("#monitorform").attr("style","");
+	           		$("#masterform").attr("style","display:none");
 	           		var str = "<option value=150 id='bitfw'>BIT firmware</option>";
 	           		$("#filecode").html(str);
 	           			
@@ -23,8 +24,9 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	           	 }
 	            else if(data.Select == "TERMINAL")
 	            {
-	           	$("#scheduleManaged").attr("style","display:none");
+	            	$("#scheduleManaged").attr("style","display:none");
 	            	$("#monitorform").attr("style","display:none");
+	            	$("#masterform").attr("style","");
 	            	var str = "<option value=100 id='terminalfw1'>Terminal firmware1</option>"+"<option value=101 id='terminalfw2'>Terminal firmware2</option>";
 	            	$("#filecode").html(str);
 	           		
@@ -1029,7 +1031,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 		         }
 	         });*/
     },
-    MONITOR_ONOFF: function(caller,act,data)
+    ILLUMINANCE_CONTROL: function(caller,act,data)
     {
     	var sendList=[];
     	
@@ -1399,24 +1401,24 @@ fnObj.pageStart = function () {
     ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
     /* this.formView01.initView();*/
     axboot.buttonClick(this, "data-ui-btn", {
-        "MonitorOne": function () {
+        "IlluminanceOne": function () {
         		axDialog.confirm({
 	        		title:" ",
-	                msg: COL("bis.confirem.bit")
+	                msg: COL("confirem.bit")
 	            }, function () {
 	                if (this.key == "ok") {
-	                	ACTIONS.dispatch(ACTIONS.MONITOR_ONOFF);
+	                	ACTIONS.dispatch(ACTIONS.ILLUMINANCE_CONTROL);
 	                	}
 	            });
         },
-        "MonitorAll": function () {
+        "IlluminanceAll": function () {
         	axDialog.confirm({
         		title:" ",
-                msg: COL("bis.confirem.bit")
+                msg: COL("confirem.bit")
             }, function () {
                 if (this.key == "ok") 
                 {
-                	ACTIONS.dispatch(ACTIONS.MONITOR_ONOFF,"ALL");
+                	ACTIONS.dispatch(ACTIONS.ILLUMINANCE_CONTROL,"ALL");
                 }
             });
          },
@@ -1425,7 +1427,7 @@ fnObj.pageStart = function () {
         		 {
 	        		 axDialog.confirm({
 	             		title:" ",
-	                     msg: COL("bis.confirem.bit")
+	                     msg: COL("confirem.bit")
 	                 }, function () {
 	                     if (this.key == "ok") 
 	                     {
@@ -1437,7 +1439,7 @@ fnObj.pageStart = function () {
         		 {
         		 axDialog.confirm({
 	             		title:" ",
-	                     msg: COL("bis.confirem.obe")
+	                     msg: COL("confirem.obe")
 	                 }, function () {
 	                     if (this.key == "ok") 
 	                     {
@@ -1493,7 +1495,7 @@ fnObj.pageStart = function () {
     		 {
         		 axDialog.confirm({
              		title:" ",
-                     msg: COL("bis.confirem.bit")
+                     msg: COL("confirem.bit")
                  }, function () {
                      if (this.key == "ok") 
                      {
@@ -1562,7 +1564,7 @@ fnObj.pageStart = function () {
    			 {
             	if("BIT" == selectType )
         		{
-            		msg = COL("bis.confirem.bit");
+            		msg = COL("confirem.bit");
 	    		
         		}
             	else if("TERMINAL" == selectType)
@@ -1607,11 +1609,11 @@ fnObj.pageStart = function () {
    			 {
             	if("BIT" == selectType )
         		{
-        		msg = COL("bis.confirem.bit");
+        		msg = COL("confirem.bit");
         		}
             	else if("TERMINAL" == selectType)
         		{
-        		msg = COL("bis.confirem.obe");
+        		msg = COL("confirem.obe");
         		}
             	axDialog.confirm({
             		title:" ",
@@ -1813,11 +1815,11 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
 	   			 {
 	            	if("BIT" == selectType )
 	        		{
-	        		msg = COL("bis.confirem.bit");
+	        		msg = COL("confirem.bit");
 	        		}
 	            	else if("TERMINAL" == selectType)
 	        		{
-	        		msg = COL("bis.confirem.obe");
+	        		msg = COL("confirem.obe");
 	        		}
 	            	axDialog.confirm({
 	            		title:" ",
@@ -1844,11 +1846,11 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
 	   			 {
 	            	if("BIT" == selectType )
 	        		{
-	        		msg = COL("bis.confirem.bit");
+	        		msg = COL("confirem.bit");
 	        		}
 	            	else if("TERMINAL" == selectType)
 	        		{
-	        		msg = COL("bis.confirem.obe");
+	        		msg = COL("confirem.obe");
 	        		}
 	            	axDialog.confirm({
 	            		title:" ",
@@ -1894,7 +1896,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -1943,7 +1945,7 @@ fnObj.firmware = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -1973,7 +1975,7 @@ fnObj.schedule = axboot.viewExtend(axboot.formView, {
             "Send": function () {
             		axDialog.confirm({
                 		title:" ",
-                        msg: COL("bis.confirem.bit")
+                        msg: COL("confirem.bit")
                     }, function () {
                         if (this.key == "ok") 
                         {
@@ -1985,7 +1987,7 @@ fnObj.schedule = axboot.viewExtend(axboot.formView, {
             "All": function () {
          		axDialog.confirm({
             		title:" ",
-                    msg: COL("bis.confirem.bit")
+                    msg: COL("confirem.bit")
                 }, function () {
                     if (this.key == "ok") 
                     {
@@ -2007,7 +2009,7 @@ fnObj.schedule = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") +" "+ COL("bis.pleaseenter"));
+            alert( rs.error[0].jquery.attr("title") +" "+ COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -2060,7 +2062,7 @@ fnObj.illuminanceschedule = axboot.viewExtend(axboot.formView, {
   validate: function () {
       var rs = this.model.validate();
       if (rs.error) {
-          alert( rs.error[0].jquery.attr("title") + COL("bis.pleaseenter"));
+          alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
           rs.error[0].jquery.focus();
           return false;
       }
