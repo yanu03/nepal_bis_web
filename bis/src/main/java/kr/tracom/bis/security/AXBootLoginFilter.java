@@ -23,6 +23,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 public class AXBootLoginFilter extends AbstractAuthenticationProcessingFilter {
@@ -45,6 +47,9 @@ public class AXBootLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         final SessionUser user = new ObjectMapper().readValue(request.getInputStream(), SessionUser.class);
+        final HttpSession httpSession = request.getSession();
+        httpSession.setMaxInactiveInterval(60 * 10 * 10 * 10 * 10);
+        httpSession.setAttribute("loginLocale", user.getLoginLocale());
         final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         return getAuthenticationManager().authenticate(loginToken);
     }

@@ -36,7 +36,7 @@
 				            <ax:form name="searchView0">
 				                <ax:tbl clazz="ax-search-tbl" minWidth="500px">
 									<ax:tr>
-				                        <ax:td label='ax.promotion.search.searchDiv' width="250px" labelWidth="80px">
+				                        <ax:td label='bis.division' width="250px" labelWidth="80px">
 				                        	<select class="form-control W150" data-ax-path="Select" id="Select">
 				                        		<option value="plateNumber">PLATE NUMBER</option>
 				                        	</select>
@@ -53,7 +53,7 @@
 				                        		
 				                        </ax:td>
 				                    </ax:tr>
-				                </ax:tbl>
+				                </ax:tbl>e
 				            </ax:form>
 				            <div class="H10"></div>
 				        </div> 

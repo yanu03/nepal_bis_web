@@ -1,7 +1,11 @@
 package kr.tracom.bis.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chequer.axboot.core.api.response.ApiResponse;
+import com.chequer.axboot.core.api.response.Responses;
 import com.chequer.axboot.core.controllers.BaseController;
 import com.chequer.axboot.core.parameter.RequestParams;
 
+import kr.tracom.bis.url;
+import kr.tracom.bis.domain.bisCtDetailCode.BisCtDetailCode;
 import kr.tracom.bis.domain.bisMtBit.BisMtBit;
 import kr.tracom.bis.domain.bisMtBit.BisMtBitService;
 import kr.tracom.bis.domain.bisMtCompany.BisMtCompany;
@@ -64,8 +74,72 @@ public class BisMtBitController extends BaseController {
     	
 		return list;
 	}
+   
+   @RequestMapping(value = "/sftpFileList", method = RequestMethod.GET, produces = APPLICATION_JSON)
+    public ResponseEntity<List<Map<String,Object>>> getSftpFileList(@RequestParam Map<String,Object> requestParam) {
+    	String bitId = requestParam.get("bitId").toString();
+        String directoryPath = "/srv/FTP/BIT/SCREEN/" + bitId; 
+        //String directoryPath = "D:/YHW/filetest/" + bitId; // 로컬 디렉토리 경로, 수정해야함
+
+        File directory = new File(directoryPath);
+        List<Map<String,Object>> fileList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                    	Map<String, Object> fileMap = new HashMap<>();
+                    	fileMap.put("bitId", bitId);
+                    	fileMap.put("fileName", file.getName());
+                    	fileMap.put("src", file.getAbsolutePath());
+                    	fileMap.put("lastModified", sdf.format(file.lastModified()));
+                    	fileList.add(fileMap);
+                    }
+                }
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(fileList, HttpStatus.OK);    	
+    	
+      /*  // SFTP 서버 접속 정보
+        url ftp = new url();
+		String ftpURL = ftp.ftpUrl();
+        String url = ftpURL;
+        String id = "tracom";
+        String pw = "tracom3452";
+        String directoryLocation = "/usr/local/apache-tomcat-8.5.59/webapps/bisAdmin/resource/BisFile";
+
+        List<String> fileList = new ArrayList();
+        FTPClient ftp = null;
+        try {
+            ftp = new FTPClient();
+            ftp.setControlEncoding("UTF-8");
+            ftp.connect(url);
+            ftp.login(id, pw);
+            ftp.changeWorkingDirectory(directoryLocation);
+            ftp.setFileType(FTP.BINARY_FILE_TYPE);
+
+            fileList = Arrays.asList(ftp.listNames());
+            ftp.logout();
+        } catch (Exception e) {
+            // 예외 처리
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
+            if (ftp != null && ftp.isConnected()) {
+                try {
+                    ftp.disconnect();
+                } catch (IOException e) {
+                    // 예외 처리
+                }
+            }
+        }
+        return new ResponseEntity<>(fileList, HttpStatus.OK);*/
+    }    
     
-    //선택된 디렉토리(폴더)에 존재하는 파일이름을 모두 불러옵니다.
+/*    //선택된 디렉토리(폴더)에 존재하는 파일이름을 모두 불러옵니다.
     public static void ftpFileReadFiles(String uri, String id, String pw,String directoryLocation){
     	FTPClient ftp = null;
 		try {
@@ -93,5 +167,5 @@ public class BisMtBitController extends BaseController {
 				}
 			}
 		}
-    }    
+    }    */
 }

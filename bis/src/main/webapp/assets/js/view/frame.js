@@ -18,8 +18,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 // fnObj 기본 함수 스타트와 리사이즈
 fnObj.pageStart = function () {
 
-    axboot.def["DEFAULT_TAB_LIST"][0].progNm = COL("ax.admin.home");
-    axboot.def["DEFAULT_TAB_LIST"][0].menuNm = COL("ax.admin.home");
+    axboot.def["DEFAULT_TAB_LIST"][0].progNm = COL("admin.home");
+    axboot.def["DEFAULT_TAB_LIST"][0].menuNm = COL("admin.home");
 
     var convertMenuItems = function(list){
         var _list = [];

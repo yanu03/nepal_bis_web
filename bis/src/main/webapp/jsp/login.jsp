@@ -70,6 +70,7 @@
                         method: "POST",
                         url: "/api/login",
                         data: JSON.stringify({
+                            "loginLocale": $("#locale").val(),
                             "userCd": $("#userCd").val(),
                             "userPs": $("#userPs").val()
                         }),
@@ -110,8 +111,16 @@
                 <div class="panel-heading"><ax:lang id="ax.admin.login.guide.message"/></div>
                 <div class="panel-body">
                     <form name="login-form" class="" method="post" action="/api/login" onsubmit="return fnObj.login();" autocomplete="off">
-
-
+						<div>
+							<div class="form-group">
+								<label for="locale"><ax:lang id="ax.admin.locale"/></label>
+								<select class="form-control" id="locale" name="locale">
+									 <option value="nep" style="color: black;">Nepal</option>
+									 <option value="en" style="color: black;">English</option>
+									 <option value="ko" style="color: black;">Korean</option>
+								</select>
+							</div>
+						</div>
                         <div class="form-group">
                             <label for="userCd"><i class="cqc-new-message"></i> <ax:lang id="ax.admin.id"/></label>
                             <ax:input id="userCd" clazz="ime-false" />

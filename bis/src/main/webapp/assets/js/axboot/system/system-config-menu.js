@@ -478,7 +478,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
         this.mask = new ax5.ui.mask({
             theme: "form-mask",
             target: $('#split-panel-form'),
-            content: COL("ax.admin.menu.form.d1")
+            content: COLA("ax.admin.menu.form.d1")
         });
         this.mask.open();
 
@@ -595,13 +595,13 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
                 //menuId
-                {key: "grpAuthCd", label: COL("ax.admin.menu.auth.group.code"), width: 80, align: "center"},
-                {key: "grpAuthNm", label: COL("ax.admin.menu.auth.group.name"), width: 160, align: "left"},
-                {key: "useYn", label: COL("ax.admin.menu.auth.apply"), editor: "checkYn"},
-                {key: "schAh", label: COL("ax.admin.menu.auth.inquery"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
-                {key: "savAh", label: COL("ax.admin.menu.auth.save"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
-                {key: "exlAh", label: COL("ax.admin.menu.auth.excel"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
-                {key: "delAh", label: COL("ax.admin.menu.auth.delete"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
+                {key: "grpAuthCd", label: COLA("admin.menu.auth.group.code"), width: 80, align: "center"},
+                {key: "grpAuthNm", label: COLA("admin.menu.auth.group.name"), width: 160, align: "left"},
+                {key: "useYn", label: COLA("admin.menu.auth.apply"), editor: "checkYn"},
+                {key: "schAh", label: COLA("admin.menu.auth.inquery"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
+                {key: "savAh", label: COLA("admin.menu.auth.save"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
+                {key: "exlAh", label: COLA("admin.menu.auth.excel"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
+                {key: "delAh", label: COLA("admin.delete"), width: 50, align: "center", editor: "menu-program-auth-checkYn"},
                 {key: "fn1Ah", label: "FN1", width: 50, align: "center", editor: "menu-program-auth-checkYn"},
                 {key: "fn2Ah", label: "FN2", width: 50, align: "center", editor: "menu-program-auth-checkYn"},
                 {key: "fn3Ah", label: "FN3", width: 50, align: "center", editor: "menu-program-auth-checkYn"},

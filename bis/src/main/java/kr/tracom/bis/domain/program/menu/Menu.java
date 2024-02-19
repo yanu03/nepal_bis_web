@@ -16,9 +16,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -138,14 +142,17 @@ public class Menu extends BaseJpaModel<Long> implements Cloneable {
 
     @JsonIgnore
     public String getLocalizedMenuName(HttpServletRequest request) {
-        Locale locale = RequestUtils.getLocale(request);
+        //Locale locale = RequestUtils.getLocale(request);
         
         //프로그램명 locale 설정부분
         //locale = new Locale("en");
+        
+        HttpSession session = request.getSession(false); // 세션 생성을 방지하기 위해 false 사용    	
 
         if (getMultiLanguageJson() != null) {
-            JsonNode jsonNode = getMultiLanguageJson().findPath(locale.getLanguage());
-
+            //JsonNode jsonNode = getMultiLanguageJson().findPath(locale.getLanguage()); //기존 소스
+            JsonNode jsonNode = getMultiLanguageJson().findPath((String) session.getAttribute("loginLocale")); //loginLocale로 변경함 20240207
+            System.out.println((String) session.getAttribute("loginLocale"));
             if (jsonNode != null) {
                 return jsonNode.asText();
             }

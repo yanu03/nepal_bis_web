@@ -13,9 +13,23 @@
     </jsp:attribute>
     <jsp:attribute name="script">
     	<ax:script-lang key="ax.script" var="LANG" />
-        <ax:script-lang key="ax.history" var="COL" />
+        <%-- <ax:script-lang key="ax.history" var="COL" /> --%>
+        <%-- <ax:script-lang key="bis" var="BIS" /> --%>
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>    	
         <ax:script-lang key="ax.promotion" var="PRO" />
-        <ax:script-lang key="bis" var="BIS" />
         
         <script type="text/javascript" src="<c:url value='/assets/js/common/common.js' />"></script>
         <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
@@ -69,13 +83,13 @@
 				            <ax:form name="searchView0">
 				                <ax:tbl clazz="ax-search-tbl" minWidth="500px">
 									<ax:tr>
-				                        <ax:td label='ax.promotion.search.searchDiv' width="250px" labelWidth="80px">
+				                        <ax:td label='bis.division' width="250px" labelWidth="80px">
 				                        	<select class="form-control W150" data-ax-path="Select" id="Select">
 				                        		<option value="routeName">ROUTE NAME</option>
 				                        		<option value="plateNumber">PLATE NUMBER</option>
 				                        	</select>
 				                        </ax:td>
-				                        <ax:td label='ax.promotion.search.searchData' width="300px" labelWidth="80px">
+				                        <ax:td label='bis.search' width="300px" labelWidth="80px">
 				                        	<div class="input-group">
 				                        		<input type="text" class="form-control" id="Keyword"  data-ax-path="Keyword" id="Keyword"/>
 				                        		<span class="input-group-btn">

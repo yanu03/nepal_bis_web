@@ -175,8 +175,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         	  frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "routeId", label: COL("bis.route.routeid"), width: 120, align: "center"},
-                {key: "routeName", label: COL("bis.route.routename"), width: 150, align: "center"}
+                {key: "routeId", label: COL("route.routeid"), width: 120, align: "center"},
+                {key: "routeName", label: COL("route.routename"), width: 150, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -228,7 +228,7 @@ var divtimecheck=[];
 var divcheck=[];
 function routeMap(data)
 {
-	var url=COL("bis.apiserverip")+'routeLine';
+	var url=COL("apiserverip")+'routeLine';
 	ajaxCall(function(result,res){
 		if(result){
 			res = res.Information;
@@ -241,7 +241,7 @@ function routeMap(data)
         	        	str+= "<div style='height:20px;background-color:#e3e3e3;'>";
         	    	    str+= "<div style='float:right;'> <a href='javascript:void(0);' onclick='routeClose(\""+ data.routeId+"\","+data.dindex+")'><img src='/assets/images/map/close.gif'> </a></div>";
         	    	    str+= "<div id=time"+data.routeId+" style='float:right;'>refreshTime:30</div>";
-        	    	    str+= "<div> "+COL("bis.route.routename")+" : "+data.routeName+"</div>";
+        	    	    str+= "<div> "+COL("route.routename")+" : "+data.routeName+"</div>";
         	    	    
         	    	    str+= "</div>";
         	    	    str+=" <div style='height:240px;overflow:auto;overflow-y:hiden;'>";
@@ -356,7 +356,7 @@ function routeMap(data)
 }
 function routeBus(data,slength)
 {
-	var url=COL("bis.apiserverip")+'busLocation';
+	var url=COL("apiserverip")+'busLocation';
 	ajaxCall(function(result,res){
 		if(result){
 			res = res.Information;

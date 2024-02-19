@@ -13,8 +13,14 @@ import com.chequer.axboot.core.utils.DateTimeUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +40,14 @@ public class AXBootUserDetailsService implements UserDetailsService {
 
     @Override
     public final SessionUser loadUserByUsername(String userCd) throws UsernameNotFoundException {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false); // 세션 생성을 방지하기 위해 false 사용    	
+        String loginLocale = null;
+        if (session != null) {
+            // 세션에서 loginLocale 값 가져오기
+            loginLocale = (String) session.getAttribute("loginLocale");
+        }    	
+    	
         User user = userService.findOne(userCd);
 
         if (user == null) {
@@ -53,6 +67,7 @@ public class AXBootUserDetailsService implements UserDetailsService {
         List<UserAuth> userAuthList = userAuthService.findByUserCd(userCd);
 
         SessionUser sessionUser = new SessionUser();
+        sessionUser.setLoginLocale(loginLocale);
         sessionUser.setUserCd(user.getUserCd());
         sessionUser.setUserNm(user.getUserNm());
         sessionUser.setUserPs(user.getUserPs());

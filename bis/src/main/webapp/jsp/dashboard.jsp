@@ -526,7 +526,7 @@
                 </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-4">
+                    <%-- <div class="col-md-3">
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">
@@ -550,7 +550,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div> --%>
                     <div class="col-md-4">
                             <div class="card">
                                 <div class="header">

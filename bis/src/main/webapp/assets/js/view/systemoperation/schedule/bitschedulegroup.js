@@ -265,28 +265,28 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "bitId", label: COL("bis.bit.bitid"), width: 90, align: "center"},
-            	{key: "bitType", label: COL("bis.bit.bittype"), width: 145, align: "center",formatter: function () {
+            	{key: "bitId", label: COL("bit.bitid"), width: 90, align: "center"},
+            	{key: "bitType", label: COL("bit.bittype"), width: 145, align: "center",formatter: function () {
             		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
                 return detailCode;
                 }},
-            	{key: "bitName", label:COL("bis.bit.bitname"), width: 90, align: "center"},
-            	{key: "bitEname", label: COL("bis.bit.bitename"), width: 90, align: "center"},
-            	{key: "terminalVersion", label: COL("bis.bit.terminalversion"), width: 140, align: "center"},
-            	{key: "ipAddress", label: COL("bis.bit.ipaddress"), width: 90, align: "center"},
-            	{key: "cameraIpAddress", label: COL("bis.bit.cameraipaddress"), width: 135, align: "center"},            	
-            	{key: "installDate", label: COL("bis.bit.installdate"), width: 100, align: "center"},          
-            	{key: "countryCode", label:  COL("bis.countrycode"), width: 105, align: "center",formatter: function () {
+            	{key: "bitName", label:COL("bit.bitname"), width: 90, align: "center"},
+            	{key: "bitEname", label: COL("bit.bitename"), width: 90, align: "center"},
+            	{key: "terminalVersion", label: COL("bit.terminalversion"), width: 140, align: "center"},
+            	{key: "ipAddress", label: COL("bit.ipaddress"), width: 90, align: "center"},
+            	{key: "cameraIpAddress", label: COL("bit.cameraipaddress"), width: 135, align: "center"},            	
+            	{key: "installDate", label: COL("bit.installdate"), width: 100, align: "center"},          
+            	{key: "countryCode", label:  COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},
-                    {key: "areaCode", label:  COL("bis.areacode"), width: 80, align: "center",formatter: function () {
+                    {key: "areaCode", label:  COL("areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;
                         }},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "userId", label:COL("bis.userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 80, align: "center"}
+                {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                {key: "userId", label:COL("userid"), width: 120, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
          
             body: {
@@ -316,7 +316,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         		      axDialog.alert({
                           theme: "primary",
                           title:" ",
-                          msg: COL("bis.error.bitselect")
+                          msg: COL("error.bitselect")
                       });
 				}
         		else
@@ -331,7 +331,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         		    axDialog.alert({
                         theme: "primary",
                         title:" ",
-                        msg: COL("bis.error.bitselect")
+                        msg: COL("error.bitselect")
                     });
         		}
         		else

@@ -20,9 +20,18 @@
   </jsp:attribute>
 
     <jsp:attribute name="script">
-   
       <ax:script-lang key="ax.script" />
-      <ax:script-lang key="bis" var="COL" />
+       <c:choose>
+	  	<c:when test="${loginLocale == 'nep'}">
+	  		<ax:script-lang key="bisnep" var="COL" />
+	  	</c:when>
+	  	<c:when test="${loginLocale == 'en'}">
+	  		<ax:script-lang key="bisen" var="COL" />
+	  	</c:when>
+	  	<c:when test="${loginLocale == 'ko'}">
+	  		<ax:script-lang key="bisko" var="COL" />
+	  	</c:when>
+	  </c:choose>  
        <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/view/RouteList.js' />"></script>
       <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
@@ -86,7 +95,7 @@
                               <div class="ax-button-group">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                         		   <ax:lang id="bis.routelist" /> </h2>
+                         		   <ax:lang id="routelist" /> </h2>
                     </div>
                   
                 </div>

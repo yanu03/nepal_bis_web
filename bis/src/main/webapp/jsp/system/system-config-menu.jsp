@@ -10,7 +10,18 @@
 <ax:layout name="base">
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" />
-        <ax:script-lang key="ax.admin" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+			</c:when>
+		</c:choose>        
+        <%-- <ax:script-lang key="ax.admin" var="COL" /> --%>
         <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-config-menu.js' />"></script>
     </jsp:attribute>
     <jsp:body>
@@ -75,12 +86,16 @@
                                 <ax:td label="ax.admin.menu.name.lang.multi" width="100%">
                                     <div class="form-inline">
                                         <div class="form-group">
-                                            <label>한국어</label>
-                                            <ax:input dataPath="multiLanguageJson.ko"/>
+                                            <label>Nepal</label>
+                                            <ax:input dataPath="multiLanguageJson.nep"/>
                                         </div>
                                         <div class="form-group">
                                             <label>English</label>
                                             <ax:input dataPath="multiLanguageJson.en"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>한국어</label>
+                                            <ax:input dataPath="multiLanguageJson.ko"/>
                                         </div>
                                     </div>
                                 </ax:td>

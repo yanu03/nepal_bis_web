@@ -116,6 +116,7 @@ public class AXBootTokenAuthenticationService {
                     if (program != null) {
                         requestUtils.setAttribute("program", program);
                         requestUtils.setAttribute("pageName", menu.getLocalizedMenuName(request));
+                        System.out.println(requestUtils.getAttribute("pageName"));
                         requestUtils.setAttribute("pageRemark", program.getRemark());
 
                         if (program.getAuthCheck().equals(AXBootTypes.Used.YES.getLabel())) {
@@ -131,10 +132,11 @@ public class AXBootTokenAuthenticationService {
 
             ScriptSessionVO scriptSessionVO = ModelMapperUtils.map(user, ScriptSessionVO.class);
             scriptSessionVO.setDateFormat(scriptSessionVO.getDateFormat().toUpperCase());
-            scriptSessionVO.getDetails().put("language", requestUtils.getLocale(request).getLanguage());
+            //scriptSessionVO.getDetails().put("language", requestUtils.getLocale(request).getLanguage()); //기존 작성된 language
+            scriptSessionVO.getDetails().put("language", user.getLoginLocale()); //메뉴명 표출위해 loginLocale로 변경함
             requestUtils.setAttribute("loginUser", user);
             requestUtils.setAttribute("scriptSession", JsonUtils.toJson(scriptSessionVO));
-
+            //requestUtils.setAttribute("loginLocale", user.getLoginLocale());
             if (progCd.equals("main")) {
                 List<Menu> menuList = menuService.getAuthorizedMenuList(user.getMenuGrpCd(), user.getAuthGroupList());
                 requestUtils.setAttribute("menuJson", JsonUtils.toJson(menuList));

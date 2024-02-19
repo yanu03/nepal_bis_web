@@ -295,31 +295,31 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "vehicleId", label: COL("bis.vehicle.vehicleid"), width: 90, align: "center"},
-            	{key: "vehicleType", label: COL("bis.vehicle.vehicletype"),  width: 115, align: "center",formatter: function () {
+            	{key: "vehicleId", label: COL("vehicle.vehicleid"), width: 90, align: "center"},
+            	{key: "vehicleType", label: COL("vehicle.vehicletype"),  width: 115, align: "center",formatter: function () {
             		var detailCode = getDetailCode("VEHICLE_TYPE",this.item.vehicleType);
                     return detailCode;
                     }},
-            	{key: "plateNumber", label:  COL("bis.vehicle.platenumber"),  width: 105, align: "center"},
-            	{key: "companyId", label: COL("bis.company.companyid"),  width: 90, align: "center"},
-            	{key: "companyName", label: COL("bis.company.companyname"),  width: 205, align: "center"},
-            	{key: "busType", label:  COL("bis.vehicle.bustype"), width: 140, align: "center",formatter: function () {
+            	{key: "plateNumber", label:  COL("vehicle.platenumber"),  width: 105, align: "center"},
+            	{key: "companyId", label: COL("company.companyid"),  width: 90, align: "center"},
+            	{key: "companyName", label: COL("company.companyname"),  width: 205, align: "center"},
+            	{key: "busType", label:  COL("vehicle.bustype"), width: 140, align: "center",formatter: function () {
             		var detailCode = getDetailCode("BUS_TYPE",this.item.busType);
                     return detailCode;
                     }},
-            	{key: "vehicleCapa", label:  COL("bis.vehicle.vehiclecapa"),  width: 210, align: "center"},
-            	{key: "countryCode", label: COL("bis.countrycode"),  width: 105, align: "center",formatter: function () {
+            	{key: "vehicleCapa", label:  COL("vehicle.vehiclecapa"),  width: 210, align: "center"},
+            	{key: "countryCode", label: COL("countrycode"),  width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},
-            	{key: "areaCode", label: COL("bis.areacode"),  width: 90, align: "center",formatter: function () {
+            	{key: "areaCode", label: COL("areacode"),  width: 90, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;
                     }},
-                {key: "updateDate", label: COL("bis.updatedate"),  width: 90, align: "center"},
-                {key: "remark", label: COL("bis.remark"),  width: 80, align: "center"},
-                {key: "userId", label: COL("bis.userid"),  width: 120, align: "center"},
-                {key: "useYn", label:  COL("bis.useyn"), width: 80, align: "center"}
+                {key: "updateDate", label: COL("updatedate"),  width: 90, align: "center"},
+                {key: "remark", label: COL("remark"),  width: 80, align: "center"},
+                {key: "userId", label: COL("userid"),  width: 120, align: "center"},
+                {key: "useYn", label:  COL("useyn"), width: 80, align: "center"}
             ],
           
             body: {
@@ -411,7 +411,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert(rs.error[0].jquery.attr("title")+ COL("bis.pleaseenter"));
+            alert(rs.error[0].jquery.attr("title")+ COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }

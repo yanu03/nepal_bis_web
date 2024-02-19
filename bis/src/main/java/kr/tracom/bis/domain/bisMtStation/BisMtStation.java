@@ -24,6 +24,7 @@ public class BisMtStation  {
 	private String updateDate="";
 	private String userId="";
 	private String useYn;
+	private String remark="";
 	
 	private String adminName1="";
 	private Integer count=0;

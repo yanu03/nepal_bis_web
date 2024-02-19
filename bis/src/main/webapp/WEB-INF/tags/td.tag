@@ -1,10 +1,12 @@
 <%@ tag import="com.chequer.axboot.core.utils.TagUtils" %>
 <%@ tag import="org.apache.commons.lang3.StringUtils" %>
 <%@ tag import="com.chequer.axboot.core.utils.MessageUtils" %>
+<%@ tag import="javax.servlet.http.HttpServletRequest" %>
 <%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
 
 <%@ attribute name="id" %>
 <%@ attribute name="label" %>
+<%@ attribute name="labelLocale" %>
 <%@ attribute name="labelClazz" %>
 <%@ attribute name="clazz" %>
 <%@ attribute name="labelStyle" %>
@@ -12,8 +14,31 @@
 <%@ attribute name="labelWidth" %>
 <%@ attribute name="width" %>
 <%
+
+ 	String currentLang = (String)session.getAttribute("loginLocale");
+    if(StringUtils.isEmpty(currentLang)) {
+        currentLang = "nep"; // 기본값 설정
+    } 
+    
+	
+	String suffix = "nep";
+	if(currentLang.equals("nep")){
+		suffix = "nep";
+	}
+	else if(currentLang.equals("en")){
+		suffix = "en";
+	}
+	else if(currentLang.equals("ko")){
+		suffix = "ko";
+	}
+	
+	String[] parts = label.split("\\.", 2);
+	String baseLabel = parts[0];
+	String labelLocaleSuffix = baseLabel + suffix;
+	labelLocale = label.replaceFirst("^"+ baseLabel, labelLocaleSuffix);
+	
     if(StringUtils.isNotEmpty(label)) {
-        String localizedMessage = MessageUtils.getMessage(request, label);
+        String localizedMessage = MessageUtils.getMessage(request, labelLocale);
 
         if(StringUtils.isNotEmpty(localizedMessage)) {
             label = localizedMessage;

@@ -85,12 +85,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     Routestation_GET: function (caller, act, data) {
     	data.key="bisKey";
     	data.useYn="Y";
-    	var url = BIS("bis.apiserverip")+'routeVertex';
+    	var url = COL("bis.apiserverip")+'routeVertex';
     	ajaxCall(function(result,res){
     		if(result){
     			 res= res.Information;
           		 RouteStationLayer(res);
-          		 url = BIS("bis.apiserverip")+'routeNodeCoordinate';
+          		 url = COL("bis.apiserverip")+'routeNodeCoordinate';
           		ajaxCall(function(result,res){
           			if(result){
           				  res= res.Information;
@@ -238,18 +238,18 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     	var swapColumns=null;
     	if(temp.Select=="routeName"){
     		swapColumns= [
-    			{key: "routeId", label: BIS("bis.route.routeid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "routeName", label: BIS("bis.route.routename"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "routeType", label: BIS("bis.route.routetype"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "routeId", label: COL("route.routeid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "routeName", label: COL("route.routename"), width: 200, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "routeType", label: COL("route.routetype"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
                     return detailCode;
                    }},
 	        ];
     	}else{
     		swapColumns= [
-    			{key: "vehicleId", label: BIS("bis.vehicle.vehicleid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-    			{key: "plateNumber", label: BIS("bis.vehicle.platenumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-	            {key: "vehicleType", label: BIS("bis.vehicle.vehicletype"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+    			{key: "vehicleId", label: COL("vehicle.vehicleid"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+    			{key: "plateNumber", label: COL("vehicle.platenumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+	            {key: "vehicleType", label: COL("vehicle.vehicletype"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("VEHICLE_TYPE",this.item.vehicleType);
                     return detailCode;
                    }},
@@ -306,31 +306,31 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
            
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-            	 {key: "routeId", label: COL("ax.history.routeId"),width:120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            	 {key: "routeName", label: COL("ax.history.routeName"),width:200, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            	 {key: "plateNumber", label: COL("ax.history.plateNumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-            	 //{key: "vehicleId", label: COL("ax.history.vehicleId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "collectDate", label: COL("ax.history.collectDate"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "eventNumber", label: COL("ax.history.eventNumber"),width:110, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "eventCode", label: COL("ax.history.eventCode"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+            	 {key: "routeId", label: COL("route.routeid"),width:120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            	 {key: "routeName", label: COL("route.routename"),width:200, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            	 {key: "plateNumber", label: COL("vehicle.platenumber"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            	 //{key: "vehicleId", label: COLA("ax.history.vehicleId"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "collectDate", label: COLA("history.collectDate"), width: 120, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "eventNumber", label: COLA("history.eventNumber"),width:110, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "eventCode", label: COLA("history.eventCode"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("EVENT_CODE",this.item.eventCode);
                     return detailCode;
                    }},
-                 //{key: "eventName", label: COL("ax.history.eventName"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "eventData", label: COL("ax.history.eventData"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "spotName", label: COL("ax.history.spotName"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 //{key: "terminalId", label: COL("ax.history.terminalId"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "runCode", label: COL("ax.history.runCode"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
+                 //{key: "eventName", label: COLA("ax.history.eventName"), width: 90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "eventData", label: COLA("history.eventData"), width: 130, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "spotName", label: COLA("history.spotName"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 //{key: "terminalId", label: COLA("ax.history.terminalId"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "runCode", label: COLA("history.runCode"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}, formatter: function () {
             		var detailCode = getDetailCode("RUN_CODE",this.item.runCode);
                     return detailCode;
                    }},
-                 //{key: "runName", label: COL("ax.history.runName"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "gpsX", label: COL("ax.history.gpsX"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "gpsY", label: COL("ax.history.gpsY"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "heading", label: COL("ax.history.heading"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "speed", label: COL("ax.history.speed"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "stopTime", label: COL("ax.history.stopTime"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                 {key: "systemDate", label: COL("ax.history.systemDate"),width:130, align: "center", editor: {type: "text", disabled: "notCreated"}}
+                 //{key: "runName", label: COLA("ax.history.runName"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "gpsX", label: COL("station.gpsx"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "gpsY", label: COL("station.gpsy"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "heading", label: COLA("history.heading"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "speed", label: COLA("history.speed"),width:70, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "stopTime", label: COLA("history.stopTime"),width:90, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                 {key: "systemDate", label: COLA("history.systemDate"),width:130, align: "center", editor: {type: "text", disabled: "notCreated"}}
             ],
             body: {
                 onClick: function () {

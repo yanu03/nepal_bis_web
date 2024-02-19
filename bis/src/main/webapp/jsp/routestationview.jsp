@@ -72,7 +72,17 @@
   </jsp:attribute>
 
     <jsp:attribute name="script">
-    <ax:script-lang key="bis" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+			<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+			<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+			<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
     	<script src="<c:url value='/assets/js/map/proj4.js' />" type="text/javascript"></script>
         <script src="<c:url value='/assets/js/map/proj4js.js' />" type="text/javascript"></script>
         <script src="<c:url value='/assets/js/openlayers/v3.4.0/build/ol.js' />" type="text/javascript"></script>
@@ -257,7 +267,7 @@
 			<div class="ax-button-group" >
 				<div class="left">
 					<h2><i class="cqc-list"></i>
-					<ax:lang id="bis.routestationlist"/> </h2>
+					<ax:lang id="bis.stationlist"/> </h2>
 				</div>	
 			</div>
 		</div>

@@ -10,7 +10,21 @@
 <ax:layout name="base">
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" var="LANG" />
-        <ax:script-lang key="ax.admin" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>          
+        <%-- <ax:script-lang key="ax.admin" var="COL" /> --%>
         <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-auth-user.js' />"></script>
     </jsp:attribute>
     <jsp:body>
@@ -32,21 +46,21 @@
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                 	<ax:tr>
-                        <ax:td label='ax.promotion.search.useYn' width="200px" labelWidth="80px">
+                        <ax:td label='bis.useyn' width="200px" labelWidth="80px">
                         	<select id="useYn" data-ax-path="useYn" style="vertical-align: middle;" class="form-control" >
                         		<option value=""><ax:lang id="ax.admin.useAll"/></option>
                         		<option value="Y"><ax:lang id="ax.admin.useY"/></option>
                         		<option value="N"><ax:lang id="ax.admin.useN"/></option>
 	                        </select>
                         </ax:td>
-                        <ax:td label='ax.promotion.search.searchDiv' width="230px" labelWidth="80px" >
+                        <ax:td label='bis.division' width="230px" labelWidth="80px" >
                         	<select id="userDiv" data-ax-path="userDiv" style="vertical-align: middle;" class="form-control" >
                         			<option value="USER_NAME"><ax:lang id="ax.admin.user.name"/></option>
                         			<option value="USER_ID"><ax:lang id="ax.promotion.userId"/></option>
 	                        		<%-- <option value="FORM_TYPE"><ax:lang id="ax.promotion.formType"/></option> --%>
 	                        </select>
                         </ax:td>
-                        <ax:td label='ax.promotion.search.searchData' width="200px" labelWidth="80px">
+                        <ax:td label='bis.search' width="200px" labelWidth="80px">
                         	<input id="filter" type="text" data-ax-path="filter" class="form-control W100" />
                         </ax:td>
                     </ax:tr>
@@ -116,7 +130,7 @@
                             <ax:td label="ax.admin.user.email" width="300px">
                                 <input type="text" name="email" data-ax-path="email" maxlength="50" title="이메일" placeholder="abc@abc.com" class="av-email form-control" value=""/>
                             </ax:td>
-                            <ax:td label="ax.admin.use.or.not" width="300px">
+                            <ax:td label="bis.useyn" width="300px">
                                 <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control W100"/>
                             </ax:td>
 			<%--     
@@ -138,7 +152,7 @@
                             </ax:td>
                         </ax:tr> --%>
                         <ax:tr labelWidth="120px">
-                            <ax:td label="ax.admin.remark" width="100%">
+                            <ax:td label="bis.remark" width="100%">
                                 <input type="text" name="remark" data-ax-path="remark" maxlength="100" class="form-control" value=""/>
                             </ax:td>
                         </ax:tr>
@@ -161,7 +175,7 @@
                     <div class="H5"></div>
                     <div class="ax-button-group sm">
                         <div class="left">
-                            <h3><ax:lang id="ax.admin.user.auth.group.setting"/></h3>
+                            <h3><ax:lang id="ax.admin.menu.auth.group.setting"/></h3>
                         </div>
                     </div>
                     <ax:tbl clazz="ax-form-tbl">

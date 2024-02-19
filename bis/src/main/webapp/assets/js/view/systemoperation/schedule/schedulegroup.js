@@ -180,15 +180,15 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "scheduleGroupId", label: COL("bis.systemschedulegroup.schedulegroupid"), width: 150, align: "center"},
-                {key: "scheduleCode", label: COL("bis.systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
+                {key: "scheduleGroupId", label: COL("systemschedulegroup.schedulegroupid"), width: 150, align: "center"},
+                {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                     return detailCode;
                  }},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("bis.remark"), width: 80, align: "center"},
-                {key: "userId", label: COL("bis.userid"), width: 115, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 80, align: "center"}
+                {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                {key: "userId", label: COL("userid"), width: 115, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -320,7 +320,7 @@ function byteCalc(obj){
    }
      
    if(check){
-       alert(limit+COL("ax.promotion.byte"));
+       alert(limit+COL("promotion.byte"));
    }
      
    thisObject.val(strTitle);

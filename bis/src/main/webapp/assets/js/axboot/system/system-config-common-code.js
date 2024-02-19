@@ -93,17 +93,17 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             multipleSelect: true,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "groupCd", label: COL("ax.admin.commoncode.group.code"), width: 250, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                {key: "groupNm", label: COL("ax.admin.commoncode.group.name"), width: 200, align: "center", editor: "text"},
-                {key: "code", label: COL("ax.admin.commoncode.code"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
-                {key: "name", label: COL("ax.admin.commoncode.name"), width: 150, align: "left", editor: "text"},
-                {key: "sort", label: COL("ax.admin.sort"), editor: "number"},
-                {key: "useYn", label: COL("ax.admin.use.or.not"), editor: "checkYn"},
-                {key: "remark", label: COL("ax.admin.remark"), width: 200, align: "left", editor: "text"},
-                {key: "data1", label: COL("ax.admin.commoncode.data1"), width: 70, align: "left", editor: "text"},
-                {key: "data2", label: COL("ax.admin.commoncode.data2"), width: 70, align: "left", editor: "text"},
-                {key: "data3", label: COL("ax.admin.commoncode.data3"), width: 70, align: "left", editor: "text"},
-                {key: "data4", label: COL("ax.admin.commoncode.data4"), width: 70, align: "left", editor: "text"}
+                {key: "groupCd", label: COLA("admin.commoncode.group.code"), width: 250, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                {key: "groupNm", label: COLA("admin.commoncode.group.name"), width: 200, align: "center", editor: "text"},
+                {key: "code", label: COL("code.detail.code"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
+                {key: "name", label: COLA("admin.commoncode.name"), width: 150, align: "left", editor: "text"},
+                {key: "sort", label: COLA("admin.sort"), editor: "number"},
+                {key: "useYn", label: COL("useyn"), editor: "checkYn"},
+                {key: "remark", label: COL("remark"), width: 200, align: "left", editor: "text"},
+                {key: "data1", label: COLA("admin.commoncode.data1"), width: 70, align: "left", editor: "text"},
+                {key: "data2", label: COLA("admin.commoncode.data2"), width: 70, align: "left", editor: "text"},
+                {key: "data3", label: COLA("admin.commoncode.data3"), width: 70, align: "left", editor: "text"},
+                {key: "data4", label: COLA("admin.commoncode.data4"), width: 70, align: "left", editor: "text"}
             ],
             body: {
                 onClick: function () {

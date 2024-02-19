@@ -9,7 +9,18 @@
 <ax:layout name="base">
     <jsp:attribute name="script">
         <ax:script-lang key="ax.script" />
-        <ax:script-lang key="ax.code" var="COL" />
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="axnep" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="axen" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="axko" var="COLA" />
+			</c:when>
+		</c:choose>        
+        <%-- <ax:script-lang key="ax.code" var="COL" /> --%>
         <script type="text/javascript" src="<c:url value='/assets/js/view/managed/manage-code.js' />"></script>
     </jsp:attribute>
     <jsp:body>
@@ -20,21 +31,21 @@
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='ax.promotion.search.useYn' width="200px" labelWidth="80px">
+                        <ax:td label='bis.useyn' width="200px" labelWidth="80px">
                         	<select id="useYn" data-ax-path="useYn" style="vertical-align: middle;" class="form-control" >
                         		<option value=""><ax:lang id="ax.admin.useAll"/></option>
                         		<option value="Y"><ax:lang id="ax.admin.useY"/></option>
                         		<option value="N"><ax:lang id="ax.admin.useN"/></option>
 	                        </select>
                         </ax:td>
-                        <ax:td label='ax.promotion.search.searchDiv' width="250px" labelWidth="80px">
+                        <ax:td label='bis.division' width="250px" labelWidth="80px">
                         	<select id="searchDiv" data-ax-path="searchDiv" style="vertical-align: middle;" class="form-control">
                         		<option value="COMMON_CODE_NAME"><ax:lang id="ax.code.group.CodeName"/></option>
                         		<option value="COMMON_CODE_ENAME"><ax:lang id="ax.code.group.CodeEname"/></option>
                         		<option value="COMMON_CODE"><ax:lang id="ax.code.group.Code"/></option>
 	                        </select>
                         </ax:td>
-                        <ax:td label='ax.promotion.search.searchData' width="200px" labelWidth="80px" >
+                        <ax:td label='bis.search' width="200px" labelWidth="80px" >
                         	<input id="searchData" type="text" data-ax-path="searchData" class="form-control W100" />
                         </ax:td>
                     </ax:tr>

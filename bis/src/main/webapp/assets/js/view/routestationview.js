@@ -32,12 +32,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     Routestation_GET: function (caller, act, data) {
     	data.key="bisKey";
     	data.useYn="Y";
-    	var url = COL("bis.apiserverip")+'routeVertex';
+    	var url = COL("apiserverip")+'routeVertex';
     	ajaxCall(function(result,res){
     		if(result){
     			 res= res.Information;
           		 RouteStationLayer(res);
-          		 url = COL("bis.apiserverip")+'routeNodeCoordinate';
+          		 url = COL("apiserverip")+'routeNodeCoordinate';
           		ajaxCall(function(result,res){
           			if(result){
           				  res= res.Information;
@@ -246,12 +246,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         this.target = axboot.gridBuilder({
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "routeId", label: COL("bis.route.routeid"), width: 140, align: "center"},
-                {key: "routeType", label: COL("bis.route.routetype"), width:140, align: "center",formatter: function () {
+            	{key: "routeId", label: COL("route.routeid"), width: 140, align: "center"},
+                {key: "routeType", label: COL("route.routetype"), width:140, align: "center",formatter: function () {
             		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
                     return detailCode;
                     }},
-                {key: "routeName", label: COL("bis.route.routename"), width: 200, align: "center"}
+                {key: "routeName", label: COL("route.routename"), width: 200, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -281,21 +281,21 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         //	showLineNumber: false,
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-                {key: "routeId", label: COL("bis.route.routeid"), width: 80, align: "center"},
-                {key: "stationSequence", label: COL("bis.routestation.stationsequence"), width:140, align: "center", editor: "text"},
-                {key: "stationId", label: COL("bis.station.stationid"), width: 100, align: "center"},
-                {key: "stationName", label: COL("bis.station.stationname"), width: 100, align: "center"},
-                {key: "updownDir", label:COL("bis.routestation.updownDir"), width: 195, align: "center", editor: "text",formatter: function () {
+                {key: "routeId", label: COL("route.routeid"), width: 80, align: "center"},
+                {key: "stationSequence", label: COL("routestation.stationsequence"), width:140, align: "center", editor: "text"},
+                {key: "stationId", label: COL("station.stationid"), width: 100, align: "center"},
+                {key: "stationName", label: COL("station.stationname"), width: 100, align: "center"},
+                {key: "updownDir", label:COL("routestation.updownDir"), width: 195, align: "center", editor: "text",formatter: function () {
             		var detailCode = getDetailCode("UPDOWN_DIR",this.item.updownDir);
                     return detailCode;
                     }},
-                {key: "nextDistance", label: COL("bis.routestation.nextDistance"),width: 180, align: "center", editor: "text"},
-                {key: "statType", label: COL("bis.routestation.statType"),width: 80, align: "center", editor: "text",formatter: function () {
+                {key: "nextDistance", label: COL("routestation.nextDistance"),width: 180, align: "center", editor: "text"},
+                {key: "statType", label: COL("routestation.statType"),width: 80, align: "center", editor: "text",formatter: function () {
             		var detailCode = getDetailCode("STAT_tYPE",this.item.statType);
                     return detailCode;
                     }},
-                {key: "gpsX", label:COL("bis.station.gpsx"), width: 80, align: "center"},
-                {key: "gpsY", label:COL("bis.station.gpsy"), width: 80, align: "center"}/*,
+                {key: "gpsX", label:COL("station.gpsx"), width: 80, align: "center"},
+                {key: "gpsY", label:COL("station.gpsy"), width: 80, align: "center"}/*,
                 {key: "updateDate", label: COL("bis.updatedate"),width: 90, align: "center"},
                 {key: "remark", label:COL("bis.remark"), width: 80, align: "center",editor: "text"},
                 {key: "userId", label: COL("bis.userid"), width: 80, align: "center"}*/

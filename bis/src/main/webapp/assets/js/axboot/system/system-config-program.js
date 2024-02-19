@@ -93,19 +93,19 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             multipleSelect: true,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "progNm", label: COL("ax.admin.program.name"), width: 160, align: "left", editor: "text"},
-                {key: "progPh", label: COL("ax.admin.program.progPh"), width: 350, align: "left", editor: "text"},
-                {key: "authCheck", label: COL("ax.admin.program.auth.check.or.not"), width: 80, align: "center", editor: "checkYn"},
-                {key: "schAh", label: COL("ax.admin.program.auth.inquery"), width: 50, align: "center", editor: "checkYn"},
-                {key: "savAh", label: COL("ax.admin.program.auth.save"), width: 50, align: "center", editor: "checkYn"},
-                {key: "exlAh", label: COL("ax.admin.program.auth.excel"), width: 50, align: "center", editor: "checkYn"},
-                {key: "delAh", label: COL("ax.admin.program.auth.delete"), width: 50, align: "center", editor: "checkYn"},
+                {key: "progNm", label: COLA("admin.program.name"), width: 160, align: "left", editor: "text"},
+                {key: "progPh", label: COLA("admin.program.progPh"), width: 350, align: "left", editor: "text"},
+                {key: "authCheck", label: COLA("admin.program.auth.check.or.not"), width: 80, align: "center", editor: "checkYn"},
+                {key: "schAh", label: COLA("admin.menu.auth.inquery"), width: 50, align: "center", editor: "checkYn"},
+                {key: "savAh", label: COLA("admin.menu.auth.save"), width: 50, align: "center", editor: "checkYn"},
+                {key: "exlAh", label: COLA("admin.menu.auth.excel"), width: 50, align: "center", editor: "checkYn"},
+                {key: "delAh", label: COLA("admin.program.auth.delete"), width: 50, align: "center", editor: "checkYn"},
                 {key: "fn1Ah", label: "FN1", width: 50, align: "center", editor: "checkYn"},
                 {key: "fn2Ah", label: "FN2", width: 50, align: "center", editor: "checkYn"},
                 {key: "fn3Ah", label: "FN3", width: 50, align: "center", editor: "checkYn"},
                 {key: "fn4Ah", label: "FN4", width: 50, align: "center", editor: "checkYn"},
                 {key: "fn5Ah", label: "FN5", width: 50, align: "center", editor: "checkYn"},
-                {key: "remark", label: COL("ax.admin.remark"), width: 300, editor: "text"}
+                {key: "remark", label: COL("remark"), width: 300, editor: "text"}
             ],
             body: {
                 onClick: function () {

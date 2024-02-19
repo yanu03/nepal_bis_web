@@ -1,4 +1,11 @@
+$(window).resize(function(){
+    setTimeout(function(){
+        map.updateSize();
+    }, 200);
+});
+var vehicleListInterval;
 var fnObj = {};
+
 var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
         axboot.ajax({
@@ -48,12 +55,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     Routestation_GET: function (caller, act, data) {
     	data.key="bisKey";
     	data.useYn="Y";
-    	var url = COL("bis.apiserverip")+'routeVertex';
+    	var url = COL("apiserverip")+'routeVertex';
     	ajaxCall(function(result,res){
     		if(result){
     			 res= res.Information;
           		 RouteStationLayer(res);
-          		 url = COL("bis.apiserverip")+'routeNodeCoordinate';
+          		 /*url = COL("apiserverip")+'routeNodeCoordinate';
           		ajaxCall(function(result,res){
           			if(result){
           				  res= res.Information;
@@ -70,14 +77,14 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 						  }
 						  addStationMaker();
           			}else{
-          				console.log(err);
+          				//console.log(err);
                         axDialog.alert({
                             theme: "primary",
                             title:" ",
                             msg: "not responding."
                         });		
           			}
-          		 },url,data);
+          		 },url,data);*/
     		}else{
     			console.log(err);
                 axDialog.alert({
@@ -88,7 +95,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     		}
     	},url,data);
    	
-   	 axboot.ajax({
+   	 /*axboot.ajax({
          type: "GET",
          url: '/api/v1/bisMtRoutestations',
          data:  {routeId: data.routeId},
@@ -101,10 +108,17 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                  console.log(err);
              }
          }
-     });
+     });*/
 },    
     ITEM_CLICK: function (caller, act, data) {
     	ACTIONS.dispatch(ACTIONS.Routestation_GET, {routeId:data.routeId});
+        if (vehicleListInterval) {
+            clearInterval(vehicleListInterval);
+        }
+        vehicleList(data);
+        vehicleListInterval = setInterval(function() {
+            vehicleList(data);
+        }, 10000);
     },
     ITEM_ADD: function (caller, act, data) {
         caller.gridView01.addRow();
@@ -183,12 +197,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         this.target = axboot.gridBuilder({
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	{key: "routeId", label: COL("bis.route.routeid"), width: 140, align: "center"},
-                {key: "routeType", label: COL("bis.route.routetype"), width:140, align: "center",formatter: function () {
+            	{key: "routeId", label: COL("route.routeid"), width: 140, align: "center"},
+                {key: "routeType", label: COL("route.routetype"), width:140, align: "center",formatter: function () {
             		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
                     return detailCode;
                     }},
-                {key: "routeName", label: COL("bis.route.routename"), width: 200, align: "center"}
+                {key: "routeName", label: COL("route.routename"), width: 200, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -220,7 +234,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
 
 function routeMap(data)
 {
-	var url=COL("bis.apiserverip")+'routeLine';
+	var url=COL("apiserverip")+'routeLine';
 	ajaxCall(function(result,res){
 		if(result){
 			res = res.Information;
@@ -233,7 +247,7 @@ function routeMap(data)
         	        	str+= "<div style='height:20px;background-color:#e3e3e3;'>";
         	    	    str+= "<div style='float:right;'> <a href='javascript:void(0);' onclick='routeClose(\""+ data.routeId+"\","+data.dindex+")'><img src='/assets/images/map/close.gif'> </a></div>";
         	    	    str+= "<div id=time"+data.routeId+" style='float:right;'>refreshTime:30</div>";
-        	    	    str+= "<div> "+COL("bis.route.routename")+" : "+data.routeName+"</div>";
+        	    	    str+= "<div> "+COL("route.routename")+" : "+data.routeName+"</div>";
         	    	    
         	    	    str+= "</div>";
         	    	    str+=" <div style='height:240px;overflow:auto;overflow-y:hiden;'>";
@@ -342,4 +356,33 @@ function routeMap(data)
                 });		
     		}
 	},url,data);
-}
+};
+
+//var vehicleList = [];
+function vehicleList(data){
+	var url = "/api/v1/bisMaHistory/vehicleMonitor";
+	data = JSON.stringify(data);
+	
+	//map.getView().setCenter(gps); 
+	removeBusMaker();
+	$.ajax({
+        type: "PUT",
+        url: url,
+        data:data,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        timeout: 3000,
+        success: function(json) {
+        	for(var i=0; i<json.length; i++){
+        		var gps = ol.proj.transform([json[i].gpsX, json[i].gpsY], 'EPSG:4326', 'EPSG:3857');
+        	   	var busLayer = makerLayerWithText(gps,'/assets/images/map/icon_bus_vehicle_42_black.png',json[i].plateNumber);
+        	    busLayers.push(busLayer);        		
+        	}
+        	 addBusMaker();
+        },
+        error: function(xReq, status, error) {
+        	console.log(error);
+        }
+    });	
+	
+};
