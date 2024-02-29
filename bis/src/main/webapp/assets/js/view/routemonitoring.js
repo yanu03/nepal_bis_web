@@ -169,9 +169,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
         var _this = this;
         this.target = axboot.gridBuilder({
-        	  showLineNumber: false,
+            header: {
+            	selector: false
+              },  
+        	showLineNumber: false,
         	  multipleSelect: true,
-        	  showRowSelector: true,
+        	  showRowSelector: false,
         	  frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
@@ -180,7 +183,6 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             ],
             body: {
                 onClick: function () {
-                	
                     this.self.select(this.dindex, {selectedClear: false});
                   data = this.list[this.dindex];
                   data.dindex=this.dindex;
@@ -190,12 +192,13 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 	  }
                   else
             		  {
-                	  $("#"+ data.routeId).remove();
+                	  		$("#"+ data.routeId).remove();
             		  }
-              }
+              }, 
+              onDataChanged: handleGridDataChange
             }
         });
-
+        
         axboot.buttonClick(this, "data-grid-view-01-btn", {
             "add": function () {
                 ACTIONS.dispatch(ACTIONS.ITEM_ADD);
@@ -465,4 +468,15 @@ function preview_Image(id){
 	//path 바꾸기
 	path = "/assets/images/BM0108/EmployeeDefault.jpg";//default path
 	document.getElementById(id).src=path;
+}
+
+function handleGridDataChange() {
+    var allData = fnObj.gridView01.target.getList(); // 그리드의 모든 데이터 가져오기
+    allData.forEach(function(data) {
+        if(data.__selected__) {
+            ACTIONS.dispatch(ACTIONS.ROUTEMAP, data); // 선택된 데이터에 대한 처리
+        } else {
+            $("#"+ data.routeId).remove(); // 선택 해제된 데이터에 대한 처리
+        }
+    });
 }

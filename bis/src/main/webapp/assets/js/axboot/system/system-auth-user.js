@@ -1,6 +1,7 @@
 var fnObj = {};
 var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
+    	defaultDateSetting();
         axboot.ajax({
             type: "GET",
             url: ["users"],
@@ -272,7 +273,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title")));
+            alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title").replace(/\n/g, "")));
             rs.error[0].jquery.focus();
             return false;
         }

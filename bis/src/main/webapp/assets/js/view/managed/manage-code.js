@@ -242,7 +242,6 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             columns: [
                 {key: "commonCode", label: COLA("code.group.Code"), width: 100, align: "center"},
                 {key: "commonCodeName", label:COLA("code.group.CodeName"), width: 100, align: "center"},
-                {key: "commonCodeEname", label:COLA("code.group.CodeEname"), width: 140, align: "center"},
                 {key: "useYn", label: COLA("code.useYn"), width: 70, align: "center"}
             ],
             body: {
@@ -327,7 +326,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
         	axDialog.alert({
                 theme: "primary",
                 title:" ",
-                msg: LANG("ax.script.form.validate", rs.error[0].jquery.attr("title")),
+                msg: LANG("ax.script.form.validate", rs.error[0].jquery.attr("title").replace(/\n/g, "")),
                 onStateChanged:function(){
                 	if(this.state=="close"){
                 		rs.error[0].jquery.focus();
@@ -335,7 +334,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
                 	}
                 }
         	})
-           // alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title")));
+           // alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title").replace(/\n/g, "")));
             
         }
         return true;

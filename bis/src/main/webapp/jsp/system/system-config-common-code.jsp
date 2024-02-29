@@ -13,12 +13,15 @@
 		<c:choose>
 			<c:when test="${loginLocale == 'nep'}">
 				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="axnep" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'en'}">
 				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="axen" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'ko'}">
 				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="axko" var="COL" />
 			</c:when>
 		</c:choose>        
         <%-- <ax:script-lang key="ax.admin" var="COL" /> --%>
@@ -32,8 +35,21 @@
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='ax.admin.search' width="300px">
-                            <ax:input type="text" name="filter" id="filter" clazz="form-control" placeholder="ax.admin.input.search"/>
+                        <ax:td label='bis.useyn' width="200px" labelWidth="80px">
+                        	<select id="useYn" data-ax-path="useYn" style="vertical-align: middle;" class="form-control" >
+                        		<option value=""><ax:lang id="ax.admin.useAll"/></option>
+                        		<option value="Y"><ax:lang id="ax.admin.useY"/></option>
+                        		<option value="N"><ax:lang id="ax.admin.useN"/></option>
+	                        </select>
+                        </ax:td>
+                        <ax:td label='bis.division' width="250px" labelWidth="80px">
+                        	<select id="searchDiv" data-ax-path="searchDiv" style="vertical-align: middle;" class="form-control">
+                        		<option value="COMMON_CODE_NAME"><ax:lang id="ax.code.group.CodeName"/></option>
+                        		<option value="COMMON_CODE"><ax:lang id="ax.code.group.Code"/></option>
+	                        </select>
+                        </ax:td>
+                        <ax:td label='bis.search' width="200px" labelWidth="80px" >
+                        	<input id="searchData" type="text" data-ax-path="searchData" class="form-control W100" />
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>

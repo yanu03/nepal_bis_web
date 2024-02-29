@@ -56,13 +56,13 @@
         UPDATE bis_ct_common_code
         SET
             COMMON_CODE_NAME = #{commonCodeName},
-            COMMON_CODE_ENAME = #{commonCodeEname},
+            COMMON_CODE_ENAME = "",
             VALUE_1 = #{value1},
             VALUE_2 = #{value2},
             VALUE_3 = #{value3},
             REMARK = #{remark},
             USER_ID = #{userId},
-            UPDATE_DATE = now(),
+            UPDATE_DATE =  #{updateDate},
             USE_YN = #{useYn}
         WHERE
             COMMON_CODE LIKE #{commonCode}
@@ -83,7 +83,7 @@
         ) VALUES (
             #{commonCode},
             #{commonCodeName},
-            #{commonCodeEname},
+            "",
             #{value1},
             #{value2},
             #{value3},
@@ -94,7 +94,7 @@
         ) ON DUPLICATE KEY
         UPDATE
             COMMON_CODE_NAME = #{commonCodeName},
-            COMMON_CODE_ENAME = #{commonCodeEname},
+            COMMON_CODE_ENAME = "",
             VALUE_1 = #{value1},
             VALUE_2 = #{value2},
             VALUE_3 = #{value3},

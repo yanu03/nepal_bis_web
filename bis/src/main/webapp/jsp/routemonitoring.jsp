@@ -336,28 +336,31 @@ ol.rt-line {
 
                 <ax:form name="searchView0">
                  <div data-ax-tbl="" id="" class="ax-search-tbl" style="">
-		<div data-ax-tr="" id="" class="" style="">
-			<div data-ax-td="" id="" class="" style=";width:300px">
-			    <div data-ax-td-label="" class="" style=";width:300px">   <ax:lang id="bis.routemap.businfomationinquiry" /></div>
-			    <div data-ax-td-wrap="">
-			    </div>
-			</div>
-			<div data-ax-td="" id="" class="" style=";width:300px">
-			<div data-ax-td-wrap="">
-                  <div class="form-inline">
-                      <div class="form-group">
-
-                          <input type="text" id="Keyword" data-ax-path="Keyword" class="form-control W200" value="">
-                          <button type="button" class="btn btn-primary" data-searchview-btn="search">
-                              <i class="cqc-magnifier"></i>
-                               <ax:lang id="ax.admin.search" />
-                      </button>
-                  </div>
-              </div>
-    </div>
-</div>
-</div>
-</div>
+					<div data-ax-tr="" id="" class="" style="">
+						<div data-ax-td="" id="" class="" style=";width:300px">
+						    <div data-ax-td-label="" class="" style=";width:300px">   <ax:lang id="bis.routemap.businfomationinquiry" /></div>
+						    <div data-ax-td-wrap="">
+						    </div>
+						</div>
+						<div data-ax-td="" id="" class="" style=";width:300px">
+						<div data-ax-td-wrap="">
+			                  <div class="form-inline">
+			                      <div class="form-group">
+										<%-- <select id="searchDiv" data-ax-path="searchDiv" style="vertical-align: middle;" class="form-control">
+		                        			<option value="routeName"><ax:lang id="bis.route.routename"/></option>
+										 	<option value="routeId"><ax:lang id="bis.route.routeid"/></option>
+	                			       </select> --%>
+			                          <input type="text" id="Keyword" data-ax-path="Keyword" class="form-control W200" value="" placeholder=<ax:lang id="bis.route.routename" />>
+			                          <button type="button" class="btn btn-primary" data-searchview-btn="search">
+			                              <i class="cqc-magnifier"></i>
+			                               <ax:lang id="ax.admin.search" />
+			                      </button>
+			                  </div>
+			              </div>
+			    		</div>
+					</div>
+					</div>
+				</div>
                 </ax:form>
                     </ax:split-panel>
                     <ax:split-panel  height="*" >

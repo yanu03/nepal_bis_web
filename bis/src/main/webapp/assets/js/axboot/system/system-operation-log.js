@@ -225,7 +225,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert(rs.error[0].jquery.attr("title") + '을(를) 입력해주세요.');
+            alert(rs.error[0].jquery.attr("title").replace(/\n/g, "") + '을(를) 입력해주세요.');
             rs.error[0].jquery.focus();
             return false;
         }

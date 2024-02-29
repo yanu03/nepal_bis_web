@@ -57,10 +57,6 @@
     </jsp:attribute>
     <jsp:body>
         <ax:page-buttons>
-           	<button type="button" class="btn btn-info" data-page-btn="excel" id="excelExport">
-        		<i class="cqc-file-excel-o"></i>
-        		 Excel
-        	</button>
         </ax:page-buttons>
 		  <div role="page-header">
               <ax:form name="searchView0">
@@ -79,8 +75,8 @@
 								 <option value="routeId"><ax:lang id="bis.route.routeid"/></option>
 							</select>
                         </ax:td>
-                        <ax:td label='bis.search' width="180px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        <ax:td label='bis.search' width="300px" labelWidth="80px">
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>
@@ -95,7 +91,7 @@
                               <div class="ax-button-group">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                         		   <ax:lang id="routelist" /> </h2>
+                         		   <ax:lang id="bis.routelist" /> </h2>
                     </div>
                   
                 </div>
@@ -115,12 +111,12 @@
                             <ax:lang id="ax.admin.sample.parent.information"/>
                         </h2>
                     </div>
-                    <div class="right">
+                    <%-- <div class="right">
                         <button type="button" class="btn btn-default" data-form-view-01-btn="form-clear">
                             <i class="cqc-erase"></i>
                             <ax:lang id="ax.admin.clear"/>
                         </button>
-                    </div>
+                    </div> --%>
                 
                 </div>
                 <ax:form name="formView01">
@@ -129,28 +125,27 @@
                             <ax:td label="bis.route.routeid" width="300px">
                                 <input type="text" name="routeId"  title="<ax:lang id="bis.route.routeid"/>" data-ax-path="routeId" maxlength="15" title="이름" class="form-control" value="" readonly/>
                             </ax:td>
-                            <ax:td label="bis.route.routetype" width="300px">
+                            <ax:td color="red" label="bis.route.routetype" width="300px">
                         <ax:BisCtDetailCode groupCd="ROUTE_TYPE" dataPath="routeType" clazz="form-control"/>  
                          
-                                <!--   <input type="text" name="routeType" data-ax-path="routeType" maxlength="100" title="아이디" class="form-control" value=""/> -->
                             </ax:td>
-                             <ax:td label="bis.route.routename" width="300px">
+                             <ax:td color="red" label="bis.route.routename" width="300px">
                                 <input type="text" name="routeName" data-ax-validate="required"  title="<ax:lang id="bis.route.routename"/>" data-ax-path="routeName" maxlength="50" title="아이디" class="form-control" value=""/>
                             </ax:td>
                         </ax:tr>
                         <ax:tr labelWidth="120px">
-                          <ax:td label="bis.route.routeename" width="300px">
+                          <%-- <ax:td label="bis.route.routeename" width="300px">
                                 <input type="text" name="routeEname" data-ax-path="routeEname" maxlength="50" title="" class="form-control"/>
-                            </ax:td>
+                            </ax:td> --%>
                             
-                             <ax:td label="bis.route.fromstationid" width="300px">
+                             <ax:td color="red" label="bis.route.fromstationid" width="300px">
                                    <input type="hidden" name="fromStationId" data-ax-validate="required"  title="<ax:lang id="bis.route.fromstationid"/>" data-ax-path="fromStationId" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="fromStationName" data-ax-path="fromStationName" maxlength="100" title="" class="form-control" value="" readonly/>
                               	   <span class="input-group-addon station_button"><i class="cqc-magnifier"></i></span>
                                 </div>
                             </ax:td>
-                                <ax:td label="bis.route.tostationid" width="300px">
+                                <ax:td color="red" label="bis.route.tostationid" width="300px">
                             	    <input type="hidden" name="toStationId" data-ax-validate="required"  title="<ax:lang id="bis.route.tostationid"/>" data-ax-path="toStationId" maxlength="100" title="" class="form-control" value=""/>
                                 <div class="input-group">
                             	    <input type="text" name="toStationName" data-ax-path="toStationName" maxlength="100" title="" class="form-control" value="" readonly/>
@@ -186,7 +181,7 @@
                               <input type="text" name="closeDate" data-ax-path="closeDate" maxlength="100" title="" class="form-control" value=""/>
                        -->      </ax:td>
            					<ax:td label="bis.route.routedistance" width="300px">
-                                <input type="text" name="routeDistance" data-ax-validate="required" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.route.routedistance"/>" data-ax-path="routeDistance" maxlength="100" title="" class="form-control" value=""/>
+                                <input type="text" name="routeDistance" onkeydown="onlyNumber(this)" title="<ax:lang id="bis.route.routedistance"/>" data-ax-path="routeDistance" maxlength="5" title="" class="form-control" value=""/>
                             </ax:td>
                         </ax:tr>
   						<%-- <ax:tr labelWidth="120px">
@@ -211,19 +206,22 @@
                           <%-- <ax:td label="bis.countrycode" width="300px">
                                 	<ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>  
                            </ax:td> --%>
-                                  <ax:td label="bis.areacode" width="300px">
+                            <%--       <ax:td label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
                               	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
                                 </div>
-                            </ax:td>
+                            </ax:td> --%>
                                   <ax:td label="bis.route.requesttime" width="300px">
-                                <input type="text" name="requestTime" onkeydown="onlyNumber(this)" data-ax-path="requestTime" maxlength="100" title="" class="form-control" value=""/>
+                                <input type="text" name="requestTime" onkeydown="onlyNumber(this)" data-ax-path="requestTime" maxlength="100" title="" maxlength="4" class="form-control" value=""/>
                             </ax:td>
                             <ax:td label="bis.updatedate" width="300px">
                   		            <input type="text" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
                              </ax:td>
+                             <ax:td label="bis.useyn" width="300px">
+                                <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
+                            </ax:td>
                             
                         </ax:tr>
           			   <%-- <ax:tr labelWidth="120px">
@@ -239,15 +237,17 @@
                         </ax:tr> --%>
                         
                         <ax:tr labelWidth="120px">
-      						 <ax:td label="bis.remark" width="300px">
-                                <input type="text" name="remark" data-ax-path="remark" maxlength="255" title="" class="form-control" value=""/>
-                            </ax:td>
-                                  <ax:td label="bis.userid" width="300px">
+      						 <ax:td label="bis.remark" width="900px">
+                                <input type="text" name="remark" data-ax-validate=""  title="<ax:lang id="bis.remark"/>"
+											data-ax-path="remark" maxlength="100"
+											class="form-control" value="" />
+                            </ax:td>  
+                             <%--      <ax:td label="bis.userid" width="300px">
                                 <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
-                            </ax:td>
-                               <ax:td label="bis.useyn" width="300px">
+                            </ax:td> --%>
+                               <%-- <ax:td label="bis.useyn" width="300px">
                                 <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
-                            </ax:td>
+                            </ax:td> --%>
                         </ax:tr>
                     </ax:tbl>
                 </ax:form>

@@ -17,15 +17,25 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 }
             }
         });
-
+        caller.formView01.clear();
         return false;
     },
     ROUTE_SAVE: function (caller, act, data) {
     	data = caller.formView01.getData();
     	data.userId=loginid;
+    	if(data.routeId==""||data.routeId==null){
+			axDialog.alert({
+                theme: "primary",
+                title:" ",
+                msg: COL("error.routeselect")
+            });
+			return false;
+    	}
+    	
+    	//기존 저장 내용
     	if(caller.formView01.validate())
     	{
-    		if(data.routeId==""||data.routeId==null)
+    		/*if(data.routeId==""||data.routeId==null)
     		{
     			axboot.ajax({
 	             type: "GET",
@@ -52,8 +62,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	             	}
     			});
     				 
-    		}	
-    		else{
+    		}	*/
+    		//else{
     	    	axboot.ajax({
    	             type: "PUT",
    	             url:'/api/v1/bisMtRoutes',
@@ -66,7 +76,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	   	              axToast.push("Saved");
    	             }
    	         });
-    		}
+    		//}
 
     	}
 },
@@ -180,13 +190,28 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     }
 });
 $('.station_button').click(function() {
-	 ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL);
+	 axDialog.alert({
+        theme: "primary",
+        title:" ",
+        msg: COL("error.manage")
+     });
+	 //ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL);
 });
 $('.station_button2').click(function() {
-	 ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL2);
+	 axDialog.alert({
+	        theme: "primary",
+	        title:" ",
+	        msg: COL("error.manage")
+	 });	
+	 //ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL2);
 });
 $('.station_button3').click(function() {
-	 ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL3);
+	 axDialog.alert({
+	        theme: "primary",
+	        title:" ",
+	        msg: COL("error.manage")
+	 });	
+	 //ACTIONS.dispatch(ACTIONS.ROUTESTATION_MODAL3);
 });
 $('.areacode_button').click(function() {
 	 ACTIONS.dispatch(ACTIONS.AREACODE_MODAL);
@@ -298,16 +323,16 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     return detailCode;
                     }},
                 {key: "routeName", label: COL("route.routename"), width: 200, align: "center"},
-                {key: "routeEname", label: COL("route.routeename"), width: 200, align: "center"},
+                /*{key: "routeEname", label: COL("route.routeename"), width: 200, align: "center"},*/
                 {key: "fromStationId", label: COL("route.fromstationid"), width: 115, align: "center",formatter: function () {
                     return this.item.fromStationName;
                     }},
                 {key: "toStationId", label: COL("route.tostationid"), width: 115, align: "center",formatter: function () {
                     return this.item.toStationName;
                 }},
-                {key: "turnStationId", label:COL("route.turnstationid"), width: 115, align: "center",formatter: function () {
+                /*{key: "turnStationId", label:COL("route.turnstationid"), width: 115, align: "center",formatter: function () {
                     return this.item.turnStationName;
-                }},
+                }},*/
                 /*{key: "permissionCount", label:COL("route.permissioncount"), width: 225, align: "center"},*/
                 {key: "beginDate", label:COL("route.begindate"), width: 160, align: "center"},
                 {key: "closeDate", label: COL("route.closedate"), width: 180, align: "center"},
@@ -317,10 +342,10 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
                     }},*/
-                {key: "areaCode", label: "AREA CODE", width: 80, align: "center",formatter: function () {
+                /*{key: "areaCode", label: "AREA CODE", width: 80, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;
-                    }},
+                    }},*/
                 {key: "requestTime", label: COL("route.requesttime"), width: 80, align: "center"},
                 /*{key: "charge", label:COL("route.charge"), width: 80, align: "center"},*/
                 /*{key: "runType", label: COL("route.runtype"), width: 80, align: "center",formatter: function () {
@@ -328,7 +353,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     return detailCode;
                     }},*/
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                {key: "remark", label:COL("remark"), width: 200, align: "center"},
                 {key: "userId", label: COL("userid"), width: 120, align: "center"},
                 {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
@@ -421,7 +446,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
+            alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }

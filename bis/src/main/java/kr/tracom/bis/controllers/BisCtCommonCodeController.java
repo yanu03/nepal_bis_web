@@ -41,7 +41,13 @@ public class BisCtCommonCodeController extends BaseController {
     	SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
     	for(Map<String,Object> temp:bisCtCommon){
     		temp.put("updateDate",sdf.format(new Date()));
-   			bisCtCommonCodeService.insert(temp);
+    		if(Boolean.TRUE.equals(temp.get("__created__"))) {
+    			bisCtCommonCodeService.insert(temp);
+    		} else if (Boolean.TRUE.equals(temp.get("__modified__"))) {
+                bisCtCommonCodeService.update(temp);
+            } else if (Boolean.TRUE.equals(temp.get("__deleted__"))) {
+                bisCtCommonCodeService.delete(temp);
+            }
     	}
     	return ok();
 	}

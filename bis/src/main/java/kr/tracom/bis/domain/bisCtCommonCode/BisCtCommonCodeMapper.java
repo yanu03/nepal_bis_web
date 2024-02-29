@@ -10,4 +10,7 @@ public interface BisCtCommonCodeMapper extends MyBatisMapper {
  
     List<BisCtCommonCode> searchAll(Map<String, Object> searchData);
     void insert(Map<String,Object> bisCtCommonCode);
+    void update(Map<String,Object> bisCtCommonCode);
+    void delete(Map<String,Object> bisCtCommonCode);
+    //void delete(Map<String,Object> bisCtCommonCode);
 }

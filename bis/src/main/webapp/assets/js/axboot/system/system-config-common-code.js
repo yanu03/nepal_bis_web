@@ -3,7 +3,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
         axboot.ajax({
             type: "GET",
-            url: ["commonCodes"],
+            //url: ["commonCodes"],
+            url: "/api/v1/bisCtCommonCodes/parent",
             data: caller.searchView.getData(),
             callback: function (res) {
                 caller.gridView01.setData(res);
@@ -17,7 +18,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 
         axboot.ajax({
             type: "PUT",
-            url: ["commonCodes"],
+            url: "/api/v1/bisCtCommonCodes/parent",
             data: JSON.stringify(saveList),
             callback: function (res) {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -68,13 +69,18 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
     initView: function () {
         this.target = $(document["searchView0"]);
         this.target.attr("onsubmit", "return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);");
-        this.filter = $("#filter");
+        this.useYn=$("#useYn");
+        this.searchDiv=$("#searchDiv");
+        this.searchData = $("#searchData");
     },
     getData: function () {
         return {
-            pageNumber: this.pageNumber,
+/*            pageNumber: this.pageNumber,
             pageSize: this.pageSize,
-            filter: this.filter.val()
+            filter: this.filter.val()*/
+        	useYn:this.useYn.val(),
+        	searchDiv: this.searchDiv.val(),
+        	searchData: this.searchData.val()
         }
     }
 });
@@ -93,7 +99,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             multipleSelect: true,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-                {key: "groupCd", label: COLA("admin.commoncode.group.code"), width: 250, align: "center", editor: {type: "text", disabled: "notCreated"}},
+            	//기존 common_code_m
+                /*{key: "groupCd", label: COLA("admin.commoncode.group.code"), width: 250, align: "center", editor: {type: "text", disabled: "notCreated"}},
                 {key: "groupNm", label: COLA("admin.commoncode.group.name"), width: 200, align: "center", editor: "text"},
                 {key: "code", label: COL("code.detail.code"), width: 100, align: "center", editor: {type: "text", disabled: "notCreated"}},
                 {key: "name", label: COLA("admin.commoncode.name"), width: 150, align: "left", editor: "text"},
@@ -103,7 +110,16 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 {key: "data1", label: COLA("admin.commoncode.data1"), width: 70, align: "left", editor: "text"},
                 {key: "data2", label: COLA("admin.commoncode.data2"), width: 70, align: "left", editor: "text"},
                 {key: "data3", label: COLA("admin.commoncode.data3"), width: 70, align: "left", editor: "text"},
-                {key: "data4", label: COLA("admin.commoncode.data4"), width: 70, align: "left", editor: "text"}
+                {key: "data4", label: COLA("admin.commoncode.data4"), width: 70, align: "left", editor: "text"}*/
+                
+                
+            	{key: "commonCode", label: COLA("code.group.Code"), width: 250, align: "center",  editor: {type: "text", disabled: "notCreated"}},
+                {key: "commonCodeName", label:COLA("code.group.CodeName"), width: 200, align: "center", editor: "text"},
+                {key: "useYn", label: COLA("code.useYn"), editor: "checkYn"},
+                {key: "value1", label: COLA("admin.commoncode.data1"), width: 200, align: "left", editor: "text"},
+                {key: "value2", label: COLA("admin.commoncode.data2"), width: 200, align: "left", editor: "text"},
+                {key: "value3", label: COLA("admin.commoncode.data3"), width: 200, align: "left", editor: "text"},
+                {key: "remark", label: COL("remark"), width: 200, align: "left", editor: "text"},
             ],
             body: {
                 onClick: function () {
@@ -124,10 +140,9 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     getData: function (_type) {
         var list = [];
         var _list = this.target.getList(_type);
-
         if (_type == "modified" || _type == "deleted") {
             list = ax5.util.filter(_list, function () {
-                return this.groupCd && this.code;
+                return this.commonCode
             });
         } else {
             list = _list;

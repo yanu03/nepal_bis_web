@@ -44,6 +44,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         return false;
     },
     MASTER_CHANGE: function (caller, act, data) {
+    	debugger;
     	var date = $("#datetimepicker").val();
 		if("" == date||null == date)
 			{
@@ -546,6 +547,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         			sendList.push(senddata);
         		}
 
+            	debugger;
             	axboot.ajax({
       		         type: "POST",
       		         async:false,
@@ -1896,7 +1898,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
+            alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -1945,7 +1947,7 @@ fnObj.firmware = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
+            alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -2009,7 +2011,7 @@ fnObj.schedule = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") +" "+ COL("pleaseenter"));
+            alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") +" "+ COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -2062,7 +2064,7 @@ fnObj.illuminanceschedule = axboot.viewExtend(axboot.formView, {
   validate: function () {
       var rs = this.model.validate();
       if (rs.error) {
-          alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
+          alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") + COL("pleaseenter"));
           rs.error[0].jquery.focus();
           return false;
       }
