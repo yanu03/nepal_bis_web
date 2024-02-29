@@ -41,7 +41,6 @@
                         <ax:td label='bis.division' width="250px" labelWidth="80px">
                         	<select id="searchDiv" data-ax-path="searchDiv" style="vertical-align: middle;" class="form-control">
                         		<option value="COMMON_CODE_NAME"><ax:lang id="ax.code.group.CodeName"/></option>
-                        		<option value="COMMON_CODE_ENAME"><ax:lang id="ax.code.group.CodeEname"/></option>
                         		<option value="COMMON_CODE"><ax:lang id="ax.code.group.Code"/></option>
 	                        </select>
                         </ax:td>

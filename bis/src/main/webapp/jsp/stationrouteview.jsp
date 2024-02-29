@@ -215,7 +215,7 @@
 								 <option value="stationId"><ax:lang id="bis.station.stationid"/></option>
 							</select>
                         </ax:td>
-                        <ax:td label='bis.search' width="180px" labelWidth="80px">
+                        <ax:td label='bis.search' width="300px" labelWidth="80px">
                         	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>

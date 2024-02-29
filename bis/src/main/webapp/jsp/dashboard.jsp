@@ -2,19 +2,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="ax" tagdir="/WEB-INF/tags"%>
 
-<ax:set key="title" value="DASH BOARD" />
+<%-- <ax:set key="title" value="DASH BOARD" /> --%>
 <ax:set key="page_desc" value="${pageRemark}" />
 <ax:set key="axbody_class" value="dashboard" />
 
 <ax:layout name="base">
 	<jsp:attribute name="css">
-        <link rel="stylesheet" type="text/css"
-			href="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/css/light-bootstrap-dashboard.css'/>" />
+        <%-- <link rel="stylesheet" type="text/css"
+			href="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/css/light-bootstrap-dashboard.css'/>" /> --%>
+		<style type="text/css">
+			body {background-image:url('${pageContext.request.contextPath}${config.main.background}');background-repeat:no-repeat;background-position:right bottom;}
+		</style>			
     </jsp:attribute>
 	<jsp:attribute name="script">
     	<ax:script-lang key="bis" var="COL" />
     	
-        <script
+        <%-- <script
 			src="<c:url value='/assets/Chart.min.js'/>"></script>
         <script
 			src="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/js/chartist.min.js'/>"></script>
@@ -23,9 +26,9 @@
         <script
 			src="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/js/light-bootstrap-dashboard.js'/>"></script>
         <script
-			src="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/js/demo.js'/>"></script>
+			src="<c:url value='/assets/plugins-fix/light-bootstrap-dashboard/js/demo.js'/>"></script> --%>
 		
-        <script type="text/javascript">
+      <!--   <script type="text/javascript">
 									$(document).ready(function() {
 										busRun();
 										packetUse();
@@ -431,15 +434,24 @@
 										
 									},url,data);
 								}
-								</script>
+								</script> -->
     </jsp:attribute>
 	<jsp:attribute name="header">
-        <h1 class="title">
-			<i class='cqc-gauge'></i> ${title}</h1>
+        <%-- <h1 class="title">
+			<i class='cqc-gauge'></i> ${title}</h1>  --%>
         <p class="desc">${page_desc}</p>
+        
     </jsp:attribute>
 	<jsp:body>
-        <div class="main-panel">
+	    <div style="display:table; width:100%; height:100%" background-color: white;>
+	    	<div style="background-color: white; position:absolute; text-align: center; width:100%; height: 100%; top: 50; left: 0; font-size:50px;">
+		    	<img src="/assets/images/home-logo.png"	style="display:inline-block; vertical-align:middle; height:490px">
+			    <span style="display: block; height:100%;">
+		    	Bus Information System
+			    </span>
+	    	</div>
+	    </div>	
+<%--         <div class="main-panel">
             <div class="content" >
                 <div class="container-fluid">
                     <div class="row">
@@ -526,7 +538,7 @@
                 </div>
                     </div>
                     <div class="row">
-                    <%-- <div class="col-md-3">
+                    <div class="col-md-3">
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">
@@ -550,7 +562,7 @@
                                     </div>
                                 </div>
                             </div>
-                    </div> --%>
+                    </div>
                     <div class="col-md-4">
                             <div class="card">
                                 <div class="header">
@@ -600,7 +612,7 @@
                    </div>
                 </div>
             </div>
-        </div>
+        </div> --%>
 
     
 	

@@ -16,7 +16,7 @@ public class UserHistoryService {
 	@Inject
 	UserHistoryMapper userHistoryMapper;
 
-	public List<User> loginHistory(Map<String,Object> map) {
+	public List<UserHistory> loginHistory(Map<String,Object> map) {
 		return userHistoryMapper.loginHistory(map);
 	}
 	

@@ -18,5 +18,13 @@ public class BisCtCommonCodeService {
     public void  insert(Map<String,Object> bisCtCommonCode){
     	bisCtCommonCodeMapper.insert(bisCtCommonCode);
     }
+    public void  update(Map<String,Object> bisCtCommonCode){
+    	bisCtCommonCodeMapper.update(bisCtCommonCode);
+    }
+    
+	public void delete(Map<String,Object> bisCtCommonCode){
+		bisCtCommonCodeMapper.delete(bisCtCommonCode);
+	}
+
 
 }

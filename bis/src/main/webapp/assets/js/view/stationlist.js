@@ -16,6 +16,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                caller.gridView01.setData(res);
            }
        });
+   	   removeStationMaker();
+   	   caller.formView01.clear();
        return false;
    },
    NODE_MODAL: function (caller, act, data) {
@@ -80,20 +82,20 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 caller.formView01.clear();
           
     },
-    //자도위에 정류장 마커를 만든다
+    //지도위에 정류장 마커를 만든다
     STATION_MAP: function (caller, act, data) {
     		var coord = map.getCoordinateFromPixel(data.pixel);
     		
-    		removeStationMaker();
+    		//removeStationMaker();
     	   	var stationLayer = makerLayer(coord,'/assets/images/map/busstopicon.png');
     	    stationLayers.push(stationLayer);
-    	    addStationMaker();
+    	   // addStationMaker();
     		
-			coord = ol.proj.transform([coord[1], coord[0]], 'EPSG:3857', 'EPSG:4326');
+			coord = ol.proj.transform([coord[0], coord[1]], 'EPSG:3857', 'EPSG:4326');
 			var formdata = caller.formView01.getData();
-			formdata.gpsX = coord[0];
-			formdata.gpsY = coord[1];
-			caller.formView01.setData(formdata);
+			formdata.gpsX = parseFloat(coord[0].toFixed(5));
+			formdata.gpsY = parseFloat(coord[1].toFixed(5));
+			//caller.formView01.setData(formdata);
 
 	    
 			
@@ -130,13 +132,20 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     Station_save: function (caller, act, data) {
     	
    //console.log(JSON.stringify(caller.formView01.getData()));
-    
+    	data = caller.formView01.getData();
+    	data.userId=loginid;
+    	if(data.stationId==""||data.stationId==null){
+			axDialog.alert({
+                theme: "primary",
+                title:" ",
+                msg: COL("error.stationselect")
+            });
+			return false;
+    	}    
     	
     	if(caller.formView01.validate())
 		{
-    		data = caller.formView01.getData();
-    		data.userId=loginid;
-    		if(data.stationId==""||data.stationId==null)
+    		/*if(data.stationId==""||data.stationId==null)
     			{
 	    			axboot.ajax({
 	   	             type: "GET",
@@ -158,8 +167,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	   	            	});
 	   	             	}
 	       			});
-        		
-    			}else{
+        		*/
+    			//}else{
     		  	     axboot.ajax({
     	                 type: "PUT",
     	                 url:'/api/v1/bisMtStations',
@@ -174,7 +183,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     	
     		
   
-		}
+		//}
     
     	
     
@@ -192,13 +201,28 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     }
 });
 $('.node_button').click(function() {
-	 ACTIONS.dispatch(ACTIONS.NODE_MODAL);
+	 axDialog.alert({
+	        theme: "primary",
+	        title:" ",
+	        msg: COL("error.manage")
+	     });	
+	// ACTIONS.dispatch(ACTIONS.NODE_MODAL);
 });
 $('.areacode_button').click(function() {
-	 ACTIONS.dispatch(ACTIONS.AREACODE_MODAL);
+	 axDialog.alert({
+	        theme: "primary",
+	        title:" ",
+	        msg: COL("error.manage")
+	     });	
+	 //ACTIONS.dispatch(ACTIONS.AREACODE_MODAL);
 });
 $('.link_button').click(function() {
-	 ACTIONS.dispatch(ACTIONS.LINK_MODAL);
+	 axDialog.alert({
+	        theme: "primary",
+	        title:" ",
+	        msg: COL("error.manage")
+	     });	
+	 //ACTIONS.dispatch(ACTIONS.LINK_MODAL);
 });
 
 // fnObj 기본 함수 스타트와 리사이즈
@@ -370,7 +394,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert( rs.error[0].jquery.attr("title") + COL("pleaseenter"));
+            alert( rs.error[0].jquery.attr("title").replace(/\n/g, "") + COL("pleaseenter"));
             rs.error[0].jquery.focus();
             return false;
         }

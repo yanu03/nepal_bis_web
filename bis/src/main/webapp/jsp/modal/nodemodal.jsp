@@ -40,7 +40,7 @@
 								 <option value="nodeId"><ax:lang id="bis.node.nodeid"/></option>
 							</select>
                         </ax:td>
-                        <ax:td label='bis.search' width="180px" labelWidth="80px">
+                        <ax:td label='bis.search' width="300px" labelWidth="80px">
                         	  <input type="text" name="Keyword"id="Keyword" onkeypress="if( event.keyCode==13 ){searchbutton();}"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>

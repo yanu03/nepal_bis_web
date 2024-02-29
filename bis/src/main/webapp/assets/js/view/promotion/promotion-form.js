@@ -321,7 +321,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
         	axDialog.alert({
                 theme: "primary",
                 title:" ",
-                msg: LANG("ax.script.form.validate", rs.error[0].jquery.attr("title")),
+                msg: LANG("ax.script.form.validate", rs.error[0].jquery.attr("title").replace(/\n/g, "")),
                 onStateChanged:function(){
                 	if(this.state=="close"){
                 		 rs.error[0].jquery.focus();

@@ -44,7 +44,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     },
     CHILD_ITEM_CLICK : function (caller, act, data) {
     	//$("#previewImg").attr("src", data.src);
-    	$("#previewImg").attr("src", "/srv/ftp/" + data.bitId + "/"+ data.fileName);
+    	$("#previewImg").attr("src", "/images/" + data.bitId + "/"+ data.fileName);
     },
     ITEM_ADD: function (caller, act, data) {
         caller.gridView01.addRow();

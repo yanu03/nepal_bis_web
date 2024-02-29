@@ -36,7 +36,7 @@
                         <ax:td label='bis.division' width="250px" labelWidth="80px">
   							<div data-ax5select="select1"></div> 
                         </ax:td>
-                        <ax:td label='bis.search' width="180px" labelWidth="80px">
+                        <ax:td label='bis.search' width="300px" labelWidth="80px">
                         	  <input type="text" name="Keyword"id="Keyword" onkeypress="if( event.keyCode==13 ){ACTIONS.dispatch(ACTIONS.STATION_SEARCH);}" class="form-control W120"/>      
                         </ax:td>
                     </ax:tr>

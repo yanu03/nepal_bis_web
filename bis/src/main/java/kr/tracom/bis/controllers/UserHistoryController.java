@@ -2,6 +2,7 @@ package kr.tracom.bis.controllers;
 
 import kr.tracom.bis.domain.bisItScenario.BisItScenario;
 import kr.tracom.bis.domain.user.User;
+import kr.tracom.bis.domain.user.UserHistory;
 import kr.tracom.bis.domain.user.UserHistoryService;
 import kr.tracom.bis.domain.user.UserService;
 import com.chequer.axboot.core.api.response.ApiResponse;
@@ -29,7 +30,7 @@ public class UserHistoryController extends BaseController {
     private UserHistoryService userHistoryService;
     
 	@RequestMapping(value = "/parent", method = RequestMethod.GET, produces = APPLICATION_JSON)
-	public List<User> list(@RequestParam Map<String,Object> searchMap) {
+	public List<UserHistory> list(@RequestParam Map<String,Object> searchMap) {
 		return userHistoryService.loginHistory(searchMap);
 	}    
 

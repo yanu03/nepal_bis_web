@@ -391,7 +391,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
     validate: function () {
         var rs = this.model.validate();
         if (rs.error) {
-            alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title")));
+            alert(LANG("ax.script.form.validate", rs.error[0].jquery.attr("title").replace(/\n/g, "")));
             rs.error[0].jquery.focus();
             return false;
         }
@@ -403,6 +403,18 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
 });
 
 $('#excelExport').click(function(){
-	var excelExport=fnObj.gridView02;
-	excelExport.excel("Route-StationList.xls");
+	debugger;
+	var test = fnObj.gridView01.getData("selected");
+	if(selectedList.length > 0){
+		//var excelExport=fnObj.gridView02;
+		//excelExport.excel("Route-StationList.xls")
+	} else {
+        axDialog.alert({
+            theme: "primary",
+            title:" ",
+            msg: COL("error.stationselect")
+        });		
+	}
+	/*var excelExport=fnObj.gridView02;
+	excelExport.excel("Route-StationList.xls");*/
 });

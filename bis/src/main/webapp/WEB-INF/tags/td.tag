@@ -13,6 +13,7 @@
 <%@ attribute name="style" %>
 <%@ attribute name="labelWidth" %>
 <%@ attribute name="width" %>
+<%@ attribute name="color" %>
 <%
 
  	String currentLang = (String)session.getAttribute("loginLocale");
@@ -48,6 +49,7 @@
     TagUtils tagUtils = new TagUtils(getParent());
     String trLabelWidth = tagUtils.getParentAttribute("labelWidth");
     String trWidth = tagUtils.getParentAttribute("width");
+    String trColor = tagUtils.getParentAttribute("color");
 
     if (StringUtils.isEmpty(labelStyle)) {
         labelStyle = "";
@@ -72,6 +74,16 @@
     }else{
         style += ";width:" + width;
     }
+    
+    
+    if (StringUtils.isEmpty(color)) {
+        if(!StringUtils.isEmpty(trColor)) {
+            labelStyle += ";color:" + color;
+        }    	
+    } else {
+        labelStyle += ";color:" + color;
+    }
+    
 
     if (StringUtils.isEmpty(label)) {
 %>
