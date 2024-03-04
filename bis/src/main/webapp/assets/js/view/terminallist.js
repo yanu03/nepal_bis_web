@@ -231,12 +231,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 {key: "plateNumber", label:  COL("vehicle.platenumber"), width: 100, align: "center"},
             	{key: "vehicleId", label:  COL("vehicle.vehicleid"), width: 90, align: "center"},
              	{key: "terminalVersion", label:  COL("terminal.terminalversion"), width: 90, align: "center"},
-            	{key: "ipAddress", label:  COL("terminal.ipaddress"), width: 90, align: "center"},
-            	{key: "serialNo", label: "SERIAL NO", width: 90, align: "center"},
-            	{key: "countryCode", label:  COL("countrycode"),  width: 105, align: "center",formatter: function () {
+            	//{key: "ipAddress", label:  COL("terminal.ipaddress"), width: 90, align: "center"},
+            	//{key: "serialNo", label: "SERIAL NO", width: 90, align: "center"},
+            	/*{key: "countryCode", label:  COL("countrycode"),  width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
+                    }},*/
             	{key: "areaCode", label:  COL("areacode"), width: 90, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;

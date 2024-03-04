@@ -13,15 +13,15 @@
 		<c:choose>
 			<c:when test="${loginLocale == 'nep'}">
 				<ax:script-lang key="axnep" var="COLA" />
-				<ax:script-lang key="axnep" var="COL" />
+				<ax:script-lang key="bisnep" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'en'}">
 				<ax:script-lang key="axen" var="COLA" />
-				<ax:script-lang key="axen" var="COL" />
+				<ax:script-lang key="bisen" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'ko'}">
 				<ax:script-lang key="axko" var="COLA" />
-				<ax:script-lang key="axko" var="COL" />
+				<ax:script-lang key="bisko" var="COL" />
 			</c:when>
 		</c:choose>        
         <%-- <ax:script-lang key="ax.admin" var="COL" /> --%>
@@ -49,7 +49,7 @@
 	                        </select>
                         </ax:td>
                         <ax:td label='bis.search' width="200px" labelWidth="80px" >
-                        	<input id="searchData" type="text" data-ax-path="searchData" class="form-control W100" />
+                        	<input style="width:200px" id="searchData" type="text" data-ax-path="searchData" class="form-control W100" />
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>

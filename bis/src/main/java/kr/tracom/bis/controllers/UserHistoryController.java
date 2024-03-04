@@ -1,10 +1,13 @@
 package kr.tracom.bis.controllers;
 
 import kr.tracom.bis.domain.bisItScenario.BisItScenario;
+import kr.tracom.bis.domain.bisMtRoute.BisMtRoute;
 import kr.tracom.bis.domain.user.User;
 import kr.tracom.bis.domain.user.UserHistory;
 import kr.tracom.bis.domain.user.UserHistoryService;
 import kr.tracom.bis.domain.user.UserService;
+import kr.tracom.bis.utils.RequestUtil;
+
 import com.chequer.axboot.core.api.response.ApiResponse;
 import com.chequer.axboot.core.api.response.Responses;
 import com.chequer.axboot.core.controllers.BaseController;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import java.util.List;
@@ -30,8 +34,10 @@ public class UserHistoryController extends BaseController {
     private UserHistoryService userHistoryService;
     
 	@RequestMapping(value = "/parent", method = RequestMethod.GET, produces = APPLICATION_JSON)
-	public List<UserHistory> list(@RequestParam Map<String,Object> searchMap) {
-		return userHistoryService.loginHistory(searchMap);
+	public List<UserHistory> list(HttpServletRequest request) {
+		Map parameterMap = RequestUtil.getParameterMap(request);
+		return userHistoryService.loginHistory(parameterMap);
+		
 	}    
 
 //    @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON, params = "userCd")

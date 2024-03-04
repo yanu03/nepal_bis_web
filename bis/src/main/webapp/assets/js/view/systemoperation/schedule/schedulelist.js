@@ -201,7 +201,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
                 {key: "scheduleId", label: COL("systemschedule.scheduleid"), width: 90, align: "center"},
-                {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
+                {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 150, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                     return detailCode;
                  }},
@@ -212,7 +212,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 {key: "scheduleValue", label: COL("systemschedule.schedulevalue"), width: 70, align: "center"},
                 
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                {key: "remark", label:COL("remark"), width: 200, align: "center"},
                 {key: "userId", label: COL("userid"), width: 120, align: "center"},
                 {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],

@@ -30,7 +30,30 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         caller.gridView01.addRow();
     },
     ITEM_DEL: function (caller, act, data) {
-        caller.gridView01.delRow("selected");
+        var delList = caller.gridView01.getData("selected");
+
+        // 모든 선택된 항목에 대해 확인
+        delList.forEach(function(item, index) {
+            axboot.ajax({
+                type: "GET",
+                url: "/api/v1/bisCtCommonCodes/child",
+                data: { Keyword: item.commonCode },
+                callback: function (res) {
+                    // 하위 코드가 없는 경우
+                    if (res.length === 0) {
+                        // 행 삭제
+                        caller.gridView01.delRow("selected");
+                    } else {
+                        // 하위 코드가 있는 경우 경고 메시지 출력
+                        axDialog.alert({
+                            theme: "primary",
+                            title:" ",
+                            msg: COL("error.commoncode")
+                         });
+                    }
+                }
+            });
+        });
     }
 });
 

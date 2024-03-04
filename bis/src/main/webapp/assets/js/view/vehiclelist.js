@@ -301,24 +301,24 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     return detailCode;
                     }},
             	{key: "plateNumber", label:  COL("vehicle.platenumber"),  width: 105, align: "center"},
-            	{key: "companyId", label: COL("company.companyid"),  width: 90, align: "center"},
-            	{key: "companyName", label: COL("company.companyname"),  width: 205, align: "center"},
-            	{key: "busType", label:  COL("vehicle.bustype"), width: 140, align: "center",formatter: function () {
+            	//{key: "companyId", label: COL("company.companyid"),  width: 90, align: "center"},
+            	//{key: "companyName", label: COL("company.companyname"),  width: 205, align: "center"},
+            	/*{key: "busType", label:  COL("vehicle.bustype"), width: 140, align: "center",formatter: function () {
             		var detailCode = getDetailCode("BUS_TYPE",this.item.busType);
                     return detailCode;
-                    }},
-            	{key: "vehicleCapa", label:  COL("vehicle.vehiclecapa"),  width: 210, align: "center"},
-            	{key: "countryCode", label: COL("countrycode"),  width: 105, align: "center",formatter: function () {
+                    }},*/
+            	//{key: "vehicleCapa", label:  COL("vehicle.vehiclecapa"),  width: 210, align: "center"},
+            	/*{key: "countryCode", label: COL("countrycode"),  width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
+                    }},*/
             	{key: "areaCode", label: COL("areacode"),  width: 90, align: "center",formatter: function () {
             		var areaCode =  getAreaCode("",this.item.areaCode);
                     return areaCode;
                     }},
                 {key: "updateDate", label: COL("updatedate"),  width: 90, align: "center"},
-                {key: "remark", label: COL("remark"),  width: 80, align: "center"},
-                {key: "userId", label: COL("userid"),  width: 120, align: "center"},
+                {key: "remark", label: COL("remark"),  width: 200, align: "center"},
+                {key: "userId", label: COL("userid"),  width: 100, align: "center"},
                 {key: "useYn", label:  COL("useyn"), width: 80, align: "center"}
             ],
           

@@ -54,11 +54,11 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                     parent.axboot.modal.callback(list);
                 }
             } else {
-                alert(LANG("ax.script.requireselect"));
+                alert(LANG("script.requireselect"));
             }
     },
     PAGE_DEL: function (caller, act, data) {
-        if (!confirm(LANG("ax.script.deleteconfirm"))) return;
+        if (!confirm(LANG("script.deleteconfirm"))) return;
 
         var list = caller.gridView01.getData("selected");
         list.forEach(function (n) {
@@ -99,7 +99,7 @@ fnObj.pageStart = function () {
             optionValue: "optionValue", optionText: "optionText"
         },
         options: [
-             {optionValue: "scheduleGroupId", optionText: COL("bis.systemschedulegroup.schedulegroupid")}
+             {optionValue: "scheduleGroupId", optionText: COL("systemschedulegroup.schedulegroupid")}
         ]
     });
     ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -161,8 +161,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	  {key: "scheduleGroupId", label: COL("bis.systemschedulegroup.schedulegroupid"), width: 150, align: "center"},
-                  {key: "scheduleCode", label: COL("bis.systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
+            	  {key: "scheduleGroupId", label: COL("systemschedulegroup.schedulegroupid"), width: 150, align: "center"},
+                  {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                     return detailCode;
                  }},
@@ -170,9 +170,9 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
               		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                       return detailCode;
                    }},*/
-                  {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                  {key: "remark", label:COL("bis.remark"), width: 80, align: "center"},
-                  {key: "userId", label: COL("bis.userid"), width: 120, align: "center"}
+                  {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                  {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                  {key: "userId", label: COL("userid"), width: 120, align: "center"}
             	],
             body: {
                 onClick: function () {

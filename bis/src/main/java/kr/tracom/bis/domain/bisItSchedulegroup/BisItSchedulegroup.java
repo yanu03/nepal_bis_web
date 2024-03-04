@@ -25,4 +25,5 @@ public class BisItSchedulegroup {
  
 	private String useYn;
  
+	private String state;
 }

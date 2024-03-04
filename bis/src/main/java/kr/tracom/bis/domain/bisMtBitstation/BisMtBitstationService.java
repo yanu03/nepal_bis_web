@@ -18,9 +18,9 @@ public List<BisMtBitstation> findAll(Map parameterMap)
 	return bisMtBitstationMapper.findAll(parameterMap);
 }
 	
-public void delete(String bitId)
+public void delete(BisMtBitstation bismtbitstation)
 {
-	bisMtBitstationMapper.delete(bitId);
+	bisMtBitstationMapper.delete(bismtbitstation);
 }
 public void add(BisMtBitstation bismtbitstation)
 	{

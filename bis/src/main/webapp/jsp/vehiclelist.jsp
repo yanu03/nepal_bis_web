@@ -61,7 +61,7 @@
 							</select>
                         </ax:td>
                         <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>
@@ -106,10 +106,10 @@
                             
                                 <input type="text" name="vehicleId" title="<ax:lang id="bis.vehicle.vehicleid"/>" data-ax-path="vehicleId" maxlength="15" class="form-control" value="" readonly/>
                             </ax:td>
-                            <ax:td label="bis.vehicle.vehicletype" width="300px">
+                            <ax:td color="red" label="bis.vehicle.vehicletype" width="300px">
                                   <ax:BisCtDetailCode groupCd="VEHICLE_TYPE" dataPath="vehicleType" clazz="form-control"/>
-                               </ax:td>
-                             <ax:td label="bis.vehicle.platenumber" width="300px">
+                             </ax:td>
+                             <ax:td color="red" label="bis.vehicle.platenumber" width="300px">
                                 <input type="text" name="plateNumber" data-ax-validate="required"  title="<ax:lang id="bis.vehicle.platenumber"/>" data-ax-path="plateNumber" maxlength="20" class="form-control" value=""/>
                             </ax:td>
                         </ax:tr>
@@ -135,7 +135,7 @@
                                 <%-- <ax:td label="bis.countrycode" width="300px">
                         		    <ax:BisCtDetailCode groupCd="COUNTRY_CODE" dataPath="countryCode" clazz="form-control"/>
                                 </ax:td> --%>
-                             <ax:td label="bis.areacode" width="300px">
+                             <ax:td color="red" label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="255" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
@@ -148,9 +148,9 @@
                         </ax:tr>
                         
                         <ax:tr labelWidth="120px">
-      						 <ax:td label="bis.remark" width="300px">
+      						 <%-- <ax:td label="bis.remark" width="300px">
                                 <input type="text" name="remark" data-ax-path="remark" maxlength="255" title="" class="form-control" value=""/>
-                             </ax:td>
+                             </ax:td> --%>
                        
                               <ax:td label="bis.userid" width="300px">
                                 <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
@@ -158,6 +158,11 @@
                                <ax:td label="bis.useyn" width="300px">
                                 <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
                             </ax:td>
+                        </ax:tr>
+                        <ax:tr labelWidth="120px">
+                      		 <ax:td label="bis.remark" width="900px">
+                                <input type="text" name="remark" data-ax-path="remark" maxlength="100" title="" class="form-control" value=""/>
+                             </ax:td>
                         </ax:tr>
                     </ax:tbl>
                 </ax:form>

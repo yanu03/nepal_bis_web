@@ -73,8 +73,16 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         caller.gridView01.delRow("selected");
     }, 
     SCHEDULE_SAVE: function (caller, act, data) {
-    	
-    	var saveList = [].concat(caller.gridView02.getData2("modified"));
+    	var modifiedList = (caller.gridView02.getData("modified") || []).map(function(item) {
+	        return Object.assign({}, item, {state: "modified"});
+	    });
+
+	    var deletedList = (caller.gridView02.getData("deleted") || []).map(function(item) {
+	        return Object.assign({}, item, {state: "deleted"});
+	    });
+
+	    //var saveList = [].concat(caller.gridView02.getData2("modified"));
+	    var saveList = modifiedList.concat(deletedList);
          axboot.ajax({
              type: "PUT",
              url:'/api/v1/bisItSchedulegroups',
@@ -261,12 +269,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [    
-            	   {key: "scheduleGroupId", label: COL("bis.systemschedulegroup.schedulegroupid"), width:150, align: "center"},
-                   {key: "scheduleCode", label: COL("bis.systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
+            	   {key: "scheduleGroupId", label: COL("systemschedulegroup.schedulegroupid"), width:150, align: "center"},
+                   {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                     return detailCode;
                  }},
-                   {key: "remark", label:COL("bis.remark"), width: 80, align: "center"}
+                   {key: "remark", label:COL("remark"), width: 200, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -298,12 +306,12 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         //	showLineNumber: false,
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-            	{key: "scheduleGroupId", label: COL("bis.systemschedulegroup.schedulegroupid"), width: 140, align: "center"},
-            	{key: "scheduleId", label: COL("bis.systemschedule.scheduleid"), width: 140, align: "center"},
-                {key: "updateDate", label:COL("bis.updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("bis.remark"), width: 80, align: "center"},
-                {key: "userId", label: COL("bis.userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("bis.useyn"), width: 120, align: "center"}
+            	{key: "scheduleGroupId", label: COL("systemschedulegroup.schedulegroupid"), width: 140, align: "center"},
+            	{key: "scheduleId", label: COL("systemschedule.scheduleid"), width: 140, align: "center"},
+                //{key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                {key: "remark", label:COL("remark"), width: 200, align: "center"},
+                {key: "userId", label: COL("userid"), width: 120, align: "center"},
+                {key: "useYn", label: COL("useyn"), width: 120, align: "center"}
             ],
             body: {
                 onClick: function () {
@@ -323,7 +331,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
                     axDialog.alert({
                         theme: "primary",
                         title:" ",
-                        msg: COL("bis.error.schedulegroup")
+                        msg: COL("error.schedulegroup")
                     });
     				
     				}
@@ -364,7 +372,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
     		    axDialog.alert({
                     theme: "primary",
                     title:" ",
-                    msg: COL("bis.error.schedulegroup")
+                    msg: COL("error.schedulegroup")
                 });
     		}
     		else
@@ -376,13 +384,11 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
     });
     },
     getData: function (_type) {
-        var list = [];
+    	var list = [];
         var _list = this.target.getList(_type);
-
         if (_type == "modified" || _type == "deleted") {
             list = ax5.util.filter(_list, function () {
-                delete this.deleted;
-                return this.key;
+            	return this.scheduleGroupId
             });
         } else {
             list = _list;

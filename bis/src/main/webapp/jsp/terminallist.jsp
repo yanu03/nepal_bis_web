@@ -63,7 +63,7 @@
 							</select>
                         </ax:td>
                         <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>
@@ -106,23 +106,21 @@
                             <ax:td label="bis.terminal.terminalid" width="300px">
                                 <input type="text" name="terminalId"   title="TERMINAL ID"  data-ax-path="terminalId" maxlength="15" class="form-control" value="" readonly/>
                             </ax:td>
-                            <ax:td label="bis.terminal.terminaltype" width="300px">
+                            <ax:td color="red" label="bis.terminal.terminaltype" width="300px">
                               		<ax:BisCtDetailCode groupCd="TERMINAL_TYPE" dataPath="terminalType" clazz="form-control"/>
                                 </ax:td>
-                             <ax:td label="bis.vehicle.vehicleid" width="300px">
-                             
+                             <ax:td color="red" label="bis.vehicle.vehicleid" width="300px">
                            		<div class="input-group">
                             		<input type="text" name="vehicleId" data-ax-validate="required"  title="<ax:lang id="bis.vehicle.vehicleid"/>"  data-ax-path="vehicleId" maxlength="100" title="" class="form-control" value="" readonly/>
                               		<span class="input-group-addon vehicle_button"><i class="cqc-magnifier"></i></span>
                                 </div>
                             </ax:td>
                         </ax:tr>
-                        
                         <ax:tr labelWidth="120px">
                           <ax:td label="bis.terminal.terminalversion" width="300px">
                                 <input type="text" name="terminalVersion" data-ax-path="terminalVersion" maxlength="16" title="" class="form-control" value=""/>
                             </ax:td>
-                            <ax:td label="bis.areacode" width="300px">
+                            <ax:td color="red" label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="100" title="" class="form-control" value=""/>
                            		<div class="input-group">
                             	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>

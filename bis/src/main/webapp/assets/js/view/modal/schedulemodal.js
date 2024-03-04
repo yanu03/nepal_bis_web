@@ -57,11 +57,11 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 parent.axboot.modal.callback(list);
             }
         } else {
-            alert(LANG("ax.script.requireselect"));
+            alert(LANG("script.requireselect"));
         }
     },
     PAGE_DEL: function (caller, act, data) {
-        if (!confirm(LANG("ax.script.deleteconfirm"))) return;
+        if (!confirm(LANG("script.deleteconfirm"))) return;
 
         var list = caller.gridView01.getData("selected");
         list.forEach(function (n) {
@@ -101,7 +101,7 @@ fnObj.pageStart = function () {
             optionValue: "optionValue", optionText: "optionText"
         },
         options: [
-             {optionValue: "scheduleId", optionText: COL("bis.systemschedule.scheduleid")}
+             {optionValue: "scheduleId", optionText: COL("systemschedule.scheduleid")}
         ]
     });
     ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -166,17 +166,17 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
-            	  {key: "scheduleId", label: COL("bis.systemschedule.scheduleid"), width: 90, align: "center"},
-                  {key: "scheduleCode", label: COL("bis.systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
+            	  {key: "scheduleId", label: COL("systemschedule.scheduleid"), width: 90, align: "center"},
+                  {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 120, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
                     return detailCode;
                  }},
-                  {key: "startDate", label: COLA("ax.promotion.startDate"), width: 80, align: "center"},
-                  {key: "endDate", label: COLA("ax.promotion.endDate"), width: 80, align: "center"},
-                  {key: "startTime", label: COLA("ax.promotion.startTime"), width: 80, align: "center"},
-                  {key: "endTime", label: COLA("ax.promotion.endTime"), width: 80, align: "center"},
-                  {key: "scheduleValue", label: COL("bis.systemschedule.schedulevalue"), width: 70, align: "center"},
-                  {key: "remark", label:COL("bis.remark"), width: 80, align: "center"}
+                  {key: "startDate", label: COLA("promotion.startDate"), width: 80, align: "center"},
+                  {key: "endDate", label: COLA("promotion.endDate"), width: 80, align: "center"},
+                  {key: "startTime", label: COLA("promotion.startTime"), width: 80, align: "center"},
+                  {key: "endTime", label: COLA("promotion.endTime"), width: 80, align: "center"},
+                  {key: "scheduleValue", label: COL("systemschedule.schedulevalue"), width: 70, align: "center"},
+                  {key: "remark", label:COL("remark"), width: 80, align: "center"}
             	],
             body: {
                 onClick: function () {

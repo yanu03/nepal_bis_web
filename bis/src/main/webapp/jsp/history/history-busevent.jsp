@@ -85,8 +85,8 @@
 									<ax:tr>
 				                        <ax:td label='bis.division' width="250px" labelWidth="80px">
 				                        	<select class="form-control W150" data-ax-path="Select" id="Select">
-				                        		<option value="routeName">ROUTE NAME</option>
-				                        		<option value="plateNumber">PLATE NUMBER</option>
+				                        		<option value="routeName"><ax:lang id="bis.route.routename"/></option>
+				                        		<option value="plateNumber"><ax:lang id="ax.history.plateNumber"/></option>
 				                        	</select>
 				                        </ax:td>
 				                        <ax:td label='bis.search' width="300px" labelWidth="80px">
@@ -122,13 +122,13 @@
 									<ax:tr>
 				                        <ax:td label='ax.promotion.startDate' width="300px" labelWidth="100px">
 				                        	<div class="input-group">
-				                        		<input type="text" class="form-control" id="startDate" placeholder="yyyymmddHHmm" data-ax-path="startDate" onchange="dateValidate()" />
+				                        		<input type="text" class="form-control" id="startDate" placeholder="yyyymmddHHmm" data-ax-path="startDate" onchange="dateValidate()" readonly/>
 				                        		<span class="input-group-addon"><i id="startCalendar" class="cqc-calendar"></i></span>
 				                        	</div>
 				                        </ax:td>
 				                        <ax:td label='ax.promotion.endDate' width="300px" labelWidth="80px">
 				                        	<div class="input-group">
-				                        		<input type="text" class="form-control" id="endDate" placeholder="yyyymmddHHmm" data-ax-path="endDate" onchange="dateValidate()" />
+				                        		<input type="text" class="form-control" id="endDate" placeholder="yyyymmddHHmm" data-ax-path="endDate" onchange="dateValidate()" readonly/>
 				                        		<span class="input-group-addon"><i id="endCalendar" class="cqc-calendar"></i></span>
 				                        	</div>
 				                        </ax:td>

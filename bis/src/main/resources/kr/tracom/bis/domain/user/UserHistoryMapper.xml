@@ -16,12 +16,20 @@
 		
 		WHERE
 			COLLECT_DATE BETWEEN #{startDate} AND #{endDate}
-	
+		<if test="Select == 'userCode'">
+			AND 
+			USER_CD LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'userName'">
+			AND
+			USER_NM LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+        </if>	
+            ORDER BY COLLECT_DATE DESC
 	</select>
 	
 	<insert id="add" parameterType="map">
 			INSERT INTO bis_ht_login 
-			(
+			(	
 				COLLECT_DATE,
 				USER_CD,
 				USER_NM,

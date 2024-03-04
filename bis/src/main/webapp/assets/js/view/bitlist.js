@@ -238,16 +238,16 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 return detailCode;
                 }},
             	{key: "bitName", label:COL("bit.bitname"), width: 90, align: "center"},
-            	{key: "bitEname", label: COL("bit.bitename"), width: 90, align: "center"},
-            	{key: "terminalVersion", label: COL("bit.terminalversion"), width: 140, align: "center"},
-            	{key: "ipAddress", label: COL("bit.ipaddress"), width: 90, align: "center"},
-            	{key: "cameraIpAddress", label: COL("bit.cameraipaddress"), width: 135, align: "center"},            	
-            	{key: "installDate", label: COL("bit.installdate"), width: 95, align: "center"},      
-            	{key: "serialNo", label: COL("bit.serialno"), width: 90, align: "center"},
-            	{key: "countryCode", label:  COL("countrycode"), width: 105, align: "center",formatter: function () {
+            	//{key: "bitEname", label: COL("bit.bitename"), width: 90, align: "center"},
+            	//{key: "terminalVersion", label: COL("bit.terminalversion"), width: 140, align: "center"},
+            	//{key: "ipAddress", label: COL("bit.ipaddress"), width: 90, align: "center"},
+            	//{key: "cameraIpAddress", label: COL("bit.cameraipaddress"), width: 135, align: "center"},            	
+            	//{key: "installDate", label: COL("bit.installdate"), width: 95, align: "center"},      
+            	//{key: "serialNo", label: COL("bit.serialno"), width: 90, align: "center"},
+            	/*{key: "countryCode", label:  COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
+                    }},*/
                     {key: "areaCode", label:  COL("areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;

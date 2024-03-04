@@ -73,7 +73,7 @@
 							</select>
                         </ax:td>
                         <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>

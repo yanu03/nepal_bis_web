@@ -9,7 +9,7 @@ import kr.tracom.bis.domain.bisMtBit.BisMtBit;
 
 public interface BisMtBitstationMapper extends MyBatisMapper{
 List<BisMtBitstation> findAll(Map parameterMap);
-	void delete(String bitId);
+	void delete(BisMtBitstation bismtvehicle);
 	void add(BisMtBitstation bismtvehicle);
 	List<BisMtBit> count();
 }
