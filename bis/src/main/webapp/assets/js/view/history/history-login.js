@@ -62,6 +62,9 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
         this.startDate=$("#startDate");
 		this.endDate=$("#endDate");
         this.filter = $("#filter");
+        this.keyword=$("#Keyword");
+		this.select=$("#Select");
+		this.useYn='Y';
     },
     getData: function () {
         return {
@@ -69,7 +72,9 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
             pageSize: this.pageSize,
             filter: this.filter.val(),
 			startDate:this.startDate.val(),
-			endDate:this.endDate.val()
+			endDate:this.endDate.val(),
+			Keyword:this.keyword.val(),
+			Select:this.select.val()
         }
     }
 });
@@ -113,4 +118,13 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     addRow: function () {
         this.target.addRow({__created__: true, useYn: "N", authCheck: "N"}, "last");
     }
+});
+
+$(document).ready(function(){
+	console.log("ready");
+	$('#Keyword').keypress(function(e){
+	    if(e.keyCode==13){
+	    	ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
+	    }
+	  });
 });

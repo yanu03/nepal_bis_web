@@ -44,19 +44,16 @@ public class BisMtBitstationController extends BaseController {
     @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody List<BisMtBitstation> list) {
        // bisMtRouteService.save(request);
-	bisMtBitstationService.delete(list.get(0).getBitId());
+    	//bisMtBitstationService.delete(list.get(0).getBitId(), list.get(0).getStationId());
     	
     	for(int i = 0; i < list.size();i++)
     	{
-    		if(list.get(i).getUseYn() !=null)
-    		{
-    			if(list.get(i).getUseYn().equals("Y"))
-        		{
-        			bisMtBitstationService.add(list.get(i));
-        		}
-        		
-    		}
-    
+    	    if("modified".equals(list.get(i).getState())){
+    	        bisMtBitstationService.add(list.get(i));
+    	    }
+    	    else if("deleted".equals(list.get(i).getState())){
+    	        bisMtBitstationService.delete(list.get(i));
+    	    }
     	}
         return ok();
         }

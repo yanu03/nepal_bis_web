@@ -66,12 +66,12 @@
 							</select>
 						 </ax:td>
 						 <ax:td label='bis.division' width="250px" labelWidth="80px">
-  						 	<select class="form-control" id="" name="" data-ax-path="Select" >
+  						 	<select class="form-control" id="" name="" data-ax-path="Select" readonly>
 								<option value="scheduleId"><ax:lang id="bis.systemschedule.scheduleid"/></option>
 							</select>
                         </ax:td>
                          <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>
@@ -85,7 +85,7 @@
                 <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                          SCHEDULE LIST </h2>
+                          <ax:lang id="ax.promotion.schedule"/>
                     </div>
                     <div class="right">
 
@@ -115,11 +115,11 @@
                             <ax:td label="bis.systemschedule.scheduleid" width="300px" >
                                 <input type="text" data-ax-path="scheduleId" class="form-control" style="margin-top:3px;" readonly="readonly"  value=""/>
                             </ax:td>
-                             <ax:td label="bis.systemschedule.schedulecode" width="300px" style="height:46px;">
+                             <ax:td color="red" label="bis.systemschedule.schedulecode" width="300px" style="height:46px;">
  								<ax:BisCtDetailCode groupCd="SCHEDULE_CODE" dataPath="scheduleCode" clazz="form-control"/>  
                          
                             </ax:td>
-                               <ax:td label="ax.promotion.startDate" width="300px">
+                               <ax:td color="red" label="ax.promotion.startDate" width="300px">
 		                            <div class="input-group">
 	<!-- 	                            <div class="input-group" data-ax5picker="date"> -->
 		                                <input  readonly="readonly" type="text" data-ax-validate="required"  title="START DATE" class="form-control"  id="datepicker1" placeholder="mmdd" data-ax-path="startDate" />
@@ -129,13 +129,13 @@
                         </ax:tr>
                         <ax:tr>
 	                     
-                            <ax:td label="ax.promotion.endDate" width="300px">
+                            <ax:td color="red" label="ax.promotion.endDate" width="300px">
                             	<div class="input-group">
 	                                <input readonly="readonly" type="text" data-ax-validate="required"  title="END DATE" class="form-control" id="datepicker2"  placeholder="mmdd" data-ax-path="endDate" />
 	                                <span class="input-group-addon" id="datepickerbutton2"><i class="cqc-calendar"></i></span>
 	                            </div>
                             </ax:td>
-                            <ax:td label="ax.promotion.startTime" width="300px">
+                            <ax:td color="red" label="ax.promotion.startTime" width="300px">
 
 								<div style="float:left" class="input-group">
 	                               <select style="width:93px;" id="startTime" data-ax-path="startTime" class="form-control" >
@@ -184,7 +184,7 @@
                                 </select>
                                 </div>
                             </ax:td>
-                          	<ax:td label="ax.promotion.endTime" width="300px">
+                          	<ax:td color="red" label="ax.promotion.endTime" width="300px">
                            	   <div style="float:left" class="input-group">
 	                               <select style="width:93px;" id="endTime" data-ax-path="endTime" class="form-control">
 		                               <option value="00">00  </option>
@@ -249,12 +249,10 @@
 	                                	<option value="10">10</option>
                                 </select>
                             </ax:td>
-                            	<div  style="width:300px;" data-ax-td="">
-								    <div style="width:100px; height:46px "data-ax-td-label="" ><ax:lang id="bis.remark"/></div>
-									 <div data-ax-td-wrap="">
-										  <input type="text" style="margin-top:3px;" name="remark" data-ax-path="remark" maxlength="255" title="" class="form-control" value=""/>
-							   		 </div>
-								</div>
+	                            <ax:td label="bis.useyn" width="300px">
+	                                <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
+	                            </ax:td>
+                            	
                			      <div  style="width:300px;" data-ax-td="">
 								    <div style="width:100px; height:46px "data-ax-td-label="" ><ax:lang id="bis.updatedate"/></div>
 									 <div data-ax-td-wrap="">
@@ -263,12 +261,20 @@
 								</div>
 						</ax:tr>       
 						<ax:tr>              
-                            <ax:td label="bis.useyn" width="300px">
+                            <%-- <ax:td label="bis.useyn" width="300px">
                                 <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
-                            </ax:td>
+                            </ax:td> --%>
                               <ax:td label="bis.userid" width="300px">
                                 <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
                             </ax:td>
+						</ax:tr>
+						<ax:tr>
+							<div  style="width:900px;" data-ax-td="">
+								    <div style="width:100px; height:46px "data-ax-td-label="" ><ax:lang id="bis.remark"/></div>
+									 <div data-ax-td-wrap="">
+										  <input type="text" style="margin-top:3px;" name="remark" data-ax-path="remark" maxlength="100" title="" class="form-control" value=""/>
+							   		 </div>
+								</div>
 						</ax:tr>  
                     </ax:tbl>
                 </ax:form>

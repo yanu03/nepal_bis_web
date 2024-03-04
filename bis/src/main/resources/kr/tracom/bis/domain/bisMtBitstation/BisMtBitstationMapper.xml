@@ -32,7 +32,7 @@
             USE_YN='N'
              </if>
    </select>
-    <delete id="delete" parameterType="hashmap">
+    <delete id="delete" parameterType="kr.tracom.bis.domain.bisMtBitstation.BisMtBitstation">
     	delete
     	 from 
     		BIS_MT_BITSTATION

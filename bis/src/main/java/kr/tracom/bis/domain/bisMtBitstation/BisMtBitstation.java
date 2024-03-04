@@ -11,5 +11,5 @@ private String stationName="";
 private String updateDate="";
 private String userId="";
 private String useYn="";
-
+private String state="";
 }

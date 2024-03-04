@@ -14,7 +14,21 @@
   </jsp:attribute>
 
     <jsp:attribute name="script">
-        <ax:script-lang key="bis" var="COL" />
+   		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+			<ax:script-lang key="axnep" var="COLA" />
+			<ax:script-lang key="bisnep" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+			<ax:script-lang key="axen" var="COLA" />
+			<ax:script-lang key="bisen" var="COL" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+			<ax:script-lang key="axko" var="COLA" />
+			<ax:script-lang key="bisko" var="COL" />
+			</c:when>
+		</c:choose>
+        <%-- <ax:script-lang key="bis" var="COL" /> --%>
         <script type="text/javascript" src="<c:url value='/assets/js/view/systemoperation/schedule/schedule-schedulegroup.js' />"></script>
               <script type="text/javascript" src="<c:url value='/assets/js/map/layer.js' />"></script>
              <script type="text/javascript" src="<c:url value='/assets/js/common/detail.js' />"></script>
@@ -31,12 +45,12 @@
               <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
                         <ax:td label='bis.division' width="250px" labelWidth="80px">
-				 		 	<select class="form-control" id="" name="" data-ax-path="Select" >
+				 		 	<select class="form-control" id="" name="" data-ax-path="Select" readonly>
 								<option value="scheduleGroupId"><ax:lang id="bis.systemschedulegroup.schedulegroupid"/></option>
 							</select>
                         </ax:td>
                         <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>
@@ -51,7 +65,7 @@
                               <div class="ax-button-group">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                         		  SCHEDULE GROUP LIST</h2>
+                         		 <ax:lang id="bis.systemschedulegroup.scheduleList"/></h2>
                     </div>
                   
                 </div>
@@ -69,7 +83,7 @@
           <div class="ax-button-group" >
   			   <div class="left">
                         <h2><i class="cqc-list"></i>
-                     	SCHEDULE LIST</h2>
+                     	<ax:lang id="ax.promotion.schedule"/></h2>
             
                  </div>
                  <div class="right">

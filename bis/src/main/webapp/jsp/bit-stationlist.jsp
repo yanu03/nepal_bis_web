@@ -56,12 +56,12 @@
 						 </ax:td>
                         <ax:td label='bis.division' width="250px" labelWidth="80px">
   						 	<select class="form-control" id="" name="" data-ax-path="Select" >
-								 <option value="bitName"><ax:lang id="bis.bit.bitname"/></option>
-								 <option value="bitId"><ax:lang id="bis.bit.bitid"/></option>
+								 <option value="stationName"><ax:lang id="bis.station.stationname"/></option>
+								 <option value="stationId"><ax:lang id="bis.station.stationid"/></option>
 							</select>
                         </ax:td>
                         <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px;" type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
          	    </ax:tbl>

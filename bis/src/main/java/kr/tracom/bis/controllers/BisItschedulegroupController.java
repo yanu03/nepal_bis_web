@@ -45,21 +45,17 @@ public class BisItschedulegroupController extends BaseController  {
     @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody List<BisItSchedulegroup> list) {
        // bisMtRouteService.save(request);
-    	if(list.size() > 0)
+        for(int i = 0; i < list.size();i++)
     	{
-    		
-    		bisItSystemscheduleService.delete(list.get(0));
+    	    if("modified".equals(list.get(i).getState())){
+    	    	bisItSystemscheduleService.add(list.get(i));
+    	    }
+    	    else if("deleted".equals(list.get(i).getState())){
+    	    	bisItSystemscheduleService.delete(list.get(i));
+    	    }
     	}
-    	for(int i = 0; i < list.size();i++)
-    	{
-    		if(list.get(i).getUseYn().equals("Y"))
-    		{
-    			bisItSystemscheduleService.add(list.get(i));
-    		}
-    		
-    	}
-        return ok();
-    }
+        	return ok();
+        }
 	/*@RequestMapping(method =RequestMethod.PUT, produces = APPLICATION_JSON)
 	public ApiResponse save( @RequestBody BisItSchedulegroup bismtroute) {
 		//Map parameterMap = RequestUtil.getParameterMap(request);

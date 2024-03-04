@@ -32,29 +32,34 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     SET_FROM_VIEW: function (caller, act, data) {
     	caller.formView01.setData(data);
 		},
-    BIT_SAVE: function (caller, act, data) {
-    	 var saveList = [].concat(caller.gridView02.getData());
-     //    saveList = saveList.concat(caller.gridView02.getData("deleted"));
-         if(saveList.length == 0){ 
-             data ={};
-             data.bitId=caller.gridView02.bitId;
-             saveList.push(data);
-             }
-         
-			 axboot.ajax({
-		         type: "PUT",
-		       //  url:'/api/v1/bisMtBitstations',
-		         url:'/api/v1/bisMtBitstations',
-		         //url: '/api/v1/bisMtRoutes',
-		         data: JSON.stringify(saveList) ,
-		         callback: function (res) {
-		        	ACTIONS.dispatch(ACTIONS.ITEM_CLICK);
-		        	axToast.push("Saved");
-		         }
-		     });
-			
+		BIT_SAVE: function (caller, act, data) {
+		    var modifiedList = (caller.gridView02.getData("modified") || []).map(function(item) {
+		        return Object.assign({}, item, {state: "modified"}); // 객체에 _state 속성 추가
+		    });
+
+		    var deletedList = (caller.gridView02.getData("deleted") || []).map(function(item) {
+		        return Object.assign({}, item, {state: "deleted"}); // 객체에 _state 속성 추가
+		    });
 		    
-},
+		    var saveList = modifiedList.concat(deletedList);
+
+		    if (saveList.length === 0) { 
+		        data = {};
+		        data.bitId = caller.gridView02.bitId;
+		        data._state = "modified"; // 기본 상태를 'modified'로 설정
+		        saveList.push(data);
+		    }
+
+		    axboot.ajax({
+		        type: "PUT",
+		        url: '/api/v1/bisMtBitstations',
+		        data: JSON.stringify(saveList),
+		        callback: function (res) {
+		            ACTIONS.dispatch(ACTIONS.ITEM_CLICK);
+		            axToast.push("Saved");
+		        }
+		    });
+		},
     FORM_CLEAR: function (caller, act, data) {
 
                 caller.formView01.clear();
@@ -302,6 +307,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "stationId", label: COL("station.stationid"), width: 100, align: "center"},
                 {key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
                 {key: "stationType", label: COL("station.stationtype"), width: 100, align: "center",formatter: function () {
             		var detailCode = getDetailCode("STATION_TYPE",this.item.stationType);
@@ -311,11 +317,11 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 {key: "gpsX", label:COL("station.gpsx"), width: 100, align: "center"},
                 {key: "gpsY", label:COL("station.gpsx"), width: 100, align: "center"},
 
-                {key: "representationYn", label: COL("station.representationyn"), width: 170, align: "center"},
-                {key: "countryCode", label: COL("countrycode"), width: 105, align: "center",formatter: function () {
+                //{key: "representationYn", label: COL("station.representationyn"), width: 170, align: "center"},
+                /*{key: "countryCode", label: COL("countrycode"), width: 105, align: "center",formatter: function () {
             		var detailCode = getDetailCode("COUNTRY_CODE",this.item.countryCode);
                     return detailCode;
-                    }},
+                    }},*/
                     {key: "areaCode", label:  COL("areacode"), width: 80, align: "center",formatter: function () {
                 		var areaCode =  getAreaCode("",this.item.areaCode);
                         return areaCode;
@@ -382,7 +388,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
             	{key: "bitName", label: COL("bit.bitname"), width: 90, align: "center"},
             	{key: "stationId", label: COL("station.stationid"), width: 90, align: "center"},
             	{key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
-                {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
+                //{key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
                 {key: "userId", label:COL("userid"), width: 120, align: "center"},
                 {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],
@@ -397,10 +403,18 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
    
     },
     getData: function (_type) {
-    	
-        return this.target.getList(_type);
-       
+        var list = [];
+        var _list = this.target.getList(_type);
+        if (_type == "modified" || _type == "deleted") {
+            list = ax5.util.filter(_list, function () {
+            	return this.bitId
+            });
+        } else {
+            list = _list;
+        }
+        return list;
     },
+       
     addRow: function (data) {
         this.target.addRow(data, "last");
 /*                 caller.gridView02.addRow(data);*/

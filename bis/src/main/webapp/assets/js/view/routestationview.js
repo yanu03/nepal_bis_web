@@ -262,7 +262,18 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         });
     },
     getData: function (_type) {
-        return this.target.getData();
+        var list = [];
+        var _list = this.target.getList(_type);
+
+        if (_type == "modified" || _type == "deleted") {
+            list = ax5.util.filter(_list, function () {
+                delete this.deleted;
+                return this.key;
+            });
+        } else {
+            list = _list;
+        }
+        return list;
     }
 });
 
@@ -403,16 +414,15 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
 });
 
 $('#excelExport').click(function(){
-	debugger;
-	var test = fnObj.gridView01.getData("selected");
+	var selectedList = fnObj.gridView01.getData("selected");
 	if(selectedList.length > 0){
-		//var excelExport=fnObj.gridView02;
-		//excelExport.excel("Route-StationList.xls")
+		var excelExport=fnObj.gridView02;
+		excelExport.excel("Route-StationList.xls")
 	} else {
         axDialog.alert({
             theme: "primary",
             title:" ",
-            msg: COL("error.stationselect")
+            msg: COL("error.routeselect")
         });		
 	}
 	/*var excelExport=fnObj.gridView02;

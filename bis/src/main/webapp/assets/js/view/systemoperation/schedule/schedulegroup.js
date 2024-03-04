@@ -186,7 +186,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     return detailCode;
                  }},
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
-                {key: "remark", label:COL("remark"), width: 80, align: "center"},
+                {key: "remark", label:COL("remark"), width: 200, align: "center"},
                 {key: "userId", label: COL("userid"), width: 115, align: "center"},
                 {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
             ],

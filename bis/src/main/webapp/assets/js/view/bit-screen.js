@@ -152,16 +152,26 @@ fnObj.pageButtonView = axboot.viewExtend({
  */
 fnObj.searchView = axboot.viewExtend(axboot.searchView, {
     initView: function () {
-        this.target = $(document["searchView0"]);
+    	this.target = $(document["searchView0"]);
         this.target.attr("onsubmit", "return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);");
-        this.filter = $("#filter");
+        this.Keyword = $("#Keyword");
+        
+        this.model = new ax5.ui.binder();
+        this.model.setModel(this.getDefaultData(),this.target);
+        this.modelFormatter = new axboot.modelFormatter(this.model); // 모델 포메터 시작
+        
+    }, getDefaultData: function () {
+        return $.extend({}, axboot.formView.defaultData, {});
+    },
+    setPageNumber: function (pageNumber) {
+        this.pageNumber = pageNumber;
+        ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
     },
     getData: function () {
-        return {
-            pageNumber: this.pageNumber,
-            pageSize: this.pageSize,
-            filter: this.filter.val()
-        }
+    	var data = this.modelFormatter.getClearData(this.model.get()); // 모델의 값을 포멧팅 전 값으로 치환.
+  	  var Keyword=this.Keyword.val();
+  	  data.Keyword=Keyword;
+  	  return $.extend({}, data);
     }
 });
 

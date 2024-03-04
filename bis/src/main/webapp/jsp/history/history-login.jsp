@@ -45,15 +45,26 @@
                             <ax:input type="text" name="filter" id="filter" clazz="form-control" placeholder="ax.admin.input.search"/>
                             <ax:input type="text" name="filter" id="filter" clazz="form-control"/>
                         </ax:td> --%>
+                        <ax:td label='bis.division' width="250px" labelWidth="80px">
+                        	<select class="form-control W150" data-ax-path="Select" id="Select">
+                        		<option value="userCode"><ax:lang id="ax.admin.user.id"/></option>
+                        		<option value="userName"><ax:lang id="ax.admin.user.name"/></option>
+                        	</select>
+                        </ax:td>
+                        <ax:td label='bis.search' width="300px" labelWidth="80px">
+                        	<div class="input-group">
+                        		<input type="text" class="form-control" id="Keyword"  data-ax-path="Keyword" id="Keyword"/>
+                        	</div>
+                        </ax:td>
                         <ax:td label='ax.promotion.startDate' width="300px" labelWidth="100px">
                         	<div class="input-group">
-                        		<input type="text" class="form-control" id="startDate" placeholder="yyyymmddHHmm" data-ax-path="startDate" onchange="dateValidate()" />
+                        		<input type="text" class="form-control" id="startDate" placeholder="yyyymmddHHmm" data-ax-path="startDate" onchange="dateValidate()" readonly/>
                         		<span class="input-group-addon"><i id="startCalendar" class="cqc-calendar"></i></span>
                         	</div>
                         </ax:td>
                         <ax:td label='ax.promotion.endDate' width="300px" labelWidth="80px">
                         	<div class="input-group">
-                        		<input type="text" class="form-control" id="endDate" placeholder="yyyymmddHHmm" data-ax-path="endDate" onchange="dateValidate()" />
+                        		<input type="text" class="form-control" id="endDate" placeholder="yyyymmddHHmm" data-ax-path="endDate" onchange="dateValidate()" readonly/>
                         		<span class="input-group-addon"><i id="endCalendar" class="cqc-calendar"></i></span>
                         	</div>
                         </ax:td>                        

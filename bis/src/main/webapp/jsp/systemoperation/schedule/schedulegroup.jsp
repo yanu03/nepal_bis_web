@@ -65,12 +65,12 @@
 							</select>
 						 </ax:td>
 						 <ax:td label='bis.division' width="250px" labelWidth="80px">
-  						 	<select class="form-control" id="" name="" data-ax-path="Select" >
+  						 	<select class="form-control" id="" name="" data-ax-path="Select" readonly>
 								<option value="scheduleGroupId"><ax:lang id="bis.systemschedulegroup.schedulegroupid"/></option>
 							</select>
                         </ax:td>
                          <ax:td label='bis.search' width="300px" labelWidth="80px">
-                        	  <input type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
+                        	  <input style="width:200px; type="text" name="Keyword"id="Keyword"  data-ax-path="Keyword" class="form-control W100"/>      
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>
@@ -84,7 +84,7 @@
                 <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                            SCHEDULE GROUP LIST</h2>
+                            <ax:lang id="bis.systemschedulegroup.scheduleList"/></h2>
                     </div>
                     <div class="right">
 
@@ -114,20 +114,11 @@
                             <ax:td label="bis.systemschedulegroup.schedulegroupid" width="300px" >
                                 <input type="text" data-ax-path="scheduleGroupId" class="form-control" style="margin-top:3px;" readonly="readonly"  value=""/>
                             </ax:td>
-                             <ax:td label="bis.systemschedule.schedulecode" width="300px" style="height:46px;">
+                             <ax:td color="red" label="bis.systemschedule.schedulecode" width="300px" style="height:46px;">
 								<ax:BisCtDetailCode groupCd="SCHEDULE_CODE" dataPath="scheduleCode" clazz="form-control"/>  
                             </ax:td>
-                            
-                          <div  style="width:300px;" data-ax-td="">
-								    <div style="width:100px; "data-ax-td-label="" ><ax:lang id="bis.remark"/></div>
-									 <div data-ax-td-wrap="">
-										  <input type="text" name="remark" data-ax-path="remark" maxlength="255" title="" class="form-control" value=""/>
-							   		 </div>
-								</div>
                         </ax:tr>
 		                <ax:tr>
-		             
-                            	
                			      <div  style="width:300px;" data-ax-td="">
 								    <div style="width:100px;"data-ax-td-label="" ><ax:lang id="bis.updatedate"/></div>
 									 <div data-ax-td-wrap="">
@@ -140,7 +131,16 @@
                             <ax:td label="bis.userid" width="300px">
                                 <input type="text" name="userId" data-ax-path="userId" maxlength="100" title="" class="form-control" value="" readonly/>
                             </ax:td>
-						</ax:tr>       
+						</ax:tr>
+						<ax:tr>
+							<div  style="width:300px;" data-ax-td="">
+							    <div style="width:100px; "data-ax-td-label="" ><ax:lang id="bis.remark"/></div>
+								 <div data-ax-td-wrap="">
+									  <input type="text" name="remark" data-ax-path="remark" maxlength="255" title="" class="form-control" value=""/>
+						   		 </div>
+							</div>
+						</ax:tr>
+						       
                     </ax:tbl>
                 </ax:form>
             </ax:split-panel>
