@@ -42,10 +42,17 @@ public class BisItSystemscheduleController extends BaseController  {
 	}
 
 	@RequestMapping(method =RequestMethod.PUT, produces = APPLICATION_JSON)
-	public ApiResponse save( @RequestBody BisItSystemschedule bismtroute) {
+	public ApiResponse save( @RequestBody List<Map<String,Object>> bisItSystemschedule) {
 		//Map parameterMap = RequestUtil.getParameterMap(request);
-
-		bisItSystemscheduleService.add(bismtroute);
+		
+		for(Map<String,Object> temp:bisItSystemschedule) {
+			if(Boolean.TRUE.equals(temp.get("__deleted__"))) {
+				bisItSystemscheduleService.delete(temp);
+			}else{
+				bisItSystemscheduleService.add(temp);
+			}
+		}
+		
 		return ok();
 	}
 

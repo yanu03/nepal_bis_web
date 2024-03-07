@@ -27,17 +27,6 @@ public class UserAuthVO {
     public static UserAuthVO of(UserAuth userAuth) {
         UserAuthVO userAuthVTO = ModelMapperUtils.map(userAuth, UserAuthVO.class);
 
-        try {
-            //userAuthVTO.setGrpAuthNm(userAuth.getAuthGroup().getGrpAuthNm());
-        } catch (Exception e) {
-            // ignore
-        }
-
-        try {
-        } catch (Exception e) {
-            // ignore
-        }
-
         return userAuthVTO;
     }
 

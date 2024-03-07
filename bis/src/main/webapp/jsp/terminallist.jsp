@@ -23,13 +23,16 @@
     </script>
 		<c:choose>
 			<c:when test="${loginLocale == 'nep'}">
-			<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="axnep" var="COLA" />
 			</c:when>
 			<c:when test="${loginLocale == 'en'}">
-			<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="axen" var="COLA" />
 			</c:when>
 			<c:when test="${loginLocale == 'ko'}">
-			<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="axko" var="COLA" />
 			</c:when>
 		</c:choose>
       <script type="text/javascript" src="<c:url value='/assets/js/view/terminallist.js' />"></script>
@@ -70,7 +73,7 @@
             </ax:form>
         </div>
         <ax:split-layout name="ax1" orientation="vertical">
-            <ax:split-panel width="500" >
+            <ax:split-panel width="945" >
                 <!-- 목록 -->
                                       <div data-fit-height-aside="grid-view-01">
                               <div class="ax-button-group">

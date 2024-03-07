@@ -22,6 +22,10 @@
  		     WHERE 
             (SELECT BIT_NAME FROM BIS_MT_BIT WHERE BIT_ID=T1.BIT_ID) LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
              </if>
+             <if test="Select == 'bitId'">   
+              WHERE 
+             BIT_ID LIKE CONCAT('%',ifnull(#{Keyword},""),'%')
+             </if>
             
              <if test='useYn == "Y"'>           
  		    AND

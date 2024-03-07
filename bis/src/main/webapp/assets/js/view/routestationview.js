@@ -135,6 +135,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
          url: '/api/v1/bisMtRoutestations',
          data:  {routeId: data.routeId},
          callback: function (res) {
+        	 for(var i=0; i<res.length; i++) {
+        		 if(res[i].nextDistance){
+        			 res[i].nextDistance = res[i].nextDistance.toLocaleString();
+        		 }
+        		 
+        	 }
              caller.gridView02.setData(res);
              caller.gridView02.routeId=data.routeId;
             
@@ -323,6 +329,12 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
                  		map.getView().setCenter(gps); 
                  		map.getView().setZoom(17);
                   /*  ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);*/
+                 		
+                    	removeStationMaker();
+                	   	var stationLayer = makerLayer(gps,'/assets/images/map/busstopicon.png',"");
+                	    stationLayers.push(stationLayer);
+                    
+                	    addStationMaker();                 		
                 }
             }
         });

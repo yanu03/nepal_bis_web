@@ -20,9 +20,13 @@ public class BisMtBitService {
 	 public List<BisMtBit> findId() {
 	        return bisMtBitMapper.findId();
 	    }
-	    public void add(BisMtBit bisMtVehicle)
+	    public void add(Map<String,Object> bisMtbit)
 	    {
-	    	bisMtBitMapper.add(bisMtVehicle);
+	    	bisMtBitMapper.add(bisMtbit);
+	    }
+	    public void delete(Map<String,Object> bisMtbit)
+	    {
+	    	bisMtBitMapper.delete(bisMtbit);
 	    }
 	    public List<BisMtBit> count()
 	    {

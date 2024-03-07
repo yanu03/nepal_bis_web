@@ -26,12 +26,17 @@
             common_code_m
        WHERE
        		group_cd LIKE 'AUTH_GROUP'
-     <if test="searchData != null">
-       AND
-       		${searchDiv} LIKE CONCAT('%',#{searchData},'%')
-       AND
-       		use_yn LIKE CONCAT('%',#{useYn},'%')
-	</if>
+       		
+	        <choose>
+	            <when test="searchDiv == 'groupCd'">
+	                AND group_cd LIKE CONCAT('%', #{searchData}, '%')
+	            </when>
+	            <when test="searchDiv == 'groupNm'">
+	                AND group_nm LIKE CONCAT('%', #{searchData}, '%')
+	            </when>
+	        </choose>       		
+       	   AND
+       		use_yn LIKE CONCAT('%',#{useYn},'%'	
     </select>
  
    <update id="insert" parameterType="map" statementType="PREPARED">

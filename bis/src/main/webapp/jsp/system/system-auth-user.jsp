@@ -159,19 +159,20 @@
                     </ax:tbl>
 
                     <div class="H5"></div>
-                    <%-- <div class="ax-button-group sm">
-                        <div class="left">
-                            <h3><ax:lang id="ax.admin.user.menu.group.setting"/></h3>
-                        </div>
-                    </div>
-                    <ax:tbl clazz="ax-form-tbl">
-                        <ax:tr>
-                            <ax:td label="ax.admin.user.menu.group" width="250px">
-                                <ax:common-code groupCd="MENU_GROUP" dataPath="menuGrpCd"/>
-                            </ax:td>
-                        </ax:tr>
-                    </ax:tbl> --%>
-
+                    <div style="display: none;">
+	                    <div class="ax-button-group sm">
+	                        <div class="left">
+	                            <h3><ax:lang id="ax.admin.user.menu.group.setting"/></h3>
+	                        </div>
+	                    </div>
+	                    <ax:tbl clazz="ax-form-tbl">
+	                        <ax:tr>
+	                            <ax:td label="ax.admin.user.menu.group" width="250px">
+	                                <ax:common-code groupCd="MENU_GROUP" dataPath="menuGrpCd"/>
+	                            </ax:td>
+	                        </ax:tr>
+	                    </ax:tbl>
+					</div>
                     <div class="H5"></div>
                     <div class="ax-button-group sm">
                         <div class="left">
@@ -186,14 +187,17 @@
                         </ax:tr>
                     </ax:tbl>
 
-                    <div class="H5"></div>
-                    <%-- <div class="ax-button-group sm">
-                        <div class="left">
-                            <h3><ax:lang id="ax.admin.user.role.setting"/></h3>
-                        </div>
-                    </div>
+					<div style="display: none;">
+	                    <div class="H5"></div>
+	                    <div class="ax-button-group sm">
+	                        <div class="left">
+	                            <h3><ax:lang id="ax.admin.user.role.setting"/></h3>
+	                        </div>
+	                    </div>
+	                    <div data-ax5grid="grid-view-02" style="height: 300px;"></div>
+					</div>
+					
 
-                    <div data-ax5grid="grid-view-02" style="height: 300px;"></div> --%>
 
                 </ax:form>
 

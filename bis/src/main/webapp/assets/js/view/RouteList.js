@@ -317,6 +317,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "useYn", label: COL("useyn"), width: 80, align: "center"},
             	{key: "routeId", label:  COL("route.routeid"), width: 90, align: "center"},
                 {key: "routeType", label: COL("route.routetype"), width:130, align: "center",formatter: function () {
             		var detailCode = getDetailCode("ROUTE_TYPE",this.item.routeType);
@@ -354,8 +355,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     }},*/
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
                 {key: "remark", label:COL("remark"), width: 200, align: "center"},
-                {key: "userId", label: COL("userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
+                {key: "userId", label: COL("userid"), width: 120, align: "center"}
+                
             ],
           
             body: {

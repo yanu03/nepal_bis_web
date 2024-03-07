@@ -22,6 +22,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.seleniumhq.jetty7.util.ajax.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,6 +64,8 @@ public class CommunicationController extends BaseController {
 
 	@Inject
 	private BisItSendsystemversionService bisItSendsystemversionService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	url communication = new url();
 	String communicationurl = communication.url();
@@ -145,125 +149,6 @@ public class CommunicationController extends BaseController {
 		parameterMap.put("ret_message", "Success");
 		parameterMap.put("ret_code", "1");
 		return parameterMap;
-	/*	String str = "";
-		JSONObject jsondata = new JSONObject();
-
-	
-		List<BisItBitschedulegroup> list = bisItBitschedulegroupService.findAll(senddata);
-		String url = communicationurl + "/bis/bit/monitor";
-		BisItSendsystemversion version = new BisItSendsystemversion();
-		int listsize = list.size();
-		for (int i = 0; i < listsize; i++) {
-			version.setSystemId(list.get(i).getBitId());
-			version.setVersionCode("154");
-			version.setSystemType("3");
-			version.setVersionValue(list.get(i).getApplyDate());
-			bisItSendsystemversionService.add(version);
-		}
-		
-		List<Map<String, Object>> receiveList = new ArrayList<>();
-		int check = 0;
-		
-		for (int i = 0; i < listsize; i++) {
-			String code = list.get(i).getScheduleCode();
-			if (code.equals("0")) {
-				Map<String, Object> parameterMap = new HashMap();
-				parameterMap.put("Select", "scheduleGroupId");
-				parameterMap.put("scheduleGroupId", list.get(i).getScheduleGroupId());
-				parameterMap.put("useYn", "Y");
-				List<BisItSchedulegroup> grouplist = bisItSchedulegroupService.findAll(parameterMap);
-				JSONObject json = new JSONObject();
-				JSONArray array = new JSONArray();
-				
-				json.put("applyDate", list.get(i).getApplyDate());
-				json.put("deviceId", list.get(i).getBitId());
-				json.put("count", grouplist.size());
-				for (int j = 0; j < grouplist.size(); j++) {
-					JSONObject item = new JSONObject();
-					item.put("startDate", grouplist.get(j).getStartDate());
-					item.put("endDate", grouplist.get(j).getEndDate());
-					item.put("startTime", grouplist.get(j).getStartTime());
-					item.put("endTime", grouplist.get(j).getEndTime());
-					array.add(item);
-				}
-				json.put("items", array);
-				Map sendMap = send(json, url);
-				if (sendMap == null) {
-		
-					sendMap = new HashMap();
-					sendMap.put("ret_message", "Unable to connect");
-					sendMap.put("ret_code", "0");
-					
-					check++;
-					sendMap.put("id",list.get(i).getBitId());
-					receiveList.add(sendMap);
-					//return sendMap;
-				} else {
-					int ret_code = (int) sendMap.get("ret_code");
-					if (ret_code == 0) {
-
-						check++;
-						sendMap.put("id",list.get(i).getBitId());
-						receiveList.add(sendMap);
-						//return sendMap;
-					}
-				}
-			}
-		}
-		if( 0 < check)
-		{
-			Map parameterMap = new HashMap();
-			parameterMap.put("list", receiveList);
-			parameterMap.put("ret_code", "111");
-			return parameterMap;
-		}
-		Map parameterMap = new HashMap();
-		parameterMap.put("ret_message", "Success");
-		parameterMap.put("ret_code", "1");
-		return parameterMap;*/
-		/*
-		 * try{ JSONObject json = new JSONObject(); for( Map.Entry<String,
-		 * Object> entry : senddata.entrySet() ) { String key = entry.getKey();
-		 * Object value = entry.getValue(); json.put(key, value); }
-		 * 
-		 * 
-		 * URL object=new URL(url);
-		 * 
-		 * HttpURLConnection con = (HttpURLConnection) object.openConnection();
-		 * con.setDoOutput(true); con.setDoInput(true);
-		 * con.setRequestProperty("Content-Type", "application/json");
-		 * con.setRequestProperty("Accept", "application/json");
-		 * con.setRequestMethod("POST");
-		 * 
-		 * OutputStreamWriter wr = new
-		 * OutputStreamWriter(con.getOutputStream()); wr.write(json.toString());
-		 * wr.flush(); //display what returns the POST request
-		 * 
-		 * StringBuilder sb = new StringBuilder(); int HttpResult =
-		 * con.getResponseCode(); if (HttpResult == HttpURLConnection.HTTP_OK) {
-		 * BufferedReader br = new BufferedReader( new
-		 * InputStreamReader(con.getInputStream(), "utf-8")); String line =
-		 * null; while ((line = br.readLine()) != null) { sb.append(line +
-		 * "\n"); } br.close();
-		 * 
-		 * Map parameterMap = new HashMap(); JSONObject jsonObj= new
-		 * JSONObject(sb.toString()); parameterMap = new
-		 * ObjectMapper().readValue(jsonObj.toString(), Map.class) ;
-		 * 
-		 * return parameterMap;
-		 * 
-		 * } else { System.out.println(con.getResponseMessage()); }
-		 * }catch(MalformedURLException e) {
-		 * System.out.println("The URL address is incorrect");
-		 * e.printStackTrace(); }catch(IOException e) {
-		 * System.out.println("It can't connect to the web page");
-		 * e.printStackTrace(); } Map parameterMap = new HashMap();
-		 * parameterMap.put( "ret_message", "error");
-		 * parameterMap.put("ret_code", "");
-		 * 
-		 * 
-		 * return parameterMap;
-		 */
 	}
 
 	@RequestMapping(value = "/illumination", method = RequestMethod.POST, produces = APPLICATION_JSON)
@@ -344,84 +229,6 @@ public class CommunicationController extends BaseController {
 		parameterMap.put("ret_message", "Success");
 		parameterMap.put("ret_code", "1");
 		return parameterMap;
-		/*JSONObject jsondata = new JSONObject();
-
-		bisMtBitService.findId();
-		List<BisItBitschedulegroup> list = bisItBitschedulegroupService.findAll(senddata);
-		String url = communicationurl + "/bis/bit/illumination";
-
-		BisItSendsystemversion version = new BisItSendsystemversion();
-		for (int i = 0; i < list.size(); i++) {
-			version.setSystemId(list.get(i).getBitId());
-			version.setVersionCode("155");
-			version.setSystemType("3");
-			version.setVersionValue(list.get(i).getApplyDate());
-			bisItSendsystemversionService.add(version);
-		}
-
-		List<Map<String, Object>> receiveList = new ArrayList<>();
-		int check = 0;
-		for (int i = 0; i < list.size(); i++) {
-			String code = list.get(i).getScheduleCode();
-			if (code.equals("1")) {
-				Map<String, Object> parameterMap = new HashMap();
-				parameterMap.put("Select", "scheduleGroupId");
-				parameterMap.put("scheduleGroupId", list.get(i).getScheduleGroupId());
-				parameterMap.put("useYn", "Y");
-				List<BisItSchedulegroup> grouplist = bisItSchedulegroupService.findAll(parameterMap);
-				JSONObject json = new JSONObject();
-				JSONArray array = new JSONArray();
-
-				json.put("applyDate", list.get(i).getApplyDate());
-				json.put("deviceId", list.get(i).getBitId());
-				json.put("count", grouplist.size());
-				for (int j = 0; j < grouplist.size(); j++) {
-					JSONObject item = new JSONObject();
-					item.put("startDate", grouplist.get(j).getStartDate());
-					item.put("endDate", grouplist.get(j).getEndDate());
-					item.put("startTime", grouplist.get(j).getStartTime());
-					item.put("endTime", grouplist.get(j).getEndTime());
-					item.put("value", grouplist.get(j).getScheduleValue());
-					array.add(item);
-
-				}
-				json.put("items", array);
-				Map sendMap = send(json, url);
-				if (sendMap == null) {
-					sendMap = new HashMap();
-					sendMap.put("ret_message", "Unable to connect");
-					sendMap.put("ret_code", "0");
-					check++;
-					sendMap.put("id",list.get(i).getBitId());
-					receiveList.add(sendMap);
-					
-					//return sendMap;
-				} else {
-					int ret_code = (int) sendMap.get("ret_code");
-					if (ret_code != 1) {
-						
-						check++;
-						sendMap.put("id",list.get(i).getBitId());
-						receiveList.add(sendMap);
-					//	return sendMap;
-						
-					}
-				}
-			}
-
-		}
-		if( 0 < check)
-		{
-			Map parameterMap = new HashMap();
-			parameterMap.put("list", receiveList);
-			parameterMap.put("ret_code", "111");
-			return parameterMap;
-		}
-		
-		Map parameterMap = new HashMap();
-		parameterMap.put("ret_message", "Success");
-		parameterMap.put("ret_code", "");
-		return parameterMap;*/
 	}
 
 	@RequestMapping(value = "/ftp", method = RequestMethod.POST, produces = APPLICATION_JSON)
@@ -525,111 +332,11 @@ public class CommunicationController extends BaseController {
 		parameterMap.put("ret_code", "1");
 		return parameterMap;
 		
-		/*String str = "";
-		JSONObject jsondata = new JSONObject();
-
-		try {
-			JSONObject json = new JSONObject();
-			for (Map.Entry<String, Object> entry : senddata.entrySet()) {
-				String key = entry.getKey();
-				Object value = entry.getValue();
-				json.put(key, value);
-			}
-			String url = communicationurl + "/bis/ftp";
-			List<BisMtBit> bitlist = null;
-			List<BisMtTerminal> terminallist = null;
-			if(((String) senddata.get("deviceId")).equals("0000000000"))
-			{
-				bitlist = bisMtBitService.findId();
-				BisItSendsystemversion version = new BisItSendsystemversion();
-				for (int i = 0; i < bitlist.size(); i++) {
-					version.setSystemId(bitlist.get(i).getBitId());
-					version.setVersionCode("151");
-					version.setSystemType("3");
-					version.setVersionValue((String) senddata.get("applyDate"));
-					bisItSendsystemversionService.add(version);
-				}
-				terminallist = bisMtTerminalService.findId();
-				for (int i = 0; i < terminallist.size(); i++) {
-					version.setSystemId(terminallist.get(i).getTerminalId());
-					version.setVersionCode("102");
-					version.setSystemType("2");
-					version.setVersionValue((String) senddata.get("applyDate"));
-					bisItSendsystemversionService.add(version);
-				}
-			}
-			else
-			{
-				String versionCode ="";
-				if(2 == (int)senddata.get("deviceType"))
-				{
-
-					 versionCode="102";
-				}
-				else if(3 == (int)senddata.get("deviceType"))
-				{
-					 versionCode="151";
-				}
-				BisItSendsystemversion version = new BisItSendsystemversion();
-				version.setSystemId((String) senddata.get("deviceId"));
-				version.setVersionCode(versionCode);
-				version.setSystemType(String.valueOf((int)senddata.get("deviceType")));
-				version.setVersionValue((String) senddata.get("applyDate"));
-				bisItSendsystemversionService.add(version);
-			}
-		
-			URL object = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) object.openConnection();
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestMethod("POST");
-
-			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
-			wr.write(json.toString());
-			wr.flush();
-
-
-			StringBuilder sb = new StringBuilder();
-			int HttpResult = con.getResponseCode();
-			if (HttpResult == HttpURLConnection.HTTP_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
-
-				Map parameterMap = new HashMap();
-				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(sb.toString());
-				JSONObject jsonObj = (JSONObject) obj;
-				parameterMap = new ObjectMapper().readValue(jsonObj.toString(), Map.class);
-
-				return parameterMap;
-
-			} else {
-				System.out.println(con.getResponseMessage());
-			}
-		} catch (MalformedURLException e) {
-			System.out.println("The URL address is incorrect");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("It can't connect to the web page");
-			e.printStackTrace();
-		}
-		Map parameterMap = new HashMap();
-		parameterMap.put("ret_message", "Unable to connect");
-		parameterMap.put("ret_code", "0");
-
-		return parameterMap;*/
 	}
 
 	// /, @RequestParam Map<String, Object> searchData
 	@RequestMapping(value = "/test", method = RequestMethod.POST, produces = APPLICATION_JSON)
 	public Map<String, Object> test(@RequestBody Map<String, Object> searchData) {
-		System.out.println(searchData);
 		return searchData;
 	}
 	@RequestMapping(value = "/firmware", method = RequestMethod.POST, produces = APPLICATION_JSON)
@@ -725,100 +432,6 @@ public class CommunicationController extends BaseController {
 		parameterMap.put("ret_code", "1");
 		return parameterMap;
 	
-		/*	String str = "";
-		JSONObject jsondata = new JSONObject();
-
-		JSONObject json = new JSONObject();
-		for (Map.Entry<String, Object> entry : senddata.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			json.put(key, value);
-		}
-		String url = communicationurl + "/bis/ftp";
-		List<BisMtBit> bitlist = null;
-		List<BisMtTerminal> terminallist = null;
-		if (senddata.get("deviceId").equals("0000000000")) {
-			int type = (int) senddata.get("deviceType");
-			if (3 == type) {
-				bitlist = bisMtBitService.findId();
-				BisItSendsystemversion version = new BisItSendsystemversion();
-				for (int i = 0; i < bitlist.size(); i++) {
-					version.setSystemId(bitlist.get(i).getBitId());
-					version.setVersionCode("150");
-					version.setSystemType("3");
-					version.setVersionValue((String) senddata.get("applyDate"));
-					bisItSendsystemversionService.add(version);
-				}
-
-				for (int i = 0; i < bitlist.size(); i++) {
-
-					JSONObject jsontemp = json;
-					String deviceId = bitlist.get(i).getBitId();
-					jsontemp.put("deviceId", deviceId);
-					Map sendMap = send(jsontemp, url);
-					if (sendMap == null) {
-						Map parameterMap = new HashMap();
-						parameterMap.put("ret_message", "error");
-						parameterMap.put("ret_code", "");
-						return parameterMap;
-					} else {
-						int ret_code = (int) sendMap.get("ret_code");
-						if (ret_code == 0) {
-							return sendMap;
-						}
-					}
-				}
-			} else if (2 == type) {
-				terminallist = bisMtTerminalService.findId();
-				BisItSendsystemversion version = new BisItSendsystemversion();
-				for (int i = 0; i < terminallist.size(); i++) {
-					version.setSystemId(terminallist.get(i).getTerminalId());
-					version.setVersionCode((String) senddata.get("fileCode"));
-					version.setSystemType("2");
-					version.setVersionValue((String) senddata.get("applyDate"));
-					bisItSendsystemversionService.add(version);
-				}
-
-				for (int i = 0; i < terminallist.size(); i++) {
-					JSONObject jsontemp = json;
-					String deviceId = terminallist.get(i).getTerminalId();
-					jsontemp.put("deviceId", deviceId);
-					Map sendMap = send(jsontemp, url);
-					if (sendMap == null) {
-						Map parameterMap = new HashMap();
-						parameterMap.put("ret_message", "Unable to connect");
-						parameterMap.put("ret_code", "0");
-						return parameterMap;
-					} else {
-						int ret_code = (int) sendMap.get("ret_code");
-						if (ret_code == 0) {
-							return sendMap;
-						}
-					}
-				}
-			}
-			Map parameterMap = new HashMap();
-			parameterMap.put("ret_message", "Success");
-			parameterMap.put("ret_code", "1");
-			return parameterMap;
-		}
-		BisItSendsystemversion version = new BisItSendsystemversion();
-			version.setSystemId((String) senddata.get("deviceId"));
-			version.setVersionCode((String) senddata.get("fileCode"));
-			int deviceType = (int) senddata.get("deviceType");
-			version.setSystemType(String.valueOf(deviceType));
-			version.setVersionValue((String) senddata.get("applyDate"));
-			bisItSendsystemversionService.add(version);
-			
-		Map sendMap = send(json, url);
-		if (sendMap != null) {
-			return sendMap;
-		}
-		Map parameterMap = new HashMap();
-		parameterMap.put("ret_message", "Unable to connect");
-		parameterMap.put("ret_code", "0");
-		return parameterMap;
-		*/
 	}
 
 	@RequestMapping(value = "/control", method = RequestMethod.POST, produces = APPLICATION_JSON)
@@ -959,49 +572,53 @@ public class CommunicationController extends BaseController {
 
 	}
 
-	public Map send(JSONObject json, String url) throws ParseException {
-		try {
-			URL object = new URL(url);
+	public Map<String, Object> send(JSONObject json, String url) {
+	    HttpURLConnection con = null;
 
-			HttpURLConnection con = (HttpURLConnection) object.openConnection();
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestMethod("POST");
+	    try {
+	        URL object = new URL(url);
+	        con = (HttpURLConnection) object.openConnection();
+	        con.setDoOutput(true);
+	        con.setDoInput(true);
+	        con.setRequestProperty("Content-Type", "application/json");
+	        con.setRequestProperty("Accept", "application/json");
+	        con.setRequestMethod("POST");
 
-			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
-			wr.write(json.toString());
-			wr.flush();
-			// display what returns the POST request
+	        // try-with-resources 구문을 사용하여 OutputStreamWriter 자동 닫기를 보장합니다.
+	        try (OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream())) {
+	            wr.write(json.toString());
+	            wr.flush();
+	        } // OutputStreamWriter는 여기서 자동으로 닫힙니다.
 
-			StringBuilder sb = new StringBuilder();
-			int HttpResult = con.getResponseCode();
-			if (HttpResult == HttpURLConnection.HTTP_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
+	        int HttpResult = con.getResponseCode();
+	        if (HttpResult == HttpURLConnection.HTTP_OK) {
+	            StringBuilder sb = new StringBuilder();
+	            // try-with-resources 구문을 사용하여 BufferedReader 자동 닫기를 보장합니다.
+	            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+	                String line;
+	                while ((line = br.readLine()) != null) {
+	                    sb.append(line).append("\n");
+	                }
+	            } // BufferedReader는 여기서 자동으로 닫힙니다.
 
-				Map parameterMap = new HashMap();
-				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(sb.toString());
-				JSONObject jsonObj = (JSONObject) obj;
-				parameterMap = new ObjectMapper().readValue(jsonObj.toString(), Map.class);
-				return parameterMap;
-
-			} else {
-				System.out.println(con.getResponseMessage());
-			}
-		} catch (MalformedURLException e) {
-			System.out.println("The URL address is incorrect");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("It can't connect to the web page");
-			e.printStackTrace();
-		}
-		return null;
+	            // JSON 파싱
+	            JSONParser parser = new JSONParser();
+	            JSONObject jsonObj = (JSONObject) parser.parse(sb.toString());
+	            return new ObjectMapper().readValue(jsonObj.toString(), Map.class);
+	        } else {
+	        }
+	    } catch (MalformedURLException e) {
+	        logger.error("The URL address is incorrect", e);
+	    } catch (IOException e) {
+	        logger.error("It can't connect to the web page", e);
+	    } catch (ParseException e) {
+	        logger.error("Error parsing JSON", e);
+	    } finally {
+	        if (con != null) {
+	            con.disconnect(); // HttpURLConnection 자원 해제
+	        }
+	    }
+	    return null;
 	}
 }
+	

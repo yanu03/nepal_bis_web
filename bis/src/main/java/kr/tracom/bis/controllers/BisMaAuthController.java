@@ -28,7 +28,6 @@ public class BisMaAuthController extends BaseController {
 	 
 	 @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON)
 	 public List<BisMaAuthDTO> list(@RequestParam Map<String,Object> searchData) {
-		 System.out.println("searchData : "+searchData.get("searchData"));
 	  	return bisMaAuthService.searchFind(searchData);
 	 }
 	    

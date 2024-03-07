@@ -16,16 +16,16 @@
         <ax:script-lang key="ax.script" />
 		<c:choose>
 			<c:when test="${loginLocale == 'nep'}">
-			<ax:script-lang key="axnep" var="COLA" />
-			<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="axnep" var="COLA" />
+				<ax:script-lang key="bisnep" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'en'}">
-			<ax:script-lang key="axen" var="COLA" />
-			<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="axen" var="COLA" />
+				<ax:script-lang key="bisen" var="COL" />
 			</c:when>
 			<c:when test="${loginLocale == 'ko'}">
-			<ax:script-lang key="axko" var="COLA" />
-			<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="axko" var="COLA" />
+				<ax:script-lang key="bisko" var="COL" />
 			</c:when>
 		</c:choose>
         <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>

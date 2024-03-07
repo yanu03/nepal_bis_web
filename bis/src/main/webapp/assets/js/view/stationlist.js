@@ -303,6 +303,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "useYn", label: COL("useyn"), width: 100, align: "center"},
                 {key: "stationId", label: COL("station.stationid"), width: 100, align: "center"},
                 {key: "stationName", label: COL("station.stationname"), width: 170, align: "center"},
                 //{key: "stationEname", label:COL("station.stationename"), width: 170, align: "center"},
@@ -334,7 +335,6 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                         }},
                 {key: "updateDate", label: COL("updatedate"), width: 90, align: "center"},
                 {key: "userId", label:COL("userid"), width: 100, align: "center"},
-                {key: "useYn", label: COL("useyn"), width: 100, align: "center"},
                 {key: "remark", label: COL("remark"), width: 200, align: "center"}
             ],
             body: {

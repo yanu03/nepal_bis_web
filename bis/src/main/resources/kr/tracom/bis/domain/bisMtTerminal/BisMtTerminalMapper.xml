@@ -27,10 +27,15 @@
 			TERMINAL_ID LIKE
 			CONCAT('%',ifnull(#{Keyword},""),'%')
 		</if>
-			<if test="Select == 'plateNumber'">
+		<if test="Select == 'plateNumber'">
 			WHERE
 			FN_MT_GET_PLATE_NUMBER(T1.VEHICLE_ID) LIKE
 			CONCAT('%',IFNULL(#{Keyword},""),'%')
+		</if>
+		<if test="Select == 'vehicleId'">
+			WHERE
+			VEHICLE_ID LIKE
+			CONCAT('%',ifnull(#{Keyword},""),'%')
 		</if>
 		<if test='useYn == "Y"'>
 			AND
@@ -101,6 +106,14 @@
 	SELECT LPAD(MAX(SUBSTRING(TERMINAL_ID,3,8))+1,9,0)
     			FROM BIS_MT_TERMINAL
 	</select>
+	
+	<delete id="delete" parameterType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
+		DELETE FROM
+			bis_mt_terminal
+		WHERE
+			TERMINAL_ID LIKE #{terminalId}	
+	</delete>
+	
 	<select id="findId" parameterType="map"
 		resultType="kr.tracom.bis.domain.bisMtTerminal.BisMtTerminal">
 		SELECT

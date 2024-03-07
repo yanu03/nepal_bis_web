@@ -83,5 +83,12 @@
 		SELECT LPAD(MAX(SUBSTRING(SCHEDULE_ID,4,7))+1,7,0)
 		FROM bis_it_systemschedule
 	</select>
+	
+	<delete id="delete" parameterType="kr.tracom.bis.domain.bisItSystemschedule.BisItSystemschedule">
+		DELETE FROM
+			bis_it_systemschedule
+		WHERE
+			SCHEDULE_ID LIKE #{scheduleId}	
+	</delete>	
     
 </mapper>

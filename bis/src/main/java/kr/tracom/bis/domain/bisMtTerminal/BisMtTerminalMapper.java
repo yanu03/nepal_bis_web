@@ -10,7 +10,8 @@ public interface BisMtTerminalMapper extends MyBatisMapper {
 	List<BisMtTerminal> findAll(Map parameterMap);
 	
 	List<BisMtTerminal> findId();
-	void add(BisMtTerminal bismtroute);
+	void add(Map<String, Object> bismtterminal);
+	void delete(Map<String, Object> bismtterminal);
 	
 	List<BisMtTerminal> count();
 	  String maxPlus();

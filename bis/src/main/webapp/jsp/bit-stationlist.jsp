@@ -38,10 +38,10 @@
     </jsp:attribute>
     <jsp:body>
       <ax:page-buttons>
-       	 	<button type="button" class="btn btn-info" data-page-btn="excel" id="excelExport">
+       	 <!--	<button type="button" class="btn btn-info" data-page-btn="excel" id="excelExport">
         		<i class="cqc-file-excel-o"></i>
         		 Excel
-        	</button>
+        	</button> -->
         </ax:page-buttons>
 		  <div role="page-header">
             <ax:form name="searchView0">

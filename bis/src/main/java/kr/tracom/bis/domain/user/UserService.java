@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,6 @@ public class UserService extends BaseService<User, String> {
     }
 
     public User getUser(RequestParams requestParams) {
-    	System.out.println("user ");
         User user = get(requestParams).stream().findAny().orElse(null);
 
         if (user != null) {
@@ -57,7 +57,6 @@ public class UserService extends BaseService<User, String> {
     }
 
     public List<User> get(RequestParams requestParams) {
-    	System.out.println("222 ");
 
         String userCd = requestParams.getString("userCd");
         String userDiv = requestParams.getString("userDiv");
@@ -96,12 +95,6 @@ public class UserService extends BaseService<User, String> {
         
 
         List<User> list = select().from(qUser).where(builder).orderBy(qUser.userNm.asc()).fetch();
-        for(User temp : list){
-        	System.out.println("temp : "+temp.getUserNm());
-        }
-       /* if (isNotEmpty(filter)) {
-            list = filter(list, filter);
-        }*/
 
         return list;
     }
@@ -115,7 +108,7 @@ public class UserService extends BaseService<User, String> {
     }
 
     @Transactional
-    public void saveUser(List<User> users) throws Exception {
+    public void saveUser(List<User> users) throws UsernameNotFoundException {
         if (isNotEmpty(users)) {
             for (User user : users) {
                 delete(qUserRole).where(qUserRole.userCd.eq(user.getUserCd())).execute();
@@ -166,12 +159,6 @@ public class UserService extends BaseService<User, String> {
 	    		user.setUserPs(originalUser.getUserPs());
 	    	}
 			
-//			if(isNotEmpty(user.getScdPs())) {
-//				user.setScdPsUpdateDate(Instant.now(Clock.systemUTC()));
-//		    	user.setScdPs(standardPasswordEncoder.encode(user.getScdPs()));
-//			} else {
-//				user.setScdPs(originalUser.getScdPs());
-//			}
     	}
 		
 		user.setMenuGrpCd(originalUser.getMenuGrpCd());
@@ -188,31 +175,6 @@ public class UserService extends BaseService<User, String> {
     public void deleteUser(User user) {
     	delete(user);
     }
-    
-//    public String checkScdPs(User user) {
-//    	User originalUser = userRepository.findOne(SessionUtils.getCurrentLoginUserCd());
-//    	
-//    	// 1: 2李⑤퉬諛�踰덊샇 �궗�슜�븞�븿
-//    	// 2: 2李� 鍮꾨�踰덊샇 �뾾�쓬
-//    	// 3: 2李� 鍮꾨�踰덊샇 ��由�
-//    	
-//    	if(originalUser.getScdPsUseYn().equals("N")) {
-//    		return "1";
-//    	}
-//    	
-//    	if(isEmpty(originalUser.getScdPs())) {
-//    		return "2";
-//    	}
-//    	
-//    	if(isNotEmpty(user.getScdPs()) && isNotEmpty(originalUser.getScdPs())) {
-//    		if(standardPasswordEncoder.matches(user.getScdPs(), originalUser.getScdPs())) {
-//    			return "0";
-//    		} else {
-//    			return "3";
-//    		}
-//		} 
-//    	return "3";
-//    }
     
     public Boolean changePs(Map<String, Object> password) {
     	User originalUser = userRepository.findOne(SessionUtils.getCurrentLoginUserCd());

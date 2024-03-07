@@ -25,8 +25,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     	{
     		data = caller.formView01.getData();
     		data.userId=loginid;
+    		var gridViewData = [].concat(caller.gridView01.getData("modified"));
+            gridViewData = gridViewData.concat(caller.gridView01.getData("deleted"));
+            
     		if(data.terminalId==""||data.terminalId==null)
     			{
+    			gridViewData.push(data);
     			axboot.ajax({
                     type: "GET",
                     url:'/api/v1/bisMtTerminals/maxplus',
@@ -40,7 +44,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
  				                type: "PUT",
  				                url:'/api/v1/bisMtTerminals',
  				                //url: '/api/v1/bisMtRoutes',
- 				                data: JSON.stringify(data) ,
+ 				                data: JSON.stringify(gridViewData) ,
  				                callback: function (res) {
  				               	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
  				               	axToast.push("Saved");
@@ -51,11 +55,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
                 }); 		
             	
     			}else{
+    				gridViewData.push(data);
     	    		axboot.ajax({
     	                type: "PUT",
     	                url:'/api/v1/bisMtTerminals',
     	                //url: '/api/v1/bisMtRoutes',
-    	                data: JSON.stringify(data) ,
+    	                data: JSON.stringify(gridViewData) ,
     	                callback: function (res) {
     	               	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
     	               	axToast.push("Saved");
@@ -119,7 +124,14 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         caller.gridView01.addRow();
     },
     ITEM_DEL: function (caller, act, data) {
-        caller.gridView01.delRow("selected");
+    	axDialog.confirm({
+    		msg: COLA("script.deleteconfirm")
+    	}, function () {
+    		if (this.key == "ok"){
+    			caller.gridView01.delRow("selected");
+    			ACTIONS.dispatch(ACTIONS.TERMINAL_SAVE);
+    		}
+    	});
     },
     dispatch: function (caller, act, data) {
         var result = ACTIONS.exec(caller, act, data);
@@ -158,7 +170,10 @@ fnObj.pageButtonView = axboot.viewExtend({
             },
             "search": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
-            }
+            },
+            "fn1": function() { //삭제
+           	 ACTIONS.dispatch(ACTIONS.ITEM_DEL);
+            }   
         });
     }
 });
@@ -223,6 +238,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "useYn", label:  COL("useyn"),  width: 80, align: "center"},
             	{key: "terminalId", label: COL("terminal.terminalid"), width: 90, align: "center"},
             	{key: "terminalType", label: COL("terminal.terminaltype"), width: 130, align: "center",formatter: function () {
             		var detailCode = getDetailCode("TERMINAL_TYPE",this.item.terminalType);
@@ -242,8 +258,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     return areaCode;
                     }},
                 {key: "updateDate", label: COL("updatedate"),  width: 90, align: "center"},
-                {key: "userId", label: COL("userid"),  width: 120, align: "center"},
-                {key: "useYn", label:  COL("useyn"),  width: 80, align: "center"}
+                {key: "userId", label: COL("userid"),  width: 120, align: "center"}
+                
             ],
           
             body: {
@@ -257,6 +273,16 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
    
     },
     getData: function (_type) {
+        var list = [];
+        var _list = this.target.getList(_type);
+        if (_type == "modified" || _type == "deleted") {
+            list = ax5.util.filter(_list, function () {
+                return this.terminalid
+            });
+        } else {
+            list = _list;
+        }
+        return list;  
         return this.target.getData();
     },
     excel:function(n){

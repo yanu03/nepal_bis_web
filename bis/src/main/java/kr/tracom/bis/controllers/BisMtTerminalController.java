@@ -40,8 +40,16 @@ public class BisMtTerminalController extends BaseController {
     	 return list;
     	 }
     @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
-    public ApiResponse save(@RequestBody BisMtTerminal request) {
-    	bisMtTerminalService.add(request);
+    public ApiResponse save(@RequestBody List<Map<String,Object>> BisMtTerminal) {
+    	
+    	for(Map<String,Object> temp:BisMtTerminal){
+    		if(Boolean.TRUE.equals(temp.get("__deleted__"))) {
+    			bisMtTerminalService.delete(temp);
+    		} else{
+    			bisMtTerminalService.add(temp);
+    		}
+    	}
+    	
     	
         return ok();
     }

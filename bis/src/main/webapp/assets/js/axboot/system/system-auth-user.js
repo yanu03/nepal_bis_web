@@ -54,6 +54,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         CODE.userRole.forEach(function (n) {
             var item = {roleCd: n.roleCd, roleNm: n.roleNm, hasYn: "N", userCd: data.userCd};
 
+            if(item.roleCd == "SYSTEM_MANAGER" || item.roleCd == "ASP_ACCESS"){
+            	item.hasYn = 'Y';
+            }
+            
             if (data && data.roleList) {
                 data.roleList.forEach(function (r) {
                     if (item.roleCd == r.roleCd) {
@@ -63,11 +67,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             }
             list.push(item);
         });
-
-        //caller.gridView02.setData(list);
+        caller.gridView02.setData(list);
     },
     ROLE_GRID_DATA_GET: function (caller, act, data) {
-        //return caller.gridView02.getData("Y");
+        return caller.gridView02.getData("Y");
     }
 });
 
@@ -101,7 +104,7 @@ fnObj.pageStart = function () {
             _this.pageButtonView.initView();
             _this.searchView.initView();
             _this.gridView01.initView();
-            //_this.gridView02.initView();
+            _this.gridView02.initView();
             _this.formView01.initView();
 
             ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -170,7 +173,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     label: COLA("admin.user.name"),
                     width: 120
                 },
-                {key: "locale", label:COLA("admin.user.language")},
+                //{key: "locale", label:COLA("admin.user.language")},
                 {key: "useYn", label:COL("useyn")}
             ],
             body: {

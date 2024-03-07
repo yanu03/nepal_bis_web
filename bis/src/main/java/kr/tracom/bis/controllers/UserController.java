@@ -6,6 +6,8 @@ import com.chequer.axboot.core.api.response.ApiResponse;
 import com.chequer.axboot.core.api.response.Responses;
 import com.chequer.axboot.core.controllers.BaseController;
 import com.chequer.axboot.core.parameter.RequestParams;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = APPLICATION_JSON)
-    public ApiResponse save(@Valid @RequestBody List<User> users) throws Exception {
+    public ApiResponse save(@Valid @RequestBody List<User> users) throws UsernameNotFoundException {
         userService.saveUser(users);
         return ok();
     }

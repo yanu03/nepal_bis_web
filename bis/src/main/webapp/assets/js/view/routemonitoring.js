@@ -239,10 +239,12 @@ function routeMap(data)
         		{
         	    if($("#"+res[0].routeId).length)
         	    	{
+        	    	debugger;
         	    		var length = res.length;
         	    		var str="";
         	        	str+= "<div style='height:20px;background-color:#e3e3e3;'>";
-        	    	    str+= "<div style='float:right;'> <a href='javascript:void(0);' onclick='routeClose(\""+ data.routeId+"\","+data.dindex+")'><img src='/assets/images/map/close.gif'> </a></div>";
+        	    	    str+= "<div style='float:right;'> <a href='javascript:void(0);' onclick='routeRefresh(\""+ data.routeId+"\","+length+"\","+data.fromStationId+"\","+data.toStationId+")'><img src='/assets/images/map/refresh.png'> </a>";
+        	    	    str+= "<a href='javascript:void(0);' onclick='routeClose(\""+ data.routeId+"\","+data.dindex+")'><img src='/assets/images/map/close.gif'> </a></div>";
         	    	    str+= "<div id=time"+data.routeId+" style='float:right;'>refreshTime:30</div>";
         	    	    str+= "<div> "+COL("route.routename")+" : "+data.routeName+"</div>";
         	    	    
@@ -359,6 +361,7 @@ function routeMap(data)
 }
 function routeBus(data,slength)
 {
+	debugger;
 	var url=COL("apiserverip")+'busLocation';
 	ajaxCall(function(result,res){
 		if(result){
@@ -462,6 +465,16 @@ function routeClose(routeId,dindex)
 	$("#"+routeId).remove();
 	 ACTIONS.dispatch(ACTIONS.GRID_SELECT_FLASE,dindex);
 	}
+
+function routeRefresh(routeId, slength, fromStationId, toStationId) {
+	
+    var data = {
+        routeId: routeId,
+        fromStationId : fromStationId,
+        toStationId : toStationId
+    };
+    routeBus(data, slength);
+}
 
 function preview_Image(id){
 	var path;
