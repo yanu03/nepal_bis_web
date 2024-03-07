@@ -24,8 +24,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 			{
 			 data = caller.formView01.getData();
 			 data.userId=loginid;
+			 var gridViewData = [].concat(caller.gridView01.getData("modified"));
+	         gridViewData = gridViewData.concat(caller.gridView01.getData("deleted"));
+	            
 			 if(data.bitId==null||data.bitId=="")
 				 {
+				 	gridViewData.push(data);
 					 axboot.ajax({
 				         type: "GET",
 				         url:'/api/v1/bisMtBits/maxPlus',
@@ -38,7 +42,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 					         type: "PUT",
 					         url:'/api/v1/bisMtBits',
 					         //url: '/api/v1/bisMtRoutes',
-					         data: JSON.stringify(data) ,
+					         data: JSON.stringify(gridViewData) ,
 					         callback: function (res) {
 					        	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
 					        	 axToast.push("Saved");
@@ -50,11 +54,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 				 }
 			 else
 				 {
+				 gridViewData.push(data);
 				 axboot.ajax({
 			         type: "PUT",
 			         url:'/api/v1/bisMtBits',
 			         //url: '/api/v1/bisMtRoutes',
-			         data: JSON.stringify(data) ,
+			         data: JSON.stringify(gridViewData) ,
 			         callback: function (res) {
 			        	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
 			        	 axToast.push("Saved");
@@ -124,7 +129,14 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         caller.gridView01.addRow();
     },
     ITEM_DEL: function (caller, act, data) {
-        caller.gridView01.delRow("selected");
+    	axDialog.confirm({
+    		msg: COLA("script.deleteconfirm")
+    	}, function () {
+    		if (this.key == "ok"){
+    			caller.gridView01.delRow("selected");
+    			ACTIONS.dispatch(ACTIONS.BIT_SAVE);
+    		}
+    	});
     },
     dispatch: function (caller, act, data) {
         var result = ACTIONS.exec(caller, act, data);
@@ -173,7 +185,10 @@ fnObj.pageButtonView = axboot.viewExtend({
             "transfer": function()
             {
             	
-            }
+            },
+            "fn1": function() { //삭제
+            	ACTIONS.dispatch(ACTIONS.ITEM_DEL);
+            }  
         });
     }
 });
@@ -232,12 +247,13 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
       
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "useYn", label: COL("useyn"), width: 80, align: "center"},
             	{key: "bitId", label: COL("bit.bitid"), width: 90, align: "center"},
             	{key: "bitType", label: COL("bit.bittype"), width: 145, align: "center",formatter: function () {
             		var detailCode = getDetailCode("BIT_TYPE",this.item.bitType);
                 return detailCode;
                 }},
-            	{key: "bitName", label:COL("bit.bitname"), width: 90, align: "center"},
+            	{key: "bitName", label:COL("bit.bitname"), width: 150, align: "center"},
             	//{key: "bitEname", label: COL("bit.bitename"), width: 90, align: "center"},
             	//{key: "terminalVersion", label: COL("bit.terminalversion"), width: 140, align: "center"},
             	//{key: "ipAddress", label: COL("bit.ipaddress"), width: 90, align: "center"},
@@ -253,8 +269,8 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                         return areaCode;
                         }},
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
-                {key: "userId", label:COL("userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
+                {key: "userId", label:COL("userid"), width: 120, align: "center"}
+                
             ],
          
             body: {
@@ -271,9 +287,16 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
    
     },
     getData: function (_type) {
-    	
-        return this.target.getData();
-       
+        var list = [];
+        var _list = this.target.getList(_type);
+        if (_type == "modified" || _type == "deleted") {
+            list = ax5.util.filter(_list, function () {
+                return this.vehicleId
+            });
+        } else {
+            list = _list;
+        }
+        return list;    
     },
     excel:function(n){
     	this.target.exportExcel(n);

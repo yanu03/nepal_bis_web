@@ -52,9 +52,15 @@ public class BisMtBitController extends BaseController {
     	 return list;
     	 }
     @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
-    public ApiResponse save(@RequestBody BisMtBit request) {
-    	bisMtBitService.add(request);
+    public ApiResponse save(@RequestBody List<Map<String,Object>> BisMtBit) {
     	
+    	for(Map<String,Object> temp:BisMtBit){
+    		if(Boolean.TRUE.equals(temp.get("__deleted__"))){
+    			bisMtBitService.delete(temp);
+    		} else{
+    			bisMtBitService.add(temp);
+    		}
+    	}
         return ok();
     }
     @RequestMapping(value = "/maxPlus",method = { RequestMethod.GET }, produces = APPLICATION_JSON)
@@ -103,69 +109,5 @@ public class BisMtBitController extends BaseController {
         }
 
         return new ResponseEntity<>(fileList, HttpStatus.OK);    	
-    	
-      /*  // SFTP 서버 접속 정보
-        url ftp = new url();
-		String ftpURL = ftp.ftpUrl();
-        String url = ftpURL;
-        String id = "tracom";
-        String pw = "tracom3452";
-        String directoryLocation = "/usr/local/apache-tomcat-8.5.59/webapps/bisAdmin/resource/BisFile";
-
-        List<String> fileList = new ArrayList();
-        FTPClient ftp = null;
-        try {
-            ftp = new FTPClient();
-            ftp.setControlEncoding("UTF-8");
-            ftp.connect(url);
-            ftp.login(id, pw);
-            ftp.changeWorkingDirectory(directoryLocation);
-            ftp.setFileType(FTP.BINARY_FILE_TYPE);
-
-            fileList = Arrays.asList(ftp.listNames());
-            ftp.logout();
-        } catch (Exception e) {
-            // 예외 처리
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } finally {
-            if (ftp != null && ftp.isConnected()) {
-                try {
-                    ftp.disconnect();
-                } catch (IOException e) {
-                    // 예외 처리
-                }
-            }
-        }
-        return new ResponseEntity<>(fileList, HttpStatus.OK);*/
-    }    
-    
-/*    //선택된 디렉토리(폴더)에 존재하는 파일이름을 모두 불러옵니다.
-    public static void ftpFileReadFiles(String uri, String id, String pw,String directoryLocation){
-    	FTPClient ftp = null;
-		try {
-			ftp = new FTPClient();
-			ftp.setControlEncoding("UTF-8");
-			ftp.connect(uri);
-			ftp.login(id, pw);
-			ftp.changeWorkingDirectory(directoryLocation);//파일 가져올 디렉터리 위치
-			ftp.setFileType(FTP.BINARY_FILE_TYPE);//파일 타입 설정 기본적으로 파일을 전송할떄는 BINARY타입을 사용합니다.
-
-			for(String fileName :ftp.listNames()){
-				System.out.println(fileName);
-			}
-			
-			ftp.logout();
-		} catch (SocketException e) {
-			System.out.println("Socket:" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("IO:" + e.getMessage());
-		} finally {
-			if (ftp != null && ftp.isConnected()) {
-				try {
-					ftp.disconnect();//ftp연결 끊기
-				} catch (IOException e) {
-				}
-			}
-		}
-    }    */
+   }
 }

@@ -234,4 +234,11 @@
 	SELECT LPAD(MAX(SUBSTRING(BIT_ID,3,8))+1,9,0)
     			FROM BIS_MT_BIT
 	</select>
+	
+	<delete id="delete" parameterType="kr.tracom.bis.domain.bisMtBit.BisMtBit">
+		DELETE FROM
+			bis_mt_bit
+		WHERE
+			BIT_ID LIKE #{bitId}	
+	</delete>
 </mapper>

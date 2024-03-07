@@ -16,7 +16,7 @@ public class BisMtVehicleService {
     public List<BisMtVehicle> findAll(Map parameterMap) {
         return bisMtVehicleMapper.findAll(parameterMap);
     }
-    public void add(BisMtVehicle bisMtVehicle)
+    public void add(Map<String,Object> bisMtVehicle)
     {
     	bisMtVehicleMapper.add(bisMtVehicle);
     }
@@ -27,4 +27,7 @@ public class BisMtVehicleService {
     public String maxPlus(){
 		return bisMtVehicleMapper.maxPlus();
 	}
+    public void delete(Map<String,Object> bisMtVehicle){
+    	bisMtVehicleMapper.delete(bisMtVehicle);
+    }
 }

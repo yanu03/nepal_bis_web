@@ -4,6 +4,7 @@ import kr.tracom.bis.domain.BaseJpaModel;
 import kr.tracom.bis.domain.program.Program;
 import com.chequer.axboot.core.annotations.ColumnPosition;
 import com.chequer.axboot.core.annotations.Comment;
+import com.chequer.axboot.core.controllers.BaseController;
 import com.chequer.axboot.core.jpa.JsonNodeConverter;
 import com.chequer.axboot.core.utils.JsonUtils;
 import com.chequer.axboot.core.utils.RequestUtils;
@@ -16,6 +17,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -38,7 +41,7 @@ import java.util.Locale;
 @Comment(value = "메뉴")
 @ToString
 public class Menu extends BaseJpaModel<Long> implements Cloneable {
-
+	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
     @Id
     @Column(name = "MENU_ID", precision = 20, nullable = false)
     @Comment(value = "ID")
@@ -121,8 +124,8 @@ public class Menu extends BaseJpaModel<Long> implements Cloneable {
             Menu menu = (Menu) super.clone();
             menu.setChildren(new ArrayList<>());
             return menu;
-        } catch (Exception e) {
-            // ignore
+        } catch (CloneNotSupportedException e) {
+        	logger.error("Menu Clone Exception", e);
         }
         return null;
     }
@@ -152,7 +155,6 @@ public class Menu extends BaseJpaModel<Long> implements Cloneable {
         if (getMultiLanguageJson() != null) {
             //JsonNode jsonNode = getMultiLanguageJson().findPath(locale.getLanguage()); //기존 소스
             JsonNode jsonNode = getMultiLanguageJson().findPath((String) session.getAttribute("loginLocale")); //loginLocale로 변경함 20240207
-            System.out.println((String) session.getAttribute("loginLocale"));
             if (jsonNode != null) {
                 return jsonNode.asText();
             }

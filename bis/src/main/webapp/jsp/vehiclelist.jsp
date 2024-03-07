@@ -21,13 +21,16 @@
     </script>
 		<c:choose>
 			<c:when test="${loginLocale == 'nep'}">
-			<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="axnep" var="COLA" />
 			</c:when>
 			<c:when test="${loginLocale == 'en'}">
-			<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="axen" var="COLA" />
 			</c:when>
 			<c:when test="${loginLocale == 'ko'}">
-			<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="axko" var="COLA" />
 			</c:when>
 		</c:choose>
       <script type="text/javascript" src="<c:url value='/assets/js/view/vehiclelist.js' />"></script>
@@ -68,7 +71,7 @@
             </ax:form>
         </div>
         <ax:split-layout name="ax1" orientation="vertical">
-            <ax:split-panel width="500" >
+            <ax:split-panel width="945" >
                 <!-- 목록 -->
                                        <div data-fit-height-aside="grid-view-01">
                               <div class="ax-button-group">
@@ -138,8 +141,8 @@
                              <ax:td color="red" label="bis.areacode" width="300px">
                                    <input type="hidden" name="areaCode" data-ax-validate="required"  title="<ax:lang id="bis.areacode"/>" data-ax-path="areaCode" maxlength="255" title="" class="form-control" value=""/>
                            		<div class="input-group">
-                            	   <input type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
-                              	   <span class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
+                            	   <input style="background: white;" type="text" name="adminName1" data-ax-path="adminName1" maxlength="100" title="" class="form-control" value="" readonly/>
+                              	   <span style="background: white;" class="input-group-addon areacode_button"><i class="cqc-magnifier"></i></span>
                                 </div>
                             </ax:td>
                       <ax:td label="bis.updatedate" width="300px">

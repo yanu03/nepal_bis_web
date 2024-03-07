@@ -75,31 +75,65 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 	           },
              callback: function (data) {
             	 
+            	 
             	 data.stationId=caller.gridView02.stationId;
             	 data.stationName=caller.gridView02.stationName;
             	 data.updateDate="";
             	 data.userId=loginid;
             	 list = caller.gridView02.getData();
             	 var check= 0;
-            	 if(list.length != 0)
-            	 {
-            	 	for(var i = 0 ;i < list.length;i++)
-            	 	{
-            	 	if(list[i].stationId == data.stationId &&list[i].bitId==data.bitId)	
-            	 		{
-            	 		check=1;
-            	 		}
-            	 	}
-            	 }
-             	 if(check == 0)
-            	{
-             		 caller.gridView02.addRow(data);
-            	}else
-            		{
-            		alert("BIT already added");
-            		}
+            	 
+            	 data.Select="bitId";
+            	 data.Keyword=data.bitId;
+            	 
+            	 axboot.ajax({
+            		 type: "GET",
+            		 url: '/api/v1/bisMtBitstations',
+            		 data: data ,
+            		 callback: function (res) {
+            			 if(res.length > 0) { //다른 정류장에 있을 때
+            				 axDialog.alert({
+            				        theme: "primary",
+            				        title:" ",
+            				        msg: COL("error.bitalready")
+            				     });	
+            				 axboot.modal.close();
+            			 }
+            			 else {
+            				 if(list.length != 0)
+                        	 {
+                        	 	for(var i = 0 ;i < list.length;i++)
+                        	 	{
+                        	 	if(list[i].stationId == data.stationId &&list[i].bitId==data.bitId)	
+                        	 		{
+                        	 		check=1;
+                        	 		}
+                        	 	}
+                        	 }
+                         	 if(check == 0)
+                        	{
+                         		 caller.gridView02.addRow(data);
+                        	}else
+                        		{ //선택한 정류장에 있을 때
+	                        		axDialog.alert({
+	            				        theme: "primary",
+	            				        title:" ",
+	            				        msg: COL("error.bitalready")
+	            				     });
+                        		}
 
-            	  this.close();
+                         	axboot.modal.close();            				 
+            			 }
+            		 },
+            		 options: {
+            			 // axboot.ajax 함수에 2번째 인자는 필수가 아닙니다. ajax의 옵션을 전달하고자 할때 사용합니다.
+            			 onError: function (err) {
+            				 console.log(err);
+            			 }
+            		 }
+            	 });            	 
+            	 
+            	 
              }
 
 	       });

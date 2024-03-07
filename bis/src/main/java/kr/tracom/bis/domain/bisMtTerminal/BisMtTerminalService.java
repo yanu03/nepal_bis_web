@@ -20,9 +20,13 @@ public class BisMtTerminalService {
     public List<BisMtTerminal> findId() {
         return bisNtTerminalMapper.findId();
     }
-    public void add(BisMtTerminal bisMtTerminal)
+    public void add(Map<String, Object> bisMtTerminal)
     {
     	bisNtTerminalMapper.add(bisMtTerminal);
+    }
+    public void delete(Map<String,Object> bisMtTerminal)
+    {
+    	bisNtTerminalMapper.delete(bisMtTerminal);
     }
     public List<BisMtTerminal> count()
     {

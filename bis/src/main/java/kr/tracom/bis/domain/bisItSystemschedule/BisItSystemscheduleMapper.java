@@ -7,6 +7,7 @@ import com.chequer.axboot.core.mybatis.MyBatisMapper;
 
 public interface BisItSystemscheduleMapper extends MyBatisMapper{
 	  public List<BisItSystemschedule> findAll(Map parameterMap);
-	  public void add(BisItSystemschedule schedule);
+	  void add(Map<String, Object> schedule);
+	  void delete(Map<String, Object> schedule);
 	  public String maxPlus();
 }

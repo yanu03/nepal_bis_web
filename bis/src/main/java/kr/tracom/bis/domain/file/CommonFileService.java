@@ -30,6 +30,10 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -63,16 +67,15 @@ public class CommonFileService extends BaseService<CommonFile, Long> implements 
     }
 
     public File multiPartFileToFile(MultipartFile multipartFile) throws IOException {
-        String baseDir = getTempDir() + "/" + UUID.randomUUID().toString();
-
-        FileUtils.forceMkdir(new File(baseDir));
-
-        String tmpFileName = baseDir + "/" + FilenameUtils.getName(multipartFile.getOriginalFilename());
-
-        File file = new File(tmpFileName);
-
-        multipartFile.transferTo(file);
-        return file;
+        Path tempDir = Files.createTempDirectory(null);
+        
+        String safeFileName = UUID.randomUUID().toString();
+        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        Path tempFile = Paths.get(tempDir.toString(), safeFileName + "." + extension);
+        
+        Files.copy(multipartFile.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+        
+        return tempFile.toFile();
     }
 
     @Transactional

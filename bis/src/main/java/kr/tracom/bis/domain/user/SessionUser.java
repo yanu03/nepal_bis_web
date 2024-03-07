@@ -45,11 +45,19 @@ public class SessionUser implements UserDetails {
 
     public Object getDetail(String key) {
         if (details.containsKey(key)) {
-            return details.get(key);
+            Object value = details.get(key);
+            if (value instanceof Collection) {
+                return new ArrayList<>((Collection) value);
+            } else if (value instanceof Map) {
+                return new HashMap<>((Map) value);
+            } else if (value instanceof Object[]) {
+                return ((Object[]) value).clone();
+            }
+            return value;
         }
         return null;
     }
-
+    
     public void addDetails(String key, String value) {
         details.put(key, value);
     }

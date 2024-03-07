@@ -155,9 +155,17 @@ public class DatabaseInitService {
             lines.add(line);
         }
 
-        String code = System.getProperty("user.home") + "/Desktop/code.txt";
+        String safeDir = "/srv/apache-tomcat-8.5.98/temp/";
+        String codeFileName = "code.txt";
+        File outputFile = new File(safeDir, codeFileName);
 
-        IOUtils.writeLines(lines, null, new FileOutputStream(new File(code)), "UTF-8");
+        try {
+            // 안전한 위치에 파일 생성
+            IOUtils.writeLines(lines, null, new FileOutputStream(outputFile), "UTF-8");
+        } catch (IOException e) {
+            // 예외 처리
+        	e.printStackTrace();
+        }
     }
 
 

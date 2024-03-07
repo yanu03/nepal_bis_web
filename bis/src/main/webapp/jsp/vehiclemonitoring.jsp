@@ -199,10 +199,7 @@
     <jsp:body>
 
         <ax:page-buttons>
-        	<button type="button" class="btn btn-info" data-page-btn="excel" id="excelExport">
-        		<i class="cqc-file-excel-o"></i>
-        		 Excel
-        	</button>
+        
         </ax:page-buttons>
 
 		  <div role="page-header">

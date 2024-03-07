@@ -84,7 +84,7 @@
         </div>
         
         <ax:split-layout name="ax1" orientation="vertical">
-            <ax:split-panel width="500" >
+            <ax:split-panel width="945" >
 
                 <!-- 목록 -->
                         <div data-fit-height-aside="grid-view-01">

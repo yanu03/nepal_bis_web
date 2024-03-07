@@ -15,12 +15,18 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SAVE: function (caller, act, data) {
         if (caller.formView01.validate()) {
         	
-            var parentData = caller.formView01.getData();
-            parentData.endTime= parentData.endTime+parentData.endMin;
-            parentData.startTime = parentData.startTime+parentData.startMin;
-            parentData.userId=loginid;
-            if(parentData.scheduleId==""||parentData.scheduleId==null)
+            data = caller.formView01.getData();
+            data.endTime= data.endTime+data.endMin;
+            data.startTime = data.startTime+data.startMin;
+            data.userId=loginid;
+            var gridViewData = [].concat(caller.gridView01.getData("modified"));
+            gridViewData = gridViewData.concat(caller.gridView01.getData("deleted"));
+            if(data.scheduleId==""||data.scheduleId==null)
     		{
+            	gridViewData.push(data);
+            	for(var i=0; i<gridViewData.length; i++) {
+            		gridViewData[i].scheduleValue = parseInt(gridViewData[i].scheduleValue);
+            	}
             	axboot.ajax({
    	             type: "GET",
    	             url:'/api/v1/bisItSystemschedules/maxplus',
@@ -29,18 +35,19 @@ var ACTIONS = axboot.actionExtend(fnObj, {
    	             {
     	             	if(res.max == null)
        	             	{
-    						parentData.scheduleId="SC00000001";
+    	             		data.scheduleId="SC00000001";
        	             	}else
        	             	{
-       	             		parentData.scheduleId="SC0"+res.max;
+       	             		data.scheduleId="SC0"+res.max;
        	             	}
    	            	axboot.ajax({
    	                    type: "PUT",
    	                    url: "/api/v1/bisItSystemschedules",
-   	                    data: JSON.stringify(parentData),
+   	                    data: JSON.stringify(gridViewData),
    	                    callback: function (res) {
    	                    	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
    	                         ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
+   	                         axToast.push("Saved");
    	                    }
    	                });
    	             }
@@ -48,13 +55,18 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     		}
             else
             {
+            	gridViewData.push(data);
+            	for(var i=0; i<gridViewData.length; i++) {
+            		gridViewData[i].scheduleValue = parseInt(gridViewData[i].scheduleValue);
+            	}
             	axboot.ajax({
 	                    type: "PUT",
 	                    url: "/api/v1/bisItSystemschedules",
-	                    data: JSON.stringify(parentData),
+	                    data: JSON.stringify(gridViewData),
 	                    callback: function (res) {
 	                    	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
 	                         ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
+	                         axToast.push("Saved");
 	                    }
 	                });
             }	
@@ -63,7 +75,17 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 
     },
     FORM_CLEAR: function (caller, act, data) {
-    	 caller.formView01.clear();
+    	caller.formView01.clear();
+		var value = $('select[data-ax-path="scheduleCode"]').val();
+		if(value == 0) { //Power On/Off
+			$('#scheduleValue').val(null);
+			$('#scheduleValue').attr('disabled', true);
+			$('#scheduleValue').attr('readonly', true);
+		} else if(value == 1) { //Illuminance
+			$('#scheduleValue').val(1);
+			$('#scheduleValue').attr('disabled', false);
+			$('#scheduleValue').attr('readonly', false);
+		}
         /*axDialog.confirm({
             msg: LANG("ax.script.form.clearconfirm")
         }, function () {
@@ -73,6 +95,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         });*/
     },
     ITEM_CLICK: function (caller, act, data) {
+    	
     	var temp ={};
         temp.endDate= data.endDate;
     	temp.remark = data.remark;
@@ -88,8 +111,38 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     	temp.startMin = data.startTime.substring(2,4);
     	temp.startTime= data.startTime.substring(0,2);
         caller.formView01.setData(temp);
+		var value = $('select[data-ax-path="scheduleCode"]').val();
+		if(value == 0) { //Power On/Off
+			$('#scheduleValue').val(null);
+			$('#scheduleValue').attr('disabled', true);
+			$('#scheduleValue').attr('readonly', true);
+		} else if(value == 1) { //Illuminance
+			$('#scheduleValue').val(1);
+			$('#scheduleValue').attr('disabled', false);
+			$('#scheduleValue').attr('readonly', false);
+		}
        
-    }
+    },
+    ITEM_DEL: function (caller, act, data) {
+    	axDialog.confirm({
+    		msg: COLA("script.deleteconfirm")
+    	}, function () {
+    		if (this.key == "ok"){
+    			caller.gridView01.delRow("selected");
+    			var gridViewData = caller.gridView01.getData("deleted");
+            	axboot.ajax({
+                    type: "PUT",
+                    url: "/api/v1/bisItSystemschedules",
+                    data: JSON.stringify(gridViewData),
+                    callback: function (res) {
+                    	 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
+                         ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
+                         axToast.push("Saved");
+                    }
+                });
+    		}
+    	});
+    },    
 });
 
 fnObj.pageStart = function () {
@@ -141,7 +194,10 @@ fnObj.pageButtonView = axboot.viewExtend({
             },
             "excel": function () {
 
-            }
+            },
+            "fn1": function() { //삭제
+            	ACTIONS.dispatch(ACTIONS.ITEM_DEL);
+            }               
         });
     }
 });
@@ -197,9 +253,10 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
         });*/
         this.target = axboot.gridBuilder({
             showRowSelector: false,
-            frozenColumnIndex: 0,
+            //frozenColumnIndex: 0,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
+            	{key: "useYn", label: COL("useyn"), width: 80, align: "center"},
                 {key: "scheduleId", label: COL("systemschedule.scheduleid"), width: 90, align: "center"},
                 {key: "scheduleCode", label: COL("systemschedule.schedulecode"), width: 150, align: "center", formatter: function () {
             		var detailCode = getDetailCode("SCHEDULE_CODE",this.item.scheduleCode);
@@ -209,12 +266,12 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 {key: "endDate", label: COLA("promotion.endDate"), width: 80, align: "center"},
                 {key: "startTime", label: COLA("promotion.startTime"), width: 80, align: "center"},
                 {key: "endTime", label: COLA("promotion.endTime"), width: 80, align: "center"},
-                {key: "scheduleValue", label: COL("systemschedule.schedulevalue"), width: 70, align: "center"},
+                //{key: "scheduleValue", label: COL("systemschedule.schedulevalue"), width: 70, align: "center"},
                 
                 {key: "updateDate", label:COL("updatedate"), width: 90, align: "center"},
                 {key: "remark", label:COL("remark"), width: 200, align: "center"},
                 {key: "userId", label: COL("userid"), width: 120, align: "center"},
-                {key: "useYn", label: COL("useyn"), width: 80, align: "center"}
+                
             ],
             body: {
                 onClick: function () {
@@ -243,7 +300,7 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
 
         if (_type == "modified" || _type == "deleted") {
             list = ax5.util.filter(_list, function () {
-                return this.scenarioId;
+                return this.scheduleId;
             });
         } else {
             list = _list;
@@ -403,4 +460,27 @@ function byteCalc(obj){
      
    thisObject.val(strTitle);
 }
+
+
+function codeChange() {
+	debugger;
+}
+
+$(document).ready(function() {
+    // ax:BisCtDetailCode에서 생성된 요소를 선택합니다. 실제 클래스명이나 ID에 따라 달라질 수 있습니다.
+    // 예를 들어, .form-control이 해당 요소에 사용된 클래스라고 가정합니다.
+    // 또한 'groupCd'와 'dataPath'를 기반으로 구체적인 식별이 필요할 수 있습니다.
+	$('select[data-ax-path="scheduleCode"]').on("change", function(){
+		var value = $('select[data-ax-path="scheduleCode"]').val();
+		if(value == 0) { //Power On/Off
+			$('#scheduleValue').val(null);
+			$('#scheduleValue').attr('disabled', true);
+			$('#scheduleValue').attr('readonly', true);
+		} else if(value == 1) { //Illuminance
+			$('#scheduleValue').val(1);
+			$('#scheduleValue').attr('disabled', false);
+			$('#scheduleValue').attr('readonly', false);
+		}
+	});
+});
 

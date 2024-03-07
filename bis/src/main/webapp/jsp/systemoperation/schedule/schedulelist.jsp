@@ -36,14 +36,14 @@
         var loginid ="${loginUser.userCd}";
         $(function() {
         	  $( "#datepicker1" ).datepicker({
-        	    dateFormat: 'mmdd'
+        	    dateFormat: 'yymmdd'
         	  });
         	  $("#datepickerbutton1").on("click", function(e){
                   $('#datepicker1').datepicker('show');
               });
         	  
         	  $( "#datepicker2" ).datepicker({
-          	    dateFormat: 'mmdd'
+          	    dateFormat: 'yymmdd'
           	  });
           	  $("#datepickerbutton2").on("click", function(e){
                     $('#datepicker2').datepicker('show');
@@ -80,7 +80,7 @@
         </div>
 
         <ax:split-layout name="ax1" orientation="vertical">
-            <ax:split-panel width="550" style="padding-right: 10px;">
+            <ax:split-panel width="945" style="padding-right: 10px;">
                 <!-- 목록 -->
                 <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                     <div class="left">
@@ -117,28 +117,28 @@
                             </ax:td>
                              <ax:td color="red" label="bis.systemschedule.schedulecode" width="300px" style="height:46px;">
  								<ax:BisCtDetailCode groupCd="SCHEDULE_CODE" dataPath="scheduleCode" clazz="form-control"/>  
-                         
                             </ax:td>
-                               <ax:td color="red" label="ax.promotion.startDate" width="300px">
-		                            <div class="input-group">
-	<!-- 	                            <div class="input-group" data-ax5picker="date"> -->
-		                                <input  readonly="readonly" type="text" data-ax-validate="required"  title="START DATE" class="form-control"  id="datepicker1" placeholder="mmdd" data-ax-path="startDate" />
-		                               <span class="input-group-addon" id="datepickerbutton1"><i class="cqc-calendar"></i></span>
-		                            </div>
-	                          </ax:td>
+                               
                         </ax:tr>
                         <ax:tr>
-	                     
+	                    	<ax:td color="red" label="ax.promotion.startDate" width="300px">
+	                            <div class="input-group">
+ 	                            <!--<div class="input-group" data-ax5picker="date"> -->
+	                                <input style="background: white;" readonly="readonly" type="text" data-ax-validate="required"  title="START DATE" class="form-control"  id="datepicker1" placeholder="yyyymmdd" data-ax-path="startDate" />
+	                               <span style="background: white;" class="input-group-addon" id="datepickerbutton1"><i class="cqc-calendar"></i></span>
+	                            </div>
+	                        </ax:td>
                             <ax:td color="red" label="ax.promotion.endDate" width="300px">
                             	<div class="input-group">
-	                                <input readonly="readonly" type="text" data-ax-validate="required"  title="END DATE" class="form-control" id="datepicker2"  placeholder="mmdd" data-ax-path="endDate" />
-	                                <span class="input-group-addon" id="datepickerbutton2"><i class="cqc-calendar"></i></span>
+	                                <input style="background: white;" readonly="readonly" type="text" data-ax-validate="required"  title="END DATE" class="form-control" id="datepicker2"  placeholder="yyyymmdd" data-ax-path="endDate" />
+	                                <span style="background: white;" class="input-group-addon" id="datepickerbutton2"><i class="cqc-calendar"></i></span>
 	                            </div>
                             </ax:td>
-                            <ax:td color="red" label="ax.promotion.startTime" width="300px">
-
+                        </ax:tr>
+                        <ax:tr>
+							<ax:td color="red" label="ax.promotion.startTime" width="300px">
 								<div style="float:left" class="input-group">
-	                               <select style="width:93px;" id="startTime" data-ax-path="startTime" class="form-control" >
+	                               <select style="width:75px;" id="startTime" data-ax-path="startTime" class="form-control" >
 		                               <option value="00">00 </option>
 		                               <option value="01">01 </option>
 		                               <option value="02">02 </option>
@@ -164,9 +164,10 @@
 		                               <option value="22">22 </option>
 		                               <option value="23">23 </option>
                                	   </select>
+                               <!-- <span style="top:50%;">시</span> --> 
                                 </div>
 								<div style="float:left" class="input-group">
-	                               <select style="width:93px;"id="startMin" data-ax-path="startMin" class="form-control" >
+	                               <select style="width:75px;"id="startMin" data-ax-path="startMin" class="form-control" >
 	                               <option value="00">00 </option>
 	                               <option value="01">01 </option>
 	                               <option value="02">02 </option>
@@ -182,11 +183,12 @@
 										   <option value="${i}">${i} </option>
 									</c:forEach>
                                 </select>
+                                <!-- <span>분</span> --> 
                                 </div>
                             </ax:td>
                           	<ax:td color="red" label="ax.promotion.endTime" width="300px">
                            	   <div style="float:left" class="input-group">
-	                               <select style="width:93px;" id="endTime" data-ax-path="endTime" class="form-control">
+	                               <select style="width:75px;" id="endTime" data-ax-path="endTime" class="form-control">
 		                               <option value="00">00  </option>
 		                               <option value="01">01  </option>
 		                               <option value="02">02  </option>
@@ -212,10 +214,10 @@
 		                               <option value="22">22 </option>
 		                               <option value="23">23 </option>
 	                               </select>
-	                          
+	                          <!-- <span>시</span> -->
                                </div>
                                   <div style="float:left" class="input-group">
-                                    <select  id="endMin" style="width:93px;" data-ax-path="endMin" class="form-control" >
+                                    <select  id="endMin" style="width:75px;" data-ax-path="endMin" class="form-control" >
 		                               <option value="00">00 </option>
 		                               <option value="01">01 </option>
 		                               <option value="02">02 </option>
@@ -231,8 +233,9 @@
 											   <option value="${i}">${i} </option>
 										</c:forEach>
                                 </select>
+                               <!--  <span>분</span> -->
                                 </div>
-                			 </ax:td>
+                			 </ax:td>                        
                         </ax:tr>
 		                <ax:tr>
 		                   <ax:td label="bis.systemschedule.schedulevalue" width="300px">
@@ -253,14 +256,14 @@
 	                                <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
 	                            </ax:td>
                             	
-               			      <div  style="width:300px;" data-ax-td="">
-								    <div style="width:100px; height:46px "data-ax-td-label="" ><ax:lang id="bis.updatedate"/></div>
-									 <div data-ax-td-wrap="">
-   										<input type="text" style="margin-top:3px;" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
-							   		 </div>
-								</div>
 						</ax:tr>       
-						<ax:tr>              
+						<ax:tr>     
+							<div  style="width:300px;" data-ax-td="">
+							    <div style="width:100px; height:46px "data-ax-td-label="" ><ax:lang id="bis.updatedate"/></div>
+								 <div data-ax-td-wrap="">
+  										<input type="text" style="margin-top:3px;" name="updateDate" data-ax-path="updateDate" maxlength="100" title="" class="form-control" value="" readonly/>
+						   		 </div>
+							</div>         
                             <%-- <ax:td label="bis.useyn" width="300px">
                                 <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
                             </ax:td> --%>

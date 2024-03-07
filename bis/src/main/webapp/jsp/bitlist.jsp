@@ -22,18 +22,20 @@
     <jsp:attribute name="script">
    
 	  <ax:script-lang key="ax.script" var="LANG" />
-	  <!-- JSTL 세션따라 en, nep 확인함 -->
-	  <c:choose>
-	  	<c:when test="${loginLocale == 'nep'}">
-	  		<ax:script-lang key="bisnep" var="COL" />
-	  	</c:when>
-	  	<c:when test="${loginLocale == 'en'}">
-	  		<ax:script-lang key="bisen" var="COL" />
-	  	</c:when>
-	  	<c:when test="${loginLocale == 'ko'}">
-	  		<ax:script-lang key="bisko" var="COL" />
-	  	</c:when>
-	  </c:choose>
+		<c:choose>
+			<c:when test="${loginLocale == 'nep'}">
+				<ax:script-lang key="bisnep" var="COL" />
+				<ax:script-lang key="axnep" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'en'}">
+				<ax:script-lang key="bisen" var="COL" />
+				<ax:script-lang key="axen" var="COLA" />
+			</c:when>
+			<c:when test="${loginLocale == 'ko'}">
+				<ax:script-lang key="bisko" var="COL" />
+				<ax:script-lang key="axko" var="COLA" />
+			</c:when>
+		</c:choose>
       <%-- <ax:script-lang key="bis" var="COL" /> --%>
       
       <script src="<c:url value='/assets/js/jquery-ui.min.js' />" type="text/javascript"></script>
@@ -86,7 +88,7 @@
             </ax:form>
         </div>
         <ax:split-layout name="ax1" orientation="vertical">
-            <ax:split-panel width="500" >
+            <ax:split-panel width="810" >
                          <div data-fit-height-aside="grid-view-01">
                               <div class="ax-button-group">
                     <div class="left">
@@ -177,8 +179,6 @@
 	                          		  <ax:common-code groupCd="USE_YN" dataPath="useYn" clazz="form-control"/>
 	                           	</ax:td>
 	                           
-	                  		     <ax:td label="" width="300px">
-	                  		    </ax:td>  
                         </ax:tr>
                     </ax:tbl>
                 </ax:form>

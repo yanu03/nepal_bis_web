@@ -36,9 +36,15 @@ public class BisMtVehicleController extends BaseController {
 		 return list;
 	 }
 	 @RequestMapping(method = {RequestMethod.PUT}, produces = APPLICATION_JSON)
-	    public ApiResponse save(@RequestBody BisMtVehicle list) {
-		System.out.println(list.getVehicleId()); 
-		 bisMtVehicleService.add(list);
+	    public ApiResponse save(@RequestBody List<Map<String,Object>> BisMtVehicle) {
+		 
+		 for(Map<String,Object> temp:BisMtVehicle){
+			 if(Boolean.TRUE.equals(temp.get("__deleted__"))) {
+				 bisMtVehicleService.delete(temp);
+			 } else {
+				 bisMtVehicleService.add(temp);
+			 }
+		 }
 		 
 	        return ok();
 	    }

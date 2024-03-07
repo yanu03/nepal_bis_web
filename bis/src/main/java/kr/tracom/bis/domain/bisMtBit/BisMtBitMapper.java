@@ -8,7 +8,8 @@ import com.chequer.axboot.core.mybatis.MyBatisMapper;
 public interface BisMtBitMapper extends MyBatisMapper{
 	List<BisMtBit> findAll(Map parameterMap);
 	public List<BisMtBit> findId();
-	void add(BisMtBit bismtvehicle);
+	void add(Map<String, Object> bismtbit);
+	void delete(Map<String, Object> bismtbit);
 	List<BisMtBit> count();
 	String maxPlus();
 	

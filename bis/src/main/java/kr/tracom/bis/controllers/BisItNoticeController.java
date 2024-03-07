@@ -32,13 +32,7 @@ public class BisItNoticeController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.PUT, produces = APPLICATION_JSON)
 	public void noticeInsert(@RequestBody List<Map<String, Object>> map){
-		System.out.println("map : "+map.get(0));
-		/*String noticeId=bisItNoticeService.noticeMaxId();
-		if(noticeId==null || noticeId==""){
-			noticeId="N000000000";
-		}*/
 	
-		//map.get(0).put("noticeId", noticeId);
 		String noticeId=(String)map.get(0).get("noticeId");
 		if(noticeId == null || noticeId==""){
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
@@ -52,7 +46,6 @@ public class BisItNoticeController extends BaseController {
 	
 	@RequestMapping(value="/remove", method=RequestMethod.GET, produces=APPLICATION_JSON)
 	public void noticeRemove(@RequestParam Map<String,Object> map){
-		System.out.println("noticeId : "+map.get("noticeId"));
 		bisItNoticeService.delete((String)map.get("noticeId"));
 	}
 

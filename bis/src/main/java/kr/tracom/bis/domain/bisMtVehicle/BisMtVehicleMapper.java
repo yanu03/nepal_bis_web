@@ -9,8 +9,8 @@ public interface BisMtVehicleMapper extends MyBatisMapper {
 	
 List<BisMtVehicle> findAll(Map parameterMap);
 	
-	void add(BisMtVehicle bismtvehicle);
+	void add(Map<String, Object> bismtvehicle);
 	List<BisMtVehicle> count();
 	  String maxPlus();
-	
+	void delete(Map<String, Object> bisMtVehicle);
 }

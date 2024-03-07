@@ -463,10 +463,7 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
         this.resize();
     },
     resize: function () {
-        try {
-            this.editor.resize('100%', $('[data-fit-height-content="form-view-01"]').height() - 10, false);
-        } catch (e) {
-        }
+        this.editor.resize('100%', $('[data-fit-height-content="form-view-01"]').height() - 10, false);
     },
     clear: function () {
         this.mask.open();
